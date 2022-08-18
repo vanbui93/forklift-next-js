@@ -1,0 +1,116 @@
+.page-title {
+    display: inline-block;
+    background-color: var(--gray);
+    height: 30px;
+    margin-bottom: 20px;
+    overflow: hidden;
+
+    &:after {
+        content: '';
+        border-top: 30px solid var(--darkgray);
+        border-left: 30px solid var(--gray);
+        margin-left: 40px;
+    }
+
+    >h3 {
+        background-color: var(--darkgray);
+        margin-left: 50px;
+        padding: 7px 30px 6px 30px;
+        font-size: 14px;
+        text-transform: uppercase;
+        color: #d2d2d7;
+    }
+}
+
+// swipper
+.swiper {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.swiper-slide {
+    font-size: 18px;
+    background: #fff;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+
+    img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.swiper-slide {
+    background-size: cover;
+    background-position: center;
+}
+
+.promotion {
+    &__item {
+        margin-bottom: 7px;
+
+        .bag {
+            display: inline-block;
+            background: #f7941e 0% 0% no-repeat padding-box;
+            box-shadow: 0 4px 6px #00000029;
+            border-radius: 3px;
+            color: #fff;
+            font-size: 11px;
+            padding: 2px 5px;
+            margin-right: 5px;
+        }
+    }
+
+    &__link {
+        color: var(--darkgray);
+        font-weight: bold;
+        margin-left: 10px;
+    }
+
+    &__detail {
+        font-size: 14px;
+        color: #333;
+    }
+
+    &__other {
+        font-size: 13px;
+        color: #f7941e;
+    }
+}
+
+.show-pc {
+    display: block;
+}
+
+@media screen and (max-width: 1023px) {
+    .show-pc {
+        display: none;
+    }
+
+    .page-title {
+        height: 25px;
+        margin-bottom: 7px;
+
+        &:after {
+            margin-left: 20px;
+        }
+
+        >h3 {
+            margin-left: 25px;
+            font-size: 12px;
+        }
+    }
+}

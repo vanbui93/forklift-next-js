@@ -1,0 +1,2 @@
+export const SHOW_HAMBUGER = 'SHOW_HAMBUGER';
+export const HIDE_HAMBUGER = 'HIDE_HAMBUGER';

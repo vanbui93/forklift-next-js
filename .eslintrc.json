@@ -1,0 +1,19 @@
+{
+    "plugins": ["prettier"],
+    "extends": [
+        "next",
+        "plugin:react/recommended",
+        "eslint:recommended",
+        "plugin:prettier/recommended",
+        "airbnb-base",
+        "prettier"
+    ],
+    "rules": {
+        "prettier/prettier": "warn",
+        "react/react-in-jsx-scope": "off",
+        "react/react-prop-types": "off",
+        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+        "endOfLine": 0,
+        "usePrettierrc": true
+    }
+}

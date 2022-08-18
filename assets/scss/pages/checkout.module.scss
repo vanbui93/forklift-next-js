@@ -1,0 +1,151 @@
+.checkout {
+    margin: 50px 0;
+
+    &__wrap {
+        background: var(--white);
+        padding: 30px 40px 100px;
+    }
+
+    &__asterisk {
+        color: #F00;
+    }
+
+    &__title {
+        margin-bottom: 30px;
+        font-weight: normal;
+        font-size: 40px;
+        text-align: center;
+    }
+
+    &__message {
+        display: block;
+        margin-bottom: 2em;
+        padding: 1em 2em 1em 2em;
+        border-left: 4px solid #339901;
+
+        .fa-check-circle {
+            color: #95ac3c;
+            margin-right: 20px;
+        }
+    }
+
+    &__inner {
+        display: grid;
+        flex-wrap: wrap;
+        grid-template-columns: 45% auto;
+        align-items: stretch;
+        grid-column-gap: 30px;
+        grid-row-gap: 30px;
+        margin-bottom: 30px;
+    }
+
+    &__product-wrap {
+        display: flex;
+
+        span {
+            display: block;
+        }
+    }
+
+    &__product-title {
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    &__product-thumbnail {
+        width: 55px;
+        margin-right: 10px;
+
+        >a {
+            display: block;
+        }
+    }
+
+    &__product-name {
+        width: 240px;
+    }
+
+    &__product,
+    &__total {
+        border: 1px solid #d4d4d4;
+        padding: 16px 30px;
+    }
+
+    &__total-title {
+        font-size: 18px;
+        color: #0066CC;
+    }
+
+    .variation {
+        dt {
+            float: left;
+            clear: both;
+            margin-right: 0.25em;
+        }
+
+        dd {
+            font-weight: bold;
+        }
+    }
+
+    .customer {
+        &__info {
+            label {
+                line-height: 2;
+            }
+        }
+
+        &__input {
+            display: block;
+            width: 100%;
+            padding: .75em;
+            font-size: 14px;
+            margin: 0;
+            outline: 0;
+            line-height: 1;
+            border: 1px solid #ddd;
+        }
+    }
+
+    .order-button {
+        width: 300px;
+        margin: 0 auto;
+
+        button {
+            width: 100%;
+            background-color: #0066CC;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 18px;
+            color: var(--white);
+            text-align: center;
+        }
+    }
+}
+
+.validation {
+    padding: 5px 0 10px;
+    color: #F00;
+}
+
+@media screen and (max-width: 1023px) {
+    .checkout {
+        &__inner {
+            grid-template-columns: 100%;
+        }
+
+        &__product-price {
+            span {
+                font-size: 13px;
+            }
+        }
+
+        .order-button {
+            width: 100%;
+        }
+
+        .variation {
+            font-size: 13px;
+        }
+    }
+}

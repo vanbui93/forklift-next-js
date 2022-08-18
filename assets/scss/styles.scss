@@ -1,0 +1,28 @@
+@import "helper/variables.module.scss";
+@import "purecss/reset.css";
+@import "purecss/common.css";
+
+//library
+@import 'swiper/css';
+@import 'swiper/css/navigation';
+@import 'swiper/css/pagination';
+@import 'swiper/css/scrollbar';
+
+//components
+@import "components/common.module.scss";
+@import "components/header.module.scss";
+@import "components/footer.module.scss";
+@import "components/breadcrumb.module.scss";
+@import "components/home-slide.scss";
+@import "components/product-list.module.scss";
+@import "components/collection.module.scss";
+@import "components/product-slide.module.scss";
+@import "components/product-related.module.scss";
+@import "components/skeleton.module.scss";
+
+//page
+@import "pages/home.module.scss";
+@import "pages/product-detail.module.scss";
+@import "pages/post.module.scss";
+@import "pages/checkout.module.scss";
+@import "pages/thankyou.module.scss";

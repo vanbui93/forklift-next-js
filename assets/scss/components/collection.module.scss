@@ -1,0 +1,52 @@
+.collection {
+    margin-bottom: 100px;
+
+    &__title {
+        margin: 30px 0;
+        font-weight: 700;
+        font-size: 40px;
+        text-align: center;
+    }
+
+    &__filter {
+        margin-bottom: 30px;
+    }
+
+    &__filter-list {
+        display: inline-block;
+        position: relative;
+        margin: 0 20px;
+        padding: 10px;
+        cursor: pointer;
+
+        &:after {
+            display: block;
+            position: absolute;
+            bottom: 0;
+        }
+    }
+}
+
+@media screen and (max-width: 1023px) {
+    .collection {
+        &__title {
+            font-size: 27px;
+        }
+
+        &__filter {
+            overflow: auto;
+            white-space: nowrap;
+        }
+
+        &__filter-list {
+            background-color: #FFFFFF;
+            margin: 0 4px;
+            padding: 6px 18px 6px 18px;
+            border-width: 1px 1px 1px 1px;
+            border-radius: 8px 8px 8px 8px;
+            border-color: #EFEFEF;
+            border-style: solid;
+            color: #86868B;
+        }
+    }
+}

@@ -1,0 +1,131 @@
+.logo--seleketon {
+  width: 173px !important;
+  height: 45px;
+}
+
+.page-title--seleketon {
+  max-width: 270px;
+  height: 30px;
+  margin-bottom: 20px;
+}
+
+.customerCmt--seleketon {
+  height: 270px;
+}
+
+.collections__img--sekeleton {
+  max-width: calc(100% - 20px);
+  height: 250px;
+  margin: 10px;
+}
+
+.collections__title--sekeleton {
+  height: 30px;
+}
+
+.collections__price--sekeleton {
+  height: 18px;
+  margin: 5px 5px 5px 0;
+}
+
+.collections__promotion--sekeleton {
+  max-width: calc(100% - 20px);
+  height: 18px;
+  margin: 0 10px 10px;
+}
+
+.coreValue__text01--seleketon {
+  width: 130px !important;
+  height: 12px;
+}
+
+.coreValue__text01--seleketon {
+  width: 130px !important;
+  height: 33px;
+}
+
+.search-form--seleketon {
+  max-width: 450px;
+  height: 45px;
+}
+
+.homeSlide--seleketon {
+  height: 424px;
+  margin: 20px 0 30px;
+}
+
+.menu__item--seleketon {
+  >span {
+    display: flex;
+  }
+
+  .menu__link {
+    width: 100px !important;
+    margin: 20px;
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  .logo-sp--seleketon {
+    width: 96px !important;
+    height: 30px;
+  }
+
+  .menu__item--seleketon {
+    background-color: var(--white);
+    padding: 15px;
+
+    >span {
+      justify-content: space-between;
+    }
+
+    .menu__link {
+      width: 40px !important;
+      margin: 0;
+    }
+  }
+
+  .page-title--seleketon {
+    max-width: 210px;
+    height: 27px;
+  }
+
+  .collections__img--sekeleton {
+    height: 150px;
+    padding: 7px;
+  }
+
+  .collections__title--sekeleton {
+    height: 14px;
+  }
+
+  .customerCmt--seleketon {
+    max-width: calc(100% - 24px);
+    height: 170px;
+  }
+
+  .customerCmtWrap--seleketon {
+    text-align: center;
+  }
+
+  .coreValue__text01--seleketon {
+    width: 102px !important;
+    height: 15px;
+  }
+
+  .coreValue__text01--seleketon {
+    width: 102px !important;
+    height: 18px;
+  }
+
+  .search-form--seleketon {
+    width: 336px !important;
+    height: 37px;
+    margin: 0 auto;
+  }
+
+  .homeSlide--seleketon {
+    height: 121px;
+    margin: 0 0 10px;
+  }
+}
