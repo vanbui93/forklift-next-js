@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import numberWithCommas from './../../utils/numberWithComas'
 
 export default function ProductItem(props) {
-    const { id, name, price, comparePrice, newPercent, images } = props
+    const { id, name, price, comparePrice, images } = props
     const mainData = useSelector(state => state.main.data)
 
     const img = []
@@ -33,15 +33,6 @@ export default function ProductItem(props) {
                     </SkeletonTheme>
                     <div className='collections__img' style={{ display: loading ? 'none' : undefined }}>
                         <img src={img[0]} alt='' />
-                    </div>
-                    <div className='collections__sticker'>
-                        {newPercent ? (
-                            <p className='collections__percent-pin'>
-                                <span>new: {newPercent}%</span>
-                            </p>
-                        ) : (
-                            ''
-                        )}
                     </div>
                     <div className='collections__info'>
                         <SkeletonTheme baseColor='#ccc' highlightColor='#fff'>

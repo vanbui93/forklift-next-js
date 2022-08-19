@@ -34,7 +34,6 @@ export default function Accessories() {
                             name={products[val].name}
                             price={products[val].price}
                             comparePrice={products[val].compare_price}
-                            newPercent={products[val].newBox}
                         />
                     )
                 )

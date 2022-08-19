@@ -23,7 +23,6 @@ const HomeProduct = props => {
                 const price = data[key].price ? data[key].price : ''
                 const comparePrice = data[key].compare_price ? data[key].compare_price : ''
                 const images = data[key].images ? data[key].images : ''
-                const newPercent = data[key].newBox ? data[key].newBox : ''
                 const fullbox = data[key].fullbox ? data[key].fullbox : ''
                 const isDisplay = data[key].isDisplay ? data[key].isDisplay : ''
                 arrayHomeProduct.push({
@@ -32,7 +31,6 @@ const HomeProduct = props => {
                     price: price,
                     comparePrice: comparePrice,
                     images: images,
-                    newPercent: newPercent,
                     fullbox: fullbox,
                     isDisplay: isDisplay,
                 })
@@ -57,7 +55,6 @@ const HomeProduct = props => {
                         price={item.price}
                         comparePrice={item.compare_price}
                         images={item.images}
-                        newPercent={item.newBox}
                     />
                 )
             )

@@ -38,7 +38,6 @@ const ProductAdd = props => {
         price: '',
         compare_price: '',
         category: '',
-        newBox: '',
         fullbox: '',
         videos: [],
         create_date: new Date().toString().replace(/GMT.*/g, ''),
@@ -69,7 +68,6 @@ const ProductAdd = props => {
                 const category = products[key].category ? products[key].category : ''
                 const price = products[key].price ? products[key].price : ''
                 const compare_price = products[key].compare_price ? products[key].compare_price : ''
-                const newBox = products[key].newBox ? products[key].newBox : ''
                 const fullbox = products[key].fullbox ? products[key].fullbox : ''
                 const videos = products[key].videos ? products[key].videos : []
                 arrayProduct.push({
@@ -78,7 +76,6 @@ const ProductAdd = props => {
                     category: category,
                     price: price,
                     compare_price: compare_price,
-                    newBox: newBox,
                     fullbox: fullbox,
                     videos: videos,
                 })
@@ -329,24 +326,6 @@ const ProductAdd = props => {
                                             <MenuItem value={2}>Phụ kiện</MenuItem>
                                         </Select>
                                     </FormControl>
-                                </TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell className={classes.tbHeadLeft} variant='head'>
-                                    New
-                                </TableCell>
-                                <TableCell>
-                                    <Grid container spacing={2}>
-                                        <Grid item xs={2}>
-                                            <TextField
-                                                id='outlined-size-small'
-                                                size='small'
-                                                fullWidth
-                                                name='newBox'
-                                                onChange={handleEditOnchage}
-                                            />
-                                        </Grid>
-                                    </Grid>
                                 </TableCell>
                             </TableRow>
                             <TableRow>

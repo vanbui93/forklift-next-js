@@ -59,7 +59,6 @@ const AdminOrder = props => {
         img: '',
         price: '',
         category: '',
-        newBox: '',
         fullbox: '',
         notes: '',
         create_date: '',
@@ -77,7 +76,6 @@ const AdminOrder = props => {
         product_price: '',
         product_sku: '',
         product_color: '',
-        product_newBox: '',
         product_fullbox: '',
     })
 
@@ -90,7 +88,6 @@ const AdminOrder = props => {
                 const productName = orders[key].product_name ? orders[key].product_name : ''
                 const productImg = orders[key].product_image ? orders[key].product_image : ''
                 const productPrice = orders[key].product_price ? orders[key].product_price : ''
-                const productNewBox = orders[key].product_newBox ? orders[key].product_newBox : ''
                 const productFullBox = orders[key].product_fullbox ? orders[key].product_fullbox : ''
                 const productColor = orders[key].color_id ? orders[key].color_id : ''
                 const productType = orders[key].product_sku ? orders[key].product_sku : ''
@@ -106,7 +103,6 @@ const AdminOrder = props => {
                     name: productName,
                     img: productImg,
                     price: productPrice,
-                    newBox: productNewBox,
                     fullbox: productFullBox,
                     color: productColor,
                     type: productType,
@@ -218,7 +214,6 @@ const AdminOrder = props => {
             product_price: order.price ? order.price : '',
             product_sku: order.type ? order.type : '',
             product_color: order.color,
-            product_newBox: order.newBox,
             product_fullbox: order.fullbox,
         })
     }
@@ -253,8 +248,6 @@ const AdminOrder = props => {
                 notes: editObject.customer_notes,
                 name: editObject.product_name,
                 price: editObject.product_price,
-                type: editObject.product_sku,
-                newBox: editObject.product_newBox,
                 fullbox: editObject.product_fullbox,
             })
         } catch (err) {
@@ -474,16 +467,6 @@ const AdminOrder = props => {
                                                         {viewObject.fullbox === 1 ? 'Đã sử dụng' : 'Fullbox'}
                                                     </TableCell>
                                                 </TableRow>
-                                                {viewObject.newBox ? (
-                                                    <TableRow>
-                                                        <TableCell className={classes.tbHeadLeft} variant='head'>
-                                                            % Mới
-                                                        </TableCell>
-                                                        <TableCell>{viewObject.newBox}</TableCell>
-                                                    </TableRow>
-                                                ) : (
-                                                    ''
-                                                )}
                                                 <TableRow>
                                                     <TableCell className={classes.tbHeadLeft} variant='head'>
                                                         Ghi chú
@@ -651,25 +634,6 @@ const AdminOrder = props => {
                                                                 <MenuItem value={2}>Fullbox</MenuItem>
                                                             </Select>
                                                         </FormControl>
-                                                    </TableCell>
-                                                </TableRow>
-                                                <TableRow>
-                                                    <TableCell className={classes.tbHeadLeft} variant='head'>
-                                                        % Mới
-                                                    </TableCell>
-                                                    <TableCell>
-                                                        <Grid container spacing={2}>
-                                                            <Grid item xs={2}>
-                                                                <TextField
-                                                                    id='outlined-size-small'
-                                                                    size='small'
-                                                                    fullWidth
-                                                                    defaultValue={editObject.product_newBox}
-                                                                    name='product_newBox'
-                                                                    onChange={handleEditOnchage}
-                                                                />
-                                                            </Grid>
-                                                        </Grid>
                                                     </TableCell>
                                                 </TableRow>
                                                 <TableRow>
