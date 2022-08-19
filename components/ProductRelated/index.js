@@ -62,7 +62,7 @@ export default function ProductRelated(props) {
                                                 <strong className='product-related__new-price'>
                                                     {val.price
                                                         ? `${numberInputFormat(val.price.toString())}đ`
-                                                        : `Liên hệ: ${mainData?.phone}`}
+                                                        : `${mainData?.phone}`}
                                                 </strong>
                                                 {val.price && val.compare_price && (
                                                     <strike className='product-related__compare-price'>

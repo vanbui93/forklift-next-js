@@ -249,6 +249,10 @@
         }
     }
 
+    .logo {
+        display: none;
+    }
+
     .logo-sp {
         >a {
             display: block;
@@ -308,22 +312,7 @@
     }
 
     .menu {
-        &__list {
-            display: flex;
-            padding: 15px;
-            background-color: var(--white);
-        }
-
-        &__item {
-            display: flex;
-            flex-grow: 1;
-        }
-
-        &__link {
-            display: inline-block;
-            font-size: 12px;
-            color: #1D1D1F;
-        }
+        display: none;
     }
 
     .hamberger {
