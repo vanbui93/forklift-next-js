@@ -74,7 +74,7 @@ const HomeProduct = props => {
                     {loading && <Skeleton containerClassName='avatar-skeleton' className='page-title--seleketon' />}
                 </SkeletonTheme>
                 <div className='page-title' style={{ display: loading ? 'none' : undefined }}>
-                    <h3>iPhone Đã sử dụng</h3>
+                    <h3>Forklift Đã sử dụng</h3>
                 </div>
                 <ul className='collections__list'>{getDulieu(1, 15)}</ul>
             </div>
@@ -83,7 +83,7 @@ const HomeProduct = props => {
                     {loading && <Skeleton containerClassName='avatar-skeleton' className='page-title--seleketon' />}
                 </SkeletonTheme>
                 <div className='page-title' style={{ display: loading ? 'none' : undefined }}>
-                    <h3>iPhone New FullBox</h3>
+                    <h3>Forklift Mới</h3>
                 </div>
                 <ul className='collections__list'>{getDulieu(2, 15)}</ul>
             </div>
