@@ -22,6 +22,7 @@ import EditIcon from '@mui/icons-material/Edit'
 import SearchIcon from '@mui/icons-material/Search'
 import { FormControlLabel, IconButton, InputBase, Stack, TextField } from '@mui/material'
 import Paper from '@mui/material/Paper'
+import { onValue, ref } from 'firebase/database'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -30,6 +31,7 @@ import PaginationButtons from '../../../admin_components/Pagination'
 import LayoutAdmin from '../../../layouts/LayoutAdmin'
 import { deleteProduct, getProduct, updateImgProduct, updateProduct } from '../../../store/actions/products'
 import { getVideo } from '../../../store/actions/videos'
+import { db } from '../../../utils/firebase'
 import { numberInputFormat } from '../../../utils/numberInputFormat'
 import { AdminStyle, StyledTableCell, StyledTableRow } from './../../../admin_components/AdminStyle'
 import styles from './styles'
@@ -44,6 +46,7 @@ const AdminProduct = props => {
     //Giá trị nhập vào input searchTerm, kết quả search searchResults
     const [searchTerm, setSearchTerm] = useState('')
     const [searchResults, setSearchResults] = useState([])
+    const [collect, setCollect] = useState([])
 
     //Thiết lập trạng thái DiaLog
     const [dialog, setDialog] = useState({
@@ -55,6 +58,20 @@ const AdminProduct = props => {
 
     useEffect(() => {
         dispatch(getVideo())
+    }, [])
+
+    useEffect(() => {
+        const collectionRef = ref(db, `collections`)
+        onValue(collectionRef, snapshot => {
+            if (snapshot.val() !== null) {
+                setCollect({ ...snapshot.val() })
+            } else {
+                setCollect({})
+            }
+        })
+        return () => {
+            setCollect({})
+        }
     }, [])
 
     const [isEdit, setIsEdit] = useState(false)
@@ -526,13 +543,16 @@ const AdminProduct = props => {
                                                     <Select
                                                         labelId='demo-simple-select-label'
                                                         id='demo-simple-select'
-                                                        defaultValue={editObject.collection}
+                                                        value={editObject.collection}
                                                         name='collection'
                                                         onChange={handleEditOnchage}
                                                     >
-                                                        <MenuItem value={1}>Iphone</MenuItem>
-                                                        <MenuItem value={2}>Phụ kiện</MenuItem>
-                                                        <MenuItem value={3}>Đã sử dụng</MenuItem>
+                                                        {collect &&
+                                                            Object.values(collect)?.map((item, idx) => (
+                                                                <MenuItem value={item.collection} key={idx}>
+                                                                    {item.name}
+                                                                </MenuItem>
+                                                            ))}
                                                     </Select>
                                                 </FormControl>
                                             </TableCell>

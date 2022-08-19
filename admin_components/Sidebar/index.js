@@ -25,6 +25,10 @@ function Sidebar(props) {
             name: 'Sản phẩm',
         },
         {
+            path: '/dashboard/collection',
+            name: 'Nhóm sản phẩm',
+        },
+        {
             path: '/dashboard/page',
             name: 'Page',
         },

@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
 import accountReducer from './account'
+import collectionReducer from './collections'
 import mainReducer from './main'
 import menuReducer from './menus'
 import mobileMenuReducer from './mobileMenu'
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
     ui: uiReducer,
     hambuger: mobileMenuReducer,
     menu: menuReducer,
+    collection: collectionReducer,
     order: orderReducer,
     account: accountReducer,
     slides: slideReducer,
