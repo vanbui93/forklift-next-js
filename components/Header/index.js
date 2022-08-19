@@ -102,33 +102,6 @@ export default function Header(props) {
             <div className='header'>
                 <div className='container'>
                     <div className='header-inner'>
-                        <SkeletonTheme baseColor='#ccc' highlightColor='#fff' borderRadius='0.5rem'>
-                            {loading && <Skeleton style={{ marginRight: '20px' }} className='logo--seleketon' />}
-                        </SkeletonTheme>
-                        <h1 className='logo' style={{ display: loading ? 'none' : undefined }}>
-                            <Link href='/'>
-                                <a>
-                                    <img src={headerData?.logo_img} alt={headerData?.logo_alt} />
-                                </a>
-                            </Link>
-                        </h1>
-                        <div className='search'>
-                            <form action='true' className='search-form'>
-                                <SkeletonTheme baseColor='#ccc' highlightColor='#fff' borderRadius='0.5rem'>
-                                    {loading && <Skeleton className='search-form--seleketon' />}
-                                </SkeletonTheme>
-                                <input
-                                    type='text'
-                                    placeholder='Bạn cần tìm gì?'
-                                    id='search'
-                                    className='text-input'
-                                    onChange={handleSearch}
-                                    autoComplete='off'
-                                    style={{ display: loading ? 'none' : undefined }}
-                                />
-                            </form>
-                            {listSearch()}
-                        </div>
                         <ul className='header-right'>
                             <SkeletonTheme baseColor='#ccc' highlightColor='#fff' borderRadius='0.5rem'>
                                 {loading && (
@@ -160,6 +133,23 @@ export default function Header(props) {
                                 </Link>
                             </li>
                         </ul>
+                        <div className='search'>
+                            <form action='true' className='search-form'>
+                                <SkeletonTheme baseColor='#ccc' highlightColor='#fff' borderRadius='0.5rem'>
+                                    {loading && <Skeleton className='search-form--seleketon' />}
+                                </SkeletonTheme>
+                                <input
+                                    type='text'
+                                    placeholder='คุณกำลังมองหาอะไร ?'
+                                    id='search'
+                                    className='text-input'
+                                    onChange={handleSearch}
+                                    autoComplete='off'
+                                    style={{ display: loading ? 'none' : undefined }}
+                                />
+                            </form>
+                            {listSearch()}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -207,17 +197,26 @@ export default function Header(props) {
                 <div className='container-fluid'>
                     <div className='menu-inner'>
                         <div className='container'>
-                            <ul className='menu__list' style={{ display: menuLoading ? 'none' : undefined }}>
-                                {Object.values(menus)?.map((menu, idx) => {
-                                    return (
-                                        <li className='menu__item' key={idx}>
-                                            <Link href={`/${menu.link}`}>
-                                                <a className='menu__link'> {menu.name}</a>
-                                            </Link>
-                                        </li>
-                                    )
-                                })}
-                            </ul>
+                            <div className='menu__flex'>
+                                <h1 className='logo' style={{ display: loading ? 'none' : undefined }}>
+                                    <Link href='/'>
+                                        <a>
+                                            <img src={headerData?.logo_img} alt={headerData?.logo_alt} />
+                                        </a>
+                                    </Link>
+                                </h1>
+                                <ul className='menu__list' style={{ display: menuLoading ? 'none' : undefined }}>
+                                    {Object.values(menus)?.map((menu, idx) => {
+                                        return (
+                                            <li className='menu__item' key={idx}>
+                                                <Link href={`/${menu.link}`}>
+                                                    <a className='menu__link'> {menu.name}</a>
+                                                </Link>
+                                            </li>
+                                        )
+                                    })}
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
