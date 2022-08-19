@@ -28,10 +28,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import DiaLogPopup from '../../../admin_components/DiaLogPopup'
 import PaginationButtons from '../../../admin_components/Pagination'
 import LayoutAdmin from '../../../layouts/LayoutAdmin'
-import { getColors } from '../../../store/actions/colors'
 import { deleteProduct, getProduct, updateImgProduct, updateProduct } from '../../../store/actions/products'
 import { getPromotions } from '../../../store/actions/promotions'
-import { getSkus } from '../../../store/actions/skus'
 import { getVideo } from '../../../store/actions/videos'
 import { getWarantys } from '../../../store/actions/warantys'
 import { numberInputFormat } from '../../../utils/numberInputFormat'
@@ -41,8 +39,6 @@ import styles from './styles'
 const AdminProduct = props => {
     const opensidebar = useSelector(state => state.ui.opensidebar)
     const products = useSelector(state => state.products.data)
-    const allColors = useSelector(state => state.colors.data)
-    const allSkus = useSelector(state => state.skus.data)
     const allVideos = useSelector(state => state.videos.data)
     const allWarantys = useSelector(state => state.warantys.data)
     const allPromotions = useSelector(state => state.promotions.data)
@@ -60,14 +56,6 @@ const AdminProduct = props => {
     })
 
     const dispatch = useDispatch()
-
-    useEffect(() => {
-        dispatch(getSkus())
-    }, [])
-
-    useEffect(() => {
-        dispatch(getColors())
-    }, [])
 
     useEffect(() => {
         dispatch(getVideo())
@@ -89,8 +77,6 @@ const AdminProduct = props => {
         category: '',
         newBox: '',
         fullbox: '',
-        colors: [],
-        skus: [],
         videos: [],
         warantys: [],
         promotions: [],
@@ -117,9 +103,7 @@ const AdminProduct = props => {
                 const newBox = products[key].newBox ? products[key].newBox : ''
                 const fullbox = products[key].fullbox ? products[key].fullbox : ''
                 const promotions = products[key].promotions ? products[key].promotions : []
-                const colors = products[key].colors ? products[key].colors : []
                 const warantys = products[key].warantys ? products[key].warantys : []
-                const skus = products[key].skus ? products[key].skus : ['']
                 const videos = products[key].videos ? products[key].videos : []
                 const createDate = products[key].create_date ? products[key].create_date : ''
                 const updateDate = products[key].update_date ? products[key].update_date : ''
@@ -134,8 +118,6 @@ const AdminProduct = props => {
                     newBox: newBox,
                     fullbox: fullbox,
                     promotions: promotions,
-                    colors: colors,
-                    skus: skus,
                     warantys: warantys,
                     videos: videos,
                     create_date: createDate,
@@ -258,87 +240,6 @@ const AdminProduct = props => {
     //Thêm sản phẩm mới
     const handleAddProduct = () => {
         router.push('/dashboard/product_add')
-    }
-
-    //Kiểm tra màu có nằm trong danh sách màu hay không
-    const ckColorIds =
-        editObject.colors?.length &&
-        editObject.colors.map(item => {
-            if (item !== null) {
-                return item.color_id
-            }
-        })
-
-    //Thêm bớt màu
-    const handleChangeColor = colorId => e => {
-        if (ckColorIds?.includes(colorId)) {
-            //Xóa color có sẳn trong sản phẩm
-            const newArrWithRemovedColor =
-                editObject.colors.length &&
-                editObject.colors.filter(e => {
-                    return e.color_id !== colorId
-                })
-
-            setEditObject(prevState => ({
-                ...prevState,
-                colors: newArrWithRemovedColor,
-            }))
-        } else {
-            //Thêm color vào bảng sản phẩm
-            const colorIndex =
-                allColors !== null &&
-                allColors !== undefined &&
-                Object.values(allColors)?.filter(color => color.color_id === colorId)
-
-            const newArrWithAddedColor = [...editObject.colors, { color_id: colorIndex[0].color_id }]
-
-            setEditObject(prevState => ({
-                ...prevState,
-                colors: [...newArrWithAddedColor],
-            }))
-        }
-    }
-
-    //Kiểm tra sku có nằm trong danh sách sku hay không
-    const ckSkuIds =
-        editObject.skus?.length &&
-        editObject.skus.map(item => {
-            if (item !== null) {
-                return item.sku_id
-            }
-        })
-    //Thêm/bớt dung lượng
-    const handleChangeSku = skuId => e => {
-        if (ckSkuIds?.includes(skuId)) {
-            //Xóa sku có sẳn trong sản phẩm
-            const newArrWithRemovedSku =
-                editObject.skus.length &&
-                editObject.skus.filter(e => {
-                    return e.sku_id !== skuId
-                })
-
-            setEditObject(prevState => ({
-                ...prevState,
-                skus: newArrWithRemovedSku,
-            }))
-        } else {
-            //Thêm sku vào bảng sản phẩm
-            const skuIndex =
-                allSkus !== null &&
-                allSkus !== undefined &&
-                Object.values(allSkus)?.filter(sku => {
-                    if (sku !== null && sku !== undefined) {
-                        return sku.sku_id === skuId
-                    }
-                })
-
-            const newArrWithAddedSku = [...editObject.skus, { sku_id: skuIndex[0].sku_id }]
-
-            setEditObject(prevState => ({
-                ...prevState,
-                skus: [...newArrWithAddedSku],
-            }))
-        }
     }
 
     //Kiểm tra video_id có nằm trong danh sách video_id hay không
@@ -703,74 +604,6 @@ const AdminProduct = props => {
                                                 </ul>
                                             </TableCell>
                                         </TableRow>
-                                        {ckColorIds ? (
-                                            <TableRow>
-                                                <TableCell className={classes.tbHeadLeft} variant='head'>
-                                                    Màu sắc
-                                                </TableCell>
-                                                <TableCell>
-                                                    {allColors !== null &&
-                                                        allColors !== undefined &&
-                                                        Object.values(allColors)?.map(
-                                                            (ckColor, idx) =>
-                                                                ckColor && (
-                                                                    <FormControlLabel
-                                                                        key={idx}
-                                                                        label={ckColor.color_name}
-                                                                        control={
-                                                                            <Checkbox
-                                                                                defaultChecked={ckColorIds?.includes(
-                                                                                    ckColor.color_id
-                                                                                )}
-                                                                                name='ckColor'
-                                                                                style={{
-                                                                                    color: `${ckColor.data_color}`,
-                                                                                }}
-                                                                                onChange={handleChangeColor(
-                                                                                    ckColor.color_id
-                                                                                )}
-                                                                            />
-                                                                        }
-                                                                    />
-                                                                )
-                                                        )}
-                                                </TableCell>
-                                            </TableRow>
-                                        ) : (
-                                            ''
-                                        )}
-                                        {ckSkuIds ? (
-                                            <TableRow>
-                                                <TableCell className={classes.tbHeadLeft} variant='head'>
-                                                    Dung lượng
-                                                </TableCell>
-                                                <TableCell>
-                                                    {allSkus !== null &&
-                                                        allSkus !== undefined &&
-                                                        Object.values(allSkus)?.map(
-                                                            (ckSku, idx) =>
-                                                                ckSku && (
-                                                                    <FormControlLabel
-                                                                        key={idx}
-                                                                        label={ckSku.memory}
-                                                                        control={
-                                                                            <Checkbox
-                                                                                defaultChecked={ckSkuIds?.includes(
-                                                                                    ckSku.sku_id
-                                                                                )}
-                                                                                name='ckSku'
-                                                                                color='primary'
-                                                                                onChange={handleChangeSku(ckSku.sku_id)}
-                                                                            />
-                                                                        }
-                                                                    />
-                                                                )
-                                                        )}
-                                                </TableCell>
-                                            </TableRow>
-                                        ) : (
-                                            ''
-                                        )}
                                         <TableRow>
                                             <TableCell className={classes.tbHeadLeft} variant='head'>
                                                 Giá sản phẩm
@@ -877,7 +710,7 @@ const AdminProduct = props => {
                                         )}
                                         <TableRow>
                                             <TableCell className={classes.tbHeadLeft} variant='head'>
-                                                FullBox ?
+                                                Mới ?
                                             </TableCell>
                                             <TableCell>
                                                 <FormControl>

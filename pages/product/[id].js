@@ -6,6 +6,7 @@ import { db } from './../../utils/firebase'
 
 import { faShield } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
@@ -14,21 +15,14 @@ import LayoutUser from '../../layouts/LayoutUser'
 import ProductRelated from './../../components/ProductRelated'
 import ProductSlide from './../../components/ProductSlide'
 import VideoReview from './../../components/VideoReview'
-import { getColors } from './../../store/actions/colors'
 import { getProductDetail } from './../../store/actions/productDetail'
 import { getPromotions } from './../../store/actions/promotions'
-import { getSkus } from './../../store/actions/skus'
 import { getVideo } from './../../store/actions/videos'
 import { getWarantys } from './../../store/actions/warantys'
-import Head from 'next/head'
 
 export default function ProductDetail(props) {
-    const [skus, setSkus] = useState({})
-    const [colors, setColors] = useState({})
     const [warantys, setWarantys] = useState({})
     const [videos, setVideos] = useState({})
-    const [skuInvalid, setSkuInvalid] = useState(false)
-    const [colorInvalid, setColorInvalid] = useState(false)
     const product = useSelector(state => state.product.data)
     const allPromotions = useSelector(state => state.promotions.data)
     const allWarantys = useSelector(state => state.warantys.data)
@@ -43,14 +37,6 @@ export default function ProductDetail(props) {
     }, [id])
 
     useEffect(() => {
-        dispatch(getSkus())
-    }, [])
-
-    useEffect(() => {
-        dispatch(getColors())
-    }, [])
-
-    useEffect(() => {
         dispatch(getVideo())
     }, [])
 
@@ -60,46 +46,6 @@ export default function ProductDetail(props) {
 
     useEffect(() => {
         dispatch(getPromotions())
-    }, [])
-
-    const [isSkuSelected, setIsSkuSelected] = useState('init')
-    const setSkuValue = newValue => {
-        setIsSkuSelected({ ...isSkuSelected, value: newValue })
-    }
-
-    const [isColorSelected, setIsColorSelected] = useState('init')
-    const setColorValue = newValue => {
-        setIsColorSelected({ ...isColorSelected, newValue })
-    }
-
-    // Lấy phiên bản từ bảng màu `product_sku`
-    useEffect(() => {
-        const skusRef = ref(db, `product_sku`)
-        onValue(skusRef, snapshot => {
-            if (snapshot.val() !== null) {
-                setSkus({ ...snapshot.val() })
-            } else {
-                setSkus({})
-            }
-        })
-        return () => {
-            setSkus({})
-        }
-    }, [id])
-
-    // Lấy màu từ bảng màu `product_color`
-    useEffect(() => {
-        const colorsRef = ref(db, `product_color`)
-        onValue(colorsRef, snapshot => {
-            if (snapshot.val() !== null) {
-                setColors({ ...snapshot.val() })
-            } else {
-                setColors({})
-            }
-        })
-        return () => {
-            setColors({})
-        }
     }, [])
 
     // Lấy waranty từ bảng `warantys`
@@ -132,32 +78,6 @@ export default function ProductDetail(props) {
         }
     }, [])
 
-    //Lọc màu sắc
-    let dataColor = []
-    if (product && Object(product.colors).length > 0) {
-        const productColor = product.colors
-        Object.values(colors).filter(el => {
-            return productColor?.some(f => {
-                if (f.color_id === el.color_id) {
-                    dataColor.push(el)
-                }
-            })
-        })
-    }
-
-    //Lọc phiên bản sử dụng arr2.some(arr1)
-    let dataSku = []
-    if (product && Object(product.skus).length > 0) {
-        const productSku = product.skus
-        Object.values(skus)?.filter(el => {
-            return productSku?.some(f => {
-                if (f.sku_id === el.sku_id) {
-                    dataSku.push(el)
-                }
-            })
-        })
-    }
-
     // Lọc bảo hành
     let dataWaranty = []
     if (product && Object(product.warantys).length > 0) {
@@ -186,16 +106,6 @@ export default function ProductDetail(props) {
         })
     }
 
-    const toggleClassSku = (index, skuId) => {
-        setIsSkuSelected(index)
-        setSkuSelected(skuId)
-    }
-
-    const toggleClassColor = (index, colorId) => {
-        setIsColorSelected(index)
-        setColorSelected(colorId)
-    }
-
     const getThumbnail = () => {
         let imgThumb = product.images
         const img = []
@@ -208,47 +118,19 @@ export default function ProductDetail(props) {
     }
 
     //Đi tới trang giỏ hàng
-    const [skuSelected, setSkuSelected] = useState({})
-    const [colorSelected, setColorSelected] = useState({})
     const gotoCheckout = e => {
         e.preventDefault()
-        if (
-            dataColor.length !== 0 &&
-            dataColor.length !== 0 &&
-            dataColor.length !== undefined &&
-            dataColor.length !== undefined
-        ) {
-            if (isSkuSelected !== 'init' && isColorSelected !== 'init') {
-                router.push({
-                    pathname: '/checkout',
-                    query: {
-                        productName: product.name ? product.name : '',
-                        productPrice: product.price ? product.price : '',
-                        productNewBox: product.newBox ? product.newBox : '',
-                        productFullBox: product.fullbox ? product.fullbox : '',
-                        productSku: skuSelected ? skuSelected : [],
-                        productPromotion: product.promotions ? product.promotions : [],
-                        productColor: colorSelected ? colorSelected : [],
-                        productImage: getThumbnail(),
-                    },
-                })
-            } else {
-                setSkuInvalid(true)
-                setColorInvalid(true)
-            }
-        } else {
-            router.push({
-                pathname: '/checkout',
-                query: {
-                    productName: product.name ? product.name : '',
-                    productPrice: product.price ? product.price : '',
-                    productNewBox: product.newBox ? product.newBox : '',
-                    productFullBox: product.fullbox ? product.fullbox : '',
-                    productPromotion: product.promotions ? product.promotions : [],
-                    productImage: getThumbnail(),
-                },
-            })
-        }
+        router.push({
+            pathname: '/checkout',
+            query: {
+                productName: product.name ? product.name : '',
+                productPrice: product.price ? product.price : '',
+                productNewBox: product.newBox ? product.newBox : '',
+                productFullBox: product.fullbox ? product.fullbox : '',
+                productPromotion: product.promotions ? product.promotions : [],
+                productImage: getThumbnail(),
+            },
+        })
     }
 
     const ckPromotionIds =
@@ -303,88 +185,6 @@ export default function ProductDetail(props) {
                                         <p className='product-detail__free-ship'>
                                             <span>Miễn phí vận chuyển toàn quốc</span>
                                         </p>
-                                        <div className='product-detail__color'>
-                                            <div className='option__title'>
-                                                {dataColor.length > 0 && (
-                                                    <strong className='option__title'>
-                                                        Lựa chọn màu
-                                                        {colorInvalid && (
-                                                            <span className={colorInvalid ? 'option__highlight' : ''}>
-                                                                {' '}
-                                                                ( vui lòng chọn màu ! )
-                                                            </span>
-                                                        )}
-                                                    </strong>
-                                                )}
-                                                <ul className='color'>
-                                                    {dataColor?.map((colorId, idx) => {
-                                                        return (
-                                                            <li
-                                                                key={idx}
-                                                                className={`color__item ${
-                                                                    isColorSelected === idx ? 'selected' : ''
-                                                                }`}
-                                                                data-sku='IPN1164W'
-                                                                data-id='22'
-                                                                data-bestprice='12,990,000 ₫'
-                                                                data-lastprice='21,990,000 ₫'
-                                                                data-color='#fffc17'
-                                                            >
-                                                                <span
-                                                                    className='color__option'
-                                                                    style={{ backgroundColor: `${colorId.data_color}` }}
-                                                                    onClick={() =>
-                                                                        toggleClassColor(idx, colorId.data_color)
-                                                                    }
-                                                                >
-                                                                    <span className='blind'>{colorId.data_color}</span>
-                                                                </span>
-                                                            </li>
-                                                        )
-                                                    })}
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div className='product-detail__version'>
-                                            <div className='option'>
-                                                {dataSku.length > 0 && (
-                                                    <strong className='option__title'>
-                                                        Lựa chọn dung lượng
-                                                        {skuInvalid && (
-                                                            <span className={skuInvalid ? 'option__highlight' : ''}>
-                                                                {' '}
-                                                                ( vui lòng chọn dung lượng ! )
-                                                            </span>
-                                                        )}
-                                                    </strong>
-                                                )}
-                                                <ul className='option__list'>
-                                                    {dataSku?.map((skuId, idx) => {
-                                                        return (
-                                                            <li
-                                                                className={`option__item ${
-                                                                    isSkuSelected === idx ? 'selected' : ''
-                                                                }`}
-                                                                data-sku={skuId.data_sku}
-                                                                key={idx}
-                                                            >
-                                                                <div className='option__wrap'>
-                                                                    <label className='option__label'>
-                                                                        <strong
-                                                                            onClick={() =>
-                                                                                toggleClassSku(idx, skuId.memory)
-                                                                            }
-                                                                        >
-                                                                            {skuId.memory}
-                                                                        </strong>
-                                                                    </label>
-                                                                </div>
-                                                            </li>
-                                                        )
-                                                    })}
-                                                </ul>
-                                            </div>
-                                        </div>
                                         {ckPromotionIds ? (
                                             <div className='product-detail__promotion'>
                                                 <strong>KHUYẾN MÃI</strong>
