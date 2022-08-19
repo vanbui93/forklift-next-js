@@ -1,8 +1,8 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
-import { useDispatch, useSelector } from 'react-redux'
-import numberWithCommas from './../../utils/numberWithComas'
+import { useSelector } from 'react-redux'
+import { numberInputFormat } from '../../utils/numberInputFormat'
 
 export default function ProductItem(props) {
     const { id, name, price, comparePrice, images } = props
@@ -46,11 +46,11 @@ export default function ProductItem(props) {
                         </SkeletonTheme>
                         <p className='collections__price' style={{ display: loading ? 'none' : undefined }}>
                             <strong className='collections__new-price'>
-                                {price ? `${numberWithCommas(price)} đ` : `Liên hệ: ${mainData?.phone}`}
+                                {price ? `${numberInputFormat(price.toString())} đ` : `Liên hệ: ${mainData?.phone}`}
                             </strong>
                             {price && comparePrice && (
                                 <strike className='collections__compare-price'>
-                                    {numberWithCommas(comparePrice)} đ
+                                    {numberInputFormat(comparePrice.toString())} đ
                                 </strike>
                             )}
                         </p>

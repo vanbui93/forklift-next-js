@@ -342,7 +342,6 @@ const AdminProduct = props => {
                                         <StyledTableCell align='left'>Nhóm sản phẩm</StyledTableCell>
                                         <StyledTableCell align='left'>FullBox</StyledTableCell>
                                         <StyledTableCell align='left'>Giá</StyledTableCell>
-                                        <StyledTableCell align='left'>New</StyledTableCell>
                                         <StyledTableCell align='left'>Ngày tạo</StyledTableCell>
                                         <StyledTableCell align='left'>Ngày cập nhật</StyledTableCell>
                                         <StyledTableCell align='left'>Tình trạng</StyledTableCell>

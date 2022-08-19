@@ -1,12 +1,12 @@
 import { ref, set } from 'firebase/database'
-import methods from 'validator'
-import { db } from '../../utils/firebase'
+import Head from 'next/head'
+import Link from 'next/link'
 import { useRouter, withRouter } from 'next/router'
 import { useState } from 'react'
-import numberWithCommas from '../../utils/numberWithComas'
-import Link from 'next/link'
+import methods from 'validator'
 import LayoutUser from '../../layouts/LayoutUser'
-import Head from 'next/head'
+import { db } from '../../utils/firebase'
+import { numberInputFormat } from '../../utils/numberInputFormat'
 
 function Checkout(props) {
     const state = props.router.query
@@ -231,7 +231,7 @@ function Checkout(props) {
                                                 <span className='checkout__product-title'>Tạm tính</span>
                                                 <span>
                                                     {state.productPrice
-                                                        ? `${numberWithCommas(state.productPrice)} đ`
+                                                        ? `${numberInputFormat(state.productPrice.toString())} đ`
                                                         : 'Liên hệ'}
                                                 </span>
                                             </div>

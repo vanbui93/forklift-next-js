@@ -19,7 +19,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
 import SearchIcon from '@mui/icons-material/Search'
-import { Checkbox, FormControlLabel, IconButton, InputBase, Stack, TextField } from '@mui/material'
+import { IconButton, InputBase, Stack, TextField } from '@mui/material'
 import Paper from '@mui/material/Paper'
 import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -29,7 +29,6 @@ import DiaLogPopup from './../../../admin_components/DiaLogPopup'
 import PaginationButtons from './../../../admin_components/Pagination'
 import { deleteOrder, getOrder, updateOrder } from './../../../store/actions/order'
 import { numberInputFormat } from './../../../utils/numberInputFormat'
-import numberWithCommas from './../../../utils/numberWithComas'
 import styles from './styles'
 
 const AdminOrder = props => {
@@ -75,7 +74,6 @@ const AdminOrder = props => {
         product_name: '',
         product_price: '',
         product_sku: '',
-        product_color: '',
         product_fullbox: '',
     })
 
@@ -89,8 +87,6 @@ const AdminOrder = props => {
                 const productImg = orders[key].product_image ? orders[key].product_image : ''
                 const productPrice = orders[key].product_price ? orders[key].product_price : ''
                 const productFullBox = orders[key].product_fullbox ? orders[key].product_fullbox : ''
-                const productColor = orders[key].color_id ? orders[key].color_id : ''
-                const productType = orders[key].product_sku ? orders[key].product_sku : ''
                 const name = orders[key].customer_name ? orders[key].customer_name : ''
                 const phone = orders[key].customer_phone ? orders[key].customer_phone : ''
                 const email = orders[key].customer_email ? orders[key].customer_email : ''
@@ -104,8 +100,6 @@ const AdminOrder = props => {
                     img: productImg,
                     price: productPrice,
                     fullbox: productFullBox,
-                    color: productColor,
-                    type: productType,
                     cusName: name,
                     phone: phone,
                     email: email,
@@ -212,8 +206,6 @@ const AdminOrder = props => {
             customer_notes: order.notes ? order.notes : '',
             product_name: order.name ? order.name : '',
             product_price: order.price ? order.price : '',
-            product_sku: order.type ? order.type : '',
-            product_color: order.color,
             product_fullbox: order.fullbox,
         })
     }
@@ -296,8 +288,6 @@ const AdminOrder = props => {
                                         <StyledTableCell>TÊN SẢN PHẨM</StyledTableCell>
                                         <StyledTableCell align='left'>HÌNH SẢN PHẨM</StyledTableCell>
                                         <StyledTableCell align='left'>GIÁ</StyledTableCell>
-                                        <StyledTableCell align='left'>MÀU SẮC</StyledTableCell>
-                                        <StyledTableCell align='left'>LOẠI</StyledTableCell>
                                         <StyledTableCell align='left'>TÊN KHÁCH HÀNG</StyledTableCell>
                                         <StyledTableCell align='left'>Điện thoại</StyledTableCell>
                                         <StyledTableCell align='left'>Địa chỉ</StyledTableCell>
@@ -323,16 +313,9 @@ const AdminOrder = props => {
                                                         </StyledTableCell>
                                                         <StyledTableCell>
                                                             {order.price
-                                                                ? `${numberWithCommas(order.price)} đ`
+                                                                ? `${numberInputFormat(order.price.toString())} đ`
                                                                 : 'Liên hệ'}
                                                         </StyledTableCell>
-                                                        <StyledTableCell>
-                                                            <span
-                                                                className={classes.pColor}
-                                                                style={{ backgroundColor: `${order.color}` }}
-                                                            ></span>
-                                                        </StyledTableCell>
-                                                        <StyledTableCell>{order.type}</StyledTableCell>
                                                         <StyledTableCell>{order.cusName}</StyledTableCell>
                                                         <StyledTableCell>{order.phone}</StyledTableCell>
                                                         <StyledTableCell>{`${order.address}, ${order.city}`}</StyledTableCell>

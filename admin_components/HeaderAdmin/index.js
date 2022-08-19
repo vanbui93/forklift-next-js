@@ -11,97 +11,106 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import PropTypes from 'prop-types'
 import * as React from 'react'
+import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import styles from './styles'
 
 function HeaderAdmin(props) {
-  const [auth, setAuth] = React.useState(true)
-  const [anchorEl, setAnchorEl] = React.useState(null)
+    const [auth, setAuth] = React.useState(true)
+    const [anchorEl, setAnchorEl] = React.useState(null)
 
-  const router = useRouter()
+    const router = useRouter()
 
-  const { openSidebar, onToggleSidebar } = props
+    const { openSidebar, onToggleSidebar } = props
 
-  const handleToggleSidebar = () => {
-    if (onToggleSidebar) {
-      onToggleSidebar(!openSidebar)
+    const handleToggleSidebar = () => {
+        if (onToggleSidebar) {
+            onToggleSidebar(!openSidebar)
+        }
     }
-  }
-  const handleLogout = e => {
-    setAnchorEl(null)
-    e.preventDefault()
-    router.push('/admin')
-    sessionStorage.clear('user')
-  }
+    const handleLogout = e => {
+        setAnchorEl(null)
+        e.preventDefault()
+        router.push('/admin')
+        sessionStorage.clear('user')
+    }
 
-  const handleProfileMenuOpen = e => {
-    setAnchorEl(e.currentTarget)
-  }
+    const handleProfileMenuOpen = e => {
+        setAnchorEl(e.currentTarget)
+    }
 
-  const { classes, name } = props
-  return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar>
-        {auth && (
-          <Toolbar>
-            <IconButton
-              edge='start'
-              className={classes.menuButton}
-              color='inherit'
-              aria-label='Open drawer'
-              onClick={handleToggleSidebar}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant='h6' noWrap>
-              <Link href={'/dashboard/main'}>
-                <a className={classes.title}>Admin</a>
-              </Link>
-            </Typography>
-            <div className={classes.grow} />
-            <div className={classes.sectionDesktop}>
-              <IconButton
-                color='inherit'
-                aria-label='open drawer'
-                onClick={handleProfileMenuOpen}
-                edge='start'
-                sx={{
-                  marginRight: 5,
-                  ...(openSidebar && { display: 'none' }),
-                }}
-              >
-                <AccountCircle />
-              </IconButton>
-              <Menu
-                id='menu-appbar'
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorEl)}
-                onClose={handleLogout}
-              >
-                <MenuItem onClick={handleLogout}>Đăng xuất</MenuItem>
-              </Menu>
-            </div>
-          </Toolbar>
-        )}
-      </AppBar>
-    </Box>
-  )
+    const { classes, name } = props
+    return (
+        <Box sx={{ flexGrow: 1 }}>
+            <AppBar>
+                {auth && (
+                    <Toolbar>
+                        <IconButton
+                            edge='start'
+                            className={classes.menuButton}
+                            color='inherit'
+                            aria-label='Open drawer'
+                            onClick={handleToggleSidebar}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                        <Typography variant='h6' noWrap>
+                            <Link href={'/dashboard/main'}>
+                                <a className={classes.title}>Admin</a>
+                            </Link>
+                        </Typography>
+                        <Typography variant='h6' noWrap className={classes.viewWebsite}>
+                            <Link href={'/'}>
+                                <a target='_blank'>
+                                    Xem Website
+                                    <OpenInNewIcon />
+                                </a>
+                            </Link>
+                        </Typography>
+                        <div className={classes.grow} />
+                        <div className={classes.sectionDesktop}>
+                            <IconButton
+                                color='inherit'
+                                aria-label='open drawer'
+                                onClick={handleProfileMenuOpen}
+                                edge='start'
+                                sx={{
+                                    marginRight: 5,
+                                    ...(openSidebar && { display: 'none' }),
+                                }}
+                            >
+                                <AccountCircle />
+                            </IconButton>
+                            <Menu
+                                id='menu-appbar'
+                                anchorEl={anchorEl}
+                                anchorOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                open={Boolean(anchorEl)}
+                                onClose={handleLogout}
+                            >
+                                <MenuItem onClick={handleLogout}>Đăng xuất</MenuItem>
+                            </Menu>
+                        </div>
+                    </Toolbar>
+                )}
+            </AppBar>
+        </Box>
+    )
 }
 
 HeaderAdmin.propTypes = {
-  classes: PropTypes.object,
-  name: PropTypes.string,
-  openSidebar: PropTypes.bool,
-  onToggleSidebar: PropTypes.func,
-  history: PropTypes.object,
+    classes: PropTypes.object,
+    name: PropTypes.string,
+    openSidebar: PropTypes.bool,
+    onToggleSidebar: PropTypes.func,
+    history: PropTypes.object,
 }
 
 export default dynamic(() => Promise.resolve(withStyles(styles)(HeaderAdmin)), { ssr: false })

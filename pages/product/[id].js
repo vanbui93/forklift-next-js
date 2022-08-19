@@ -1,6 +1,5 @@
 import { onValue, ref } from 'firebase/database'
 import { useEffect, useState } from 'react'
-import numberWithCommas from '../../utils/numberWithComas'
 import { db } from './../../utils/firebase'
 
 import Head from 'next/head'
@@ -8,6 +7,7 @@ import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 import BreadCrumb from '../../components/BreadCrumb'
 import LayoutUser from '../../layouts/LayoutUser'
+import { numberInputFormat } from '../../utils/numberInputFormat'
 import ProductRelated from './../../components/ProductRelated'
 import ProductSlide from './../../components/ProductSlide'
 import VideoReview from './../../components/VideoReview'
@@ -108,7 +108,7 @@ export default function ProductDetail(props) {
                                         <div className='product-detail__current-price'>
                                             <strong>
                                                 {product.price
-                                                    ? `${numberWithCommas(product.price)} đ`
+                                                    ? `${numberInputFormat(product.price.toString())} đ`
                                                     : `Liên hệ : ${mainData?.phone ? mainData?.phone : ''}`}
                                             </strong>
                                             &nbsp;&nbsp; | <i>Giá đã bao gồm 10% VAT</i>

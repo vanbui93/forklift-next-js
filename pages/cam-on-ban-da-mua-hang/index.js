@@ -2,7 +2,7 @@ import Head from 'next/head'
 import { withRouter } from 'next/router'
 import React from 'react'
 import LayoutUser from '../../layouts/LayoutUser'
-import numberWithCommas from '../../utils/numberWithComas'
+import { numberInputFormat } from '../../utils/numberInputFormat'
 
 function ThankYou(props) {
     const state = props.router.query
@@ -72,7 +72,9 @@ function ThankYou(props) {
                             <div className='thankyou__product-color'>
                                 <span className='thankyou__product-title'>Giá tiền</span>
                                 <span className='thankyou__product-content text-red'>
-                                    {state.product_price ? `${numberWithCommas(state.product_price)} đ` : 'Liên hệ'}
+                                    {state.product_price
+                                        ? `${numberInputFormat(state.product_price.toString())} đ`
+                                        : 'Liên hệ'}
                                 </span>
                             </div>
                         </div>
