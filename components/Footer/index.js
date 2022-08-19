@@ -1,19 +1,42 @@
+import { ref } from '@firebase/database'
 import { faPhone } from '@fortawesome/free-solid-svg-icons'
-import FacebookIcon from '@mui/icons-material/Facebook'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, Grid } from '@material-ui/core'
+import FacebookIcon from '@mui/icons-material/Facebook'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+import methods from 'validator'
+
 export default function Footer(props) {
     const { footerData } = props
     const [loading, setLoading] = useState(true)
+
+    const rules = [
+        {
+            field: 'contact_email',
+            method: 'isEmpty',
+            validWhen: false,
+            message: 'This field is required',
+        },
+        {
+            field: 'contact_message',
+            method: 'isEmpty',
+            validWhen: false,
+            message: 'This field is required',
+        },
+    ]
 
     useEffect(() => {
         if (Object.keys(footerData)?.length > 0) {
             setLoading(false)
         }
     }, [footerData])
+
+    const [contactData, setContactData] = useState({
+        id: '',
+        contact_email: '',
+        contact_message: '',
+    })
 
     const [errorsMessage, setErrorsMessage] = useState({
         contact_email: '',
@@ -29,8 +52,8 @@ export default function Footer(props) {
     const handleOnChange = e => {
         let name = e.target.name
         let value = e.target.value
-        setOrderData({
-            ...orderData,
+        setContactData({
+            ...contactData,
             [name]: value,
         })
 
@@ -45,7 +68,46 @@ export default function Footer(props) {
         })
     }
 
-    const handleSubmitContact = () => {}
+    let isValid = true
+    const valiErrors = () => {
+        rules.forEach(rule => {
+            if (errorsMessage[rule.field]) return
+
+            const fieldVal = fieldValue[rule.field] || ''
+            const args = rule.args || []
+            const validationMethod = typeof rule.method === 'string' ? methods[rule.method] : rule.method
+
+            if (validationMethod(fieldVal, ...args) !== rule.validWhen) {
+                isValid = false
+                errorsMessage[rule.field] = rule.message
+
+                setErrorsMessage({
+                    ...errorsMessage,
+                    [rule.field]: rule.message,
+                })
+            }
+        })
+        return errorsMessage
+    }
+
+    const handleSubmitContact = e => {
+        e.preventDefault()
+
+        if (valiErrors().contact_email === '' && valiErrors().contact_message === '') {
+            // thêm dữ liệu vào firebase
+            set(ref(db, 'contact/' + key), {
+                product_image: state.contact_email ? state.contact_email : '',
+                product_name: state.contact_message ? state.contact_message : '',
+                create_date: new Date().toString().replace(/GMT.*/g, ''),
+            })
+        } else {
+            setErrorsMessage({
+                ...valiErrors(),
+            })
+        }
+    }
+
+    const handleOpenModalContact = () => {}
 
     return (
         <footer className='footer'>
@@ -74,7 +136,15 @@ export default function Footer(props) {
                                     </Grid>
                                     <Grid item md={3} xs={12}>
                                         <div className='footer__contact-sale-team'>
-                                            <span>Contact Sales Team</span>
+                                            <Button
+                                                variant='contained'
+                                                onClick={handleOpenModalContact}
+                                                style={{
+                                                    background: '#fff',
+                                                }}
+                                            >
+                                                Contact Sales Team
+                                            </Button>
                                         </div>
                                     </Grid>
                                 </Grid>
@@ -84,9 +154,13 @@ export default function Footer(props) {
                     <div className='footer__content'>
                         <div className='container'>
                             <Grid container spacing={2} style={{ display: 'flex' }}>
-                                <Grid item md={4}>
+                                <Grid item md={4} xs={12}>
                                     <h2 className='footer__content-logo'>
-                                        <img src='../../assets/img/logo_footer.png' alt='' />
+                                        <Link href='/'>
+                                            <a>
+                                                <img src='../../assets/img/logo_footer.png' alt='' />
+                                            </a>
+                                        </Link>
                                     </h2>
                                     <p className='footer__content-address'>
                                         <strong>Address</strong>: No.369 Changhong Road, Yaoguan Town , Wujin District ,
@@ -100,7 +174,7 @@ export default function Footer(props) {
                                         </Link>
                                     </div>
                                 </Grid>
-                                <Grid item md={2}>
+                                <Grid item md={2} xs={12}>
                                     <h3>QUICK LINKS</h3>
                                     <ul className='footer__link_01'>
                                         <li className='footer__link-item'>
@@ -125,7 +199,7 @@ export default function Footer(props) {
                                         </li>
                                     </ul>
                                 </Grid>
-                                <Grid item md={2}>
+                                <Grid item md={2} xs={12}>
                                     <h3>Products</h3>
                                     <ul className='footer__link_01'>
                                         <li className='footer__link-item'>
@@ -150,7 +224,7 @@ export default function Footer(props) {
                                         </li>
                                     </ul>
                                 </Grid>
-                                <Grid item md={4}>
+                                <Grid item md={4} xs={12}>
                                     <h3>CONTACT US TODAY</h3>
                                     <form action='/'>
                                         <div>
@@ -158,13 +232,13 @@ export default function Footer(props) {
                                                 <input
                                                     type='text'
                                                     name='contact_email'
-                                                    className='customer__input'
+                                                    className='footer__contact-input'
                                                     required
                                                     onChange={e => handleOnChange(e)}
                                                 />
                                             </span>
-                                            {errorsMessage.customer_name && (
-                                                <div className='validation'>{errorsMessage.customer_name}</div>
+                                            {errorsMessage.contact_email && (
+                                                <div className='errormessage'>{errorsMessage.contact_email}</div>
                                             )}
                                         </div>
                                         <div>
@@ -172,13 +246,24 @@ export default function Footer(props) {
                                                 <textarea
                                                     type='text'
                                                     name='contact_message'
-                                                    className='customer__input'
+                                                    className='footer__contact-input footer__contact-text-area'
                                                     required
                                                     onChange={e => handleOnChange(e)}
                                                 />
                                             </span>
+                                            {errorsMessage.contact_message && (
+                                                <div className='errormessage'>{errorsMessage.contact_message}</div>
+                                            )}
                                         </div>
-                                        <Button variant='contained' onClick={handleSubmitContact}>
+                                        <Button
+                                            variant='contained'
+                                            onClick={handleSubmitContact}
+                                            style={{
+                                                color: '#fff',
+                                                backgroundColor: '#ec971f',
+                                                borderColor: '#d58512',
+                                            }}
+                                        >
                                             Submit
                                         </Button>
                                     </form>
@@ -186,195 +271,15 @@ export default function Footer(props) {
                             </Grid>
                         </div>
                     </div>
-                    {/* <div className='container'>
-                        {footerData && (
-                            <div className='footer__inner'>
-                                <div className='footer__col'>
-                                    <SkeletonTheme baseColor='#ccc' highlightColor='#fff' borderRadius='0.5rem'>
-                                        {loading && (
-                                            <Skeleton
-                                                width={250}
-                                                height={22}
-                                                style={{ marginRight: '20px' }}
-                                                containerClassName='avatar-skeleton'
-                                            />
-                                        )}
-                                    </SkeletonTheme>
-                                    <h3 style={{ display: loading ? 'none' : undefined }}>
-                                        {footerData.footer_title?.footer_title_01}
-                                    </h3>
-                                    <SkeletonTheme baseColor='#ccc' highlightColor='#fff' borderRadius='0.5rem'>
-                                        {loading && (
-                                            <Skeleton
-                                                width={250}
-                                                height={16}
-                                                style={{ marginRight: '20px' }}
-                                                containerClassName='avatar-skeleton'
-                                                count={4}
-                                            />
-                                        )}
-                                    </SkeletonTheme>
-                                    <ul className='footer__list' style={{ display: loading ? 'none' : undefined }}>
-                                        <li className='footer__item'>
-                                            <Link href={`/page/${footerData.footer_sub?.link_01}`}>
-                                                <a>{footerData.footer_sub?.text_01}</a>
-                                            </Link>
-                                        </li>
-                                        <li className='footer__item'>
-                                            <Link href={`/page/${footerData.footer_sub?.link_02}`}>
-                                                <a>{footerData.footer_sub?.text_02}</a>
-                                            </Link>
-                                        </li>
-                                        <li className='footer__item'>
-                                            <Link href={`/page/${footerData.footer_sub?.link_03}`}>
-                                                <a>{footerData.footer_sub?.text_03}</a>
-                                            </Link>
-                                        </li>
-                                        <li className='footer__item'>
-                                            <Link href={`/page/${footerData.footer_sub?.link_04}`}>
-                                                <a>{footerData.footer_sub?.text_04}</a>
-                                            </Link>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div className='footer__col'>
-                                    <SkeletonTheme baseColor='#ccc' highlightColor='#fff' borderRadius='0.5rem'>
-                                        {loading && (
-                                            <Skeleton
-                                                width={250}
-                                                height={22}
-                                                style={{ marginRight: '20px' }}
-                                                containerClassName='avatar-skeleton'
-                                            />
-                                        )}
-                                    </SkeletonTheme>
-                                    <h3 style={{ display: loading ? 'none' : undefined }}>
-                                        {footerData.footer_title?.footer_title_02}
-                                    </h3>
-                                    <SkeletonTheme baseColor='#ccc' highlightColor='#fff' borderRadius='0.5rem'>
-                                        {loading && (
-                                            <Skeleton
-                                                width={250}
-                                                height={16}
-                                                style={{ marginRight: '20px' }}
-                                                containerClassName='avatar-skeleton'
-                                                count={2}
-                                            />
-                                        )}
-                                    </SkeletonTheme>
-                                    <ul className='footer__list' style={{ display: loading ? 'none' : undefined }}>
-                                        <li className='footer__item'>
-                                            <a href={`tel: ${footerData?.phone}`}>
-                                                <span>Hotline</span>: {footerData?.phone}
-                                            </a>
-                                        </li>
-                                        <li className='footer__item'>
-                                            <span>Địa chỉ :</span> {footerData?.address}
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div className='footer__col payment'>
-                                    <SkeletonTheme baseColor='#ccc' highlightColor='#fff' borderRadius='0.5rem'>
-                                        {loading && (
-                                            <Skeleton
-                                                width={250}
-                                                height={22}
-                                                style={{ marginRight: '20px' }}
-                                                containerClassName='avatar-skeleton'
-                                            />
-                                        )}
-                                    </SkeletonTheme>
-                                    <h3 style={{ display: loading ? 'none' : undefined }}>
-                                        {footerData.footer_title?.footer_title_03}
-                                    </h3>
-                                    <SkeletonTheme baseColor='#ccc' highlightColor='#fff' borderRadius='0.5rem'>
-                                        {loading && (
-                                            <Skeleton
-                                                width={250}
-                                                height={16}
-                                                style={{ marginRight: '20px' }}
-                                                containerClassName='avatar-skeleton'
-                                                count={3}
-                                            />
-                                        )}
-                                    </SkeletonTheme>
-                                    <ul className='payment__logo' style={{ display: loading ? 'none' : undefined }}>
-                                        <li className='payment__item'>
-                                            <img src={'/assets/img/logo-visa.png'} />
-                                            <img src={'../assets/img/logo-master.png'} />
-                                        </li>
-                                        <li className='payment__item'>
-                                            <img src={'/assets/img/logo-jcb.png'} />
-                                            <img src={'/assets/img/logo-samsungpay.png'} />
-                                        </li>
-                                        <li className='payment__item'>
-                                            <img src={'/assets/img/logo-atm.png'} />
-                                            <img src={'/assets/img/logo-vnpay.png'} />
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div className='footer__col transfer'>
-                                    <SkeletonTheme baseColor='#ccc' highlightColor='#fff' borderRadius='0.5rem'>
-                                        {loading && (
-                                            <Skeleton
-                                                width={250}
-                                                height={22}
-                                                style={{ marginRight: '20px' }}
-                                                containerClassName='avatar-skeleton'
-                                            />
-                                        )}
-                                    </SkeletonTheme>
-                                    <h3 style={{ display: loading ? 'none' : undefined }}>
-                                        {footerData.footer_title?.footer_title_04}
-                                    </h3>
-                                    <ul className='transfer__list'>
-                                        <SkeletonTheme baseColor='#ccc' highlightColor='#fff' borderRadius='0.5rem'>
-                                            {loading && (
-                                                <Skeleton
-                                                    width={77}
-                                                    height={38}
-                                                    style={{ marginRight: '3px' }}
-                                                    containerClassName='avatar-skeleton'
-                                                />
-                                            )}
-                                        </SkeletonTheme>
-                                        <li
-                                            className='transfer__item'
-                                            style={{ display: loading ? 'none' : undefined }}
-                                        >
-                                            <img src={'/assets/img/nhattin.jpg'} />
-                                        </li>
-                                        <SkeletonTheme baseColor='#ccc' highlightColor='#fff' borderRadius='0.5rem'>
-                                            {loading && (
-                                                <Skeleton width={77} height={38} containerClassName='avatar-skeleton' />
-                                            )}
-                                        </SkeletonTheme>
-                                        <li
-                                            className='transfer__item'
-                                            style={{ display: loading ? 'none' : undefined }}
-                                        >
-                                            <img src={'/assets/img/vnpost.jpg'} />
-                                        </li>
-                                    </ul>
-                                    <SkeletonTheme baseColor='#ccc' highlightColor='#fff' borderRadius='0.5rem'>
-                                        {loading && (
-                                            <Skeleton
-                                                width={160}
-                                                height={61}
-                                                style={{ marginRight: '20px' }}
-                                                containerClassName='avatar-skeleton'
-                                            />
-                                        )}
-                                    </SkeletonTheme>
-                                    <div className='notice-ministry' style={{ display: loading ? 'none' : undefined }}>
-                                        <Link href='/' target='_blank'>
-                                            <img src={'/assets/img/logo-bct.png'} />
-                                        </Link>
-                                    </div>
-                                </div>
+                    <div className='footer__copy-right'>
+                        <div className='container'>
+                            <div className='copyright'>
+                                <p>
+                                    Copyright © 2022 <span>Van Bui vancntt35b@gmail.com</span>. All rights reserved.
+                                </p>
                             </div>
-                        )}
-                    </div> */}
+                        </div>
+                    </div>
                 </div>
             </div>
         </footer>

@@ -8,7 +8,7 @@
     }
 
     &__contact {
-        background: url('../../../public//assets/img/footer_bg.png') no-repeat scroll left top;
+        background: url('../../img/footer_bg.png') no-repeat scroll left top;
         background-size: cover;
         border-left: 0 solid #000;
         border-right: 0 solid #000;
@@ -55,18 +55,26 @@
     &__contact-sale-team {
         padding: 15px 20px 10px;
 
-        >span {
+        span {
             display: block;
             width: max-content;
-            background-color: #fff;
             border-radius: 5px;
             color: #333;
-            padding: 10px;
+            text-transform: capitalize;
         }
     }
 
     &__content {
         margin-top: 20px;
+
+        h3 {
+            font-size: 16px;
+            color: #233859;
+            font-weight: bold;
+            letter-spacing: 0;
+            line-height: 1.8em;
+            text-align: left;
+        }
     }
 
     &__content-logo {
@@ -77,8 +85,84 @@
         font-size: 14px;
         margin-bottom: 20px;
     }
-}
 
+    &__contact-input {
+        width: 100%;
+        font-family: Arial;
+        font-size: 14px;
+        color: #545454;
+        letter-spacing: 0;
+        line-height: 1.7em;
+        text-align: left;
+        background-color: rgb(243, 243, 243);
+        color: rgb(0, 0, 0);
+        border: 1px solid #ccc;
+        box-shadow: 1px 1px 2px rgb(0 0 0 / 10%) inset;
+
+    }
+
+    &__contact-text-area {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        resize: vertical;
+    }
+
+    .errormessage {
+        color: red;
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    &__link-item {
+        >a {
+            position: relative;
+            font-family: Arial;
+            font-size: 14px;
+            color: #545454;
+            letter-spacing: 0;
+            line-height: 1.7em;
+            text-align: left;
+
+            &:before {
+                display: block;
+                content: '';
+                position: absolute;
+                left: -10px;
+                top: 50%;
+                transform: translateY(-50%);
+                background-image: url('./../../icon/arrow.png');
+                width: 4px;
+                height: 7px;
+            }
+
+            &:hover {
+                text-decoration: underline;
+                color: #f5b00e;
+            }
+        }
+    }
+
+    &__copy-right {
+        background-color: #1c304e;
+        border-left: 0 solid #000;
+        border-right: 0 solid #000;
+        border-top: 0 solid #000;
+        border-bottom: 0 solid #000;
+    }
+
+    .copyright {
+        padding: 10px 0;
+
+        p {
+            font-size: 12px;
+            color: #eee;
+
+            span {
+                color: #E3B20D;
+            }
+        }
+    }
+}
 
 @media screen and (max-width: 1023px) {
     .footer {
