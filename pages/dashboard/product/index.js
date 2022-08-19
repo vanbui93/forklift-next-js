@@ -29,9 +29,7 @@ import DiaLogPopup from '../../../admin_components/DiaLogPopup'
 import PaginationButtons from '../../../admin_components/Pagination'
 import LayoutAdmin from '../../../layouts/LayoutAdmin'
 import { deleteProduct, getProduct, updateImgProduct, updateProduct } from '../../../store/actions/products'
-import { getPromotions } from '../../../store/actions/promotions'
 import { getVideo } from '../../../store/actions/videos'
-import { getWarantys } from '../../../store/actions/warantys'
 import { numberInputFormat } from '../../../utils/numberInputFormat'
 import { AdminStyle, StyledTableCell, StyledTableRow } from './../../../admin_components/AdminStyle'
 import styles from './styles'
@@ -40,8 +38,6 @@ const AdminProduct = props => {
     const opensidebar = useSelector(state => state.ui.opensidebar)
     const products = useSelector(state => state.products.data)
     const allVideos = useSelector(state => state.videos.data)
-    const allWarantys = useSelector(state => state.warantys.data)
-    const allPromotions = useSelector(state => state.promotions.data)
     const { classes } = props
     let router = useRouter()
 
@@ -61,14 +57,6 @@ const AdminProduct = props => {
         dispatch(getVideo())
     }, [])
 
-    useEffect(() => {
-        dispatch(getWarantys())
-    }, [])
-
-    useEffect(() => {
-        dispatch(getPromotions())
-    }, [])
-
     const [isEdit, setIsEdit] = useState(false)
     const [editObject, setEditObject] = useState({
         name: '',
@@ -78,8 +66,6 @@ const AdminProduct = props => {
         newBox: '',
         fullbox: '',
         videos: [],
-        warantys: [],
-        promotions: [],
         update_date: '',
         isDisplay: '1',
     })
@@ -102,8 +88,6 @@ const AdminProduct = props => {
                 const compare_price = products[key].compare_price ? products[key].compare_price : ''
                 const newBox = products[key].newBox ? products[key].newBox : ''
                 const fullbox = products[key].fullbox ? products[key].fullbox : ''
-                const promotions = products[key].promotions ? products[key].promotions : []
-                const warantys = products[key].warantys ? products[key].warantys : []
                 const videos = products[key].videos ? products[key].videos : []
                 const createDate = products[key].create_date ? products[key].create_date : ''
                 const updateDate = products[key].update_date ? products[key].update_date : ''
@@ -117,8 +101,6 @@ const AdminProduct = props => {
                     compare_price: compare_price,
                     newBox: newBox,
                     fullbox: fullbox,
-                    promotions: promotions,
-                    warantys: warantys,
                     videos: videos,
                     create_date: createDate,
                     update_date: updateDate,
@@ -280,93 +262,6 @@ const AdminProduct = props => {
             setEditObject(prevState => ({
                 ...prevState,
                 videos: [...newArrWithAddedVideo],
-            }))
-        }
-    }
-
-    //Kiểm tra waranty_id có nằm trong danh sách waranty_id hay không
-    const ckWarantyIds =
-        editObject.warantys?.length &&
-        editObject.warantys.map(item => {
-            if (item !== null) {
-                return item.waranty_id
-            }
-        })
-    //Thêm/bớt waranty
-    const handleChangeWaranty = warantyId => e => {
-        if (ckWarantyIds?.includes(warantyId)) {
-            //Xóa waranty có sẳn trong sản phẩm
-            const newArrWithRemovedWaranty =
-                editObject.warantys.length &&
-                editObject.warantys?.filter(e => {
-                    return e.waranty_id !== warantyId
-                })
-
-            setEditObject(prevState => ({
-                ...prevState,
-                warantys: newArrWithRemovedWaranty,
-            }))
-        } else {
-            //Thêm waranty_id vào bảng sản phẩm
-            const warantyIndex =
-                allWarantys !== null &&
-                allWarantys !== undefined &&
-                Object.values(allWarantys)?.filter(waranty => {
-                    if (waranty) {
-                        return waranty.waranty_id === warantyId
-                    }
-                })
-
-            const newArrWithAddedWaranty = [...editObject.warantys, { waranty_id: warantyIndex[0].waranty_id }]
-
-            setEditObject(prevState => ({
-                ...prevState,
-                warantys: [...newArrWithAddedWaranty],
-            }))
-        }
-    }
-
-    //Kiểm tra promotion_id có nằm trong danh sách promotion_id hay không
-    const ckPromotionIds =
-        editObject.promotions?.length &&
-        editObject.promotions?.map(item => {
-            if (item !== null) {
-                return item.promotion_id
-            }
-        })
-    //Thêm/bớt promotion
-    const handleChangePromotion = promotionId => e => {
-        if (ckPromotionIds?.includes(promotionId)) {
-            //Xóa promotion có sẳn trong sản phẩm
-            const newArrWithRemovedPromotion =
-                editObject.promotions.length &&
-                editObject.promotions?.filter(e => {
-                    return e.promotion_id !== promotionId
-                })
-
-            setEditObject(prevState => ({
-                ...prevState,
-                promotions: newArrWithRemovedPromotion,
-            }))
-        } else {
-            //Thêm promotion_id vào bảng sản phẩm
-            const promotionIndex =
-                allPromotions !== null &&
-                allPromotions !== undefined &&
-                Object.values(allPromotions)?.filter(promotion => {
-                    if (promotion !== null && promotion !== undefined) {
-                        return promotion.promotion_id === promotionId
-                    }
-                })
-
-            const newArrWithAddedPromotion = [
-                ...editObject.promotions,
-                { promotion_id: promotionIndex[0].promotion_id },
-            ]
-
-            setEditObject(prevState => ({
-                ...prevState,
-                promotions: [...newArrWithAddedPromotion],
             }))
         }
     }
@@ -676,38 +571,6 @@ const AdminProduct = props => {
                                                 </Grid>
                                             </TableCell>
                                         </TableRow>
-                                        {ckWarantyIds ? (
-                                            <TableRow>
-                                                <TableCell className={classes.tbHeadLeft} variant='head'>
-                                                    Bảo hành
-                                                </TableCell>
-                                                <TableCell>
-                                                    {allWarantys !== null &&
-                                                        allWarantys !== undefined &&
-                                                        Object.values(allWarantys)?.map((ckWaranty, idx) => (
-                                                            <Grid key={idx}>
-                                                                <FormControlLabel
-                                                                    label={ckWaranty.waranty_text}
-                                                                    control={
-                                                                        <Checkbox
-                                                                            defaultChecked={ckWarantyIds?.includes(
-                                                                                ckWaranty.waranty_id
-                                                                            )}
-                                                                            name='ckWaranty'
-                                                                            color='primary'
-                                                                            onChange={handleChangeWaranty(
-                                                                                ckWaranty.waranty_id
-                                                                            )}
-                                                                        />
-                                                                    }
-                                                                />
-                                                            </Grid>
-                                                        ))}
-                                                </TableCell>
-                                            </TableRow>
-                                        ) : (
-                                            ''
-                                        )}
                                         <TableRow>
                                             <TableCell className={classes.tbHeadLeft} variant='head'>
                                                 Mới ?
@@ -727,40 +590,6 @@ const AdminProduct = props => {
                                                 </FormControl>
                                             </TableCell>
                                         </TableRow>
-                                        {ckPromotionIds ? (
-                                            <TableRow>
-                                                <TableCell className={classes.tbHeadLeft} variant='head'>
-                                                    Khuyến mãi
-                                                </TableCell>
-                                                <TableCell>
-                                                    {allPromotions !== null &&
-                                                        allPromotions !== undefined &&
-                                                        Object.values(allPromotions)?.map(
-                                                            (ckPromotion, idx) =>
-                                                                ckPromotion && (
-                                                                    <FormControlLabel
-                                                                        key={idx}
-                                                                        label={ckPromotion.promotion_text}
-                                                                        control={
-                                                                            <Checkbox
-                                                                                defaultChecked={ckPromotionIds?.includes(
-                                                                                    ckPromotion.promotion_id
-                                                                                )}
-                                                                                name='ckPromotion'
-                                                                                color='primary'
-                                                                                onChange={handleChangePromotion(
-                                                                                    ckPromotion.promotion_id
-                                                                                )}
-                                                                            />
-                                                                        }
-                                                                    />
-                                                                )
-                                                        )}
-                                                </TableCell>
-                                            </TableRow>
-                                        ) : (
-                                            ''
-                                        )}
                                         {ckVideoIds ? (
                                             <TableRow>
                                                 <TableCell className={classes.tbHeadLeft} variant='head'>

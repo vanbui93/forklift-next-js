@@ -21,9 +21,7 @@ import nextId, { setPrefix } from 'react-id-generator'
 import { useDispatch, useSelector } from 'react-redux'
 import LayoutAdmin from '../../../layouts/LayoutAdmin'
 import { addProductObject, getProduct } from '../../../store/actions/products'
-import { getPromotions } from '../../../store/actions/promotions'
 import { getVideo } from '../../../store/actions/videos'
-import { getWarantys } from '../../../store/actions/warantys'
 import { numberInputFormat } from '../../../utils/numberInputFormat'
 import { AdminStyle } from './../../../admin_components/AdminStyle'
 import styles from './styles'
@@ -32,8 +30,6 @@ const ProductAdd = props => {
     const opensidebar = useSelector(state => state.ui.opensidebar)
     const products = useSelector(state => state.products.data)
     const allVideos = useSelector(state => state.videos.data)
-    const allWarantys = useSelector(state => state.warantys.data)
-    const allPromotions = useSelector(state => state.promotions.data)
     const { classes } = props
     let router = useRouter()
 
@@ -45,8 +41,6 @@ const ProductAdd = props => {
         newBox: '',
         fullbox: '',
         videos: [],
-        warantys: [],
-        promotions: [],
         create_date: new Date().toString().replace(/GMT.*/g, ''),
         isDisplay: '1',
     })
@@ -55,14 +49,6 @@ const ProductAdd = props => {
 
     useEffect(() => {
         dispatch(getVideo())
-    }, [])
-
-    useEffect(() => {
-        dispatch(getWarantys())
-    }, [])
-
-    useEffect(() => {
-        dispatch(getPromotions())
     }, [])
 
     const [imgsSrc, setImgsSrc] = useState([])
@@ -85,8 +71,6 @@ const ProductAdd = props => {
                 const compare_price = products[key].compare_price ? products[key].compare_price : ''
                 const newBox = products[key].newBox ? products[key].newBox : ''
                 const fullbox = products[key].fullbox ? products[key].fullbox : ''
-                const promotions = products[key].promotions ? products[key].promotions : []
-                const warantys = products[key].warantys ? products[key].warantys : []
                 const videos = products[key].videos ? products[key].videos : []
                 arrayProduct.push({
                     name: name,
@@ -96,8 +80,6 @@ const ProductAdd = props => {
                     compare_price: compare_price,
                     newBox: newBox,
                     fullbox: fullbox,
-                    promotions: promotions,
-                    warantys: warantys,
                     videos: videos,
                 })
             }
@@ -214,92 +196,6 @@ const ProductAdd = props => {
             setAddProduct(prevState => ({
                 ...prevState,
                 videos: [...newArrWithAddedVideo],
-            }))
-        }
-    }
-
-    //Kiểm tra waranty_id có nằm trong danh sách waranty_id hay không
-    const tempWaranty =
-        addProduct.warantys?.length &&
-        addProduct.warantys.map(item => {
-            if (item !== null) {
-                return item.waranty_id
-            }
-        })
-    //Thêm/bớt waranty
-    const handleChangeWaranty = warantyId => e => {
-        if (tempWaranty?.length && tempWaranty?.includes(warantyId)) {
-            //Xóa waranty có sẳn trong sản phẩm
-            const newArrWithRemovedWaranty =
-                addProduct.warantys.length &&
-                addProduct.warantys?.filter(e => {
-                    return e.waranty_id !== warantyId
-                })
-
-            setAddProduct(prevState => ({
-                ...prevState,
-                warantys: newArrWithRemovedWaranty,
-            }))
-        } else {
-            //Thêm waranty_id vào bảng sản phẩm
-            const warantyIndex =
-                allWarantys.length &&
-                allWarantys?.filter(waranty => {
-                    if (waranty) {
-                        return waranty.waranty_id === warantyId
-                    }
-                })
-
-            const newArrWithAddedWaranty = [...addProduct.warantys, { waranty_id: warantyIndex[0].waranty_id }]
-
-            setAddProduct(prevState => ({
-                ...prevState,
-                warantys: [...newArrWithAddedWaranty],
-            }))
-        }
-    }
-
-    //Kiểm tra promotion_id có nằm trong danh sách promotion_id hay không
-    const temPromotion =
-        addProduct.promotions?.length &&
-        addProduct.promotions?.map(item => {
-            if (item !== null) {
-                return item.promotion_id
-            }
-        })
-
-    //Thêm/bớt promotion
-    const handleChangePromotion = promotionId => e => {
-        if (temPromotion.length && temPromotion?.includes(promotionId)) {
-            //Xóa promotion có sẳn trong sản phẩm
-            const newArrWithRemovedPromotion =
-                addProduct.promotions.length &&
-                addProduct.promotions?.filter(e => {
-                    return e.promotion_id !== promotionId
-                })
-
-            setAddProduct(prevState => ({
-                ...prevState,
-                promotions: newArrWithRemovedPromotion,
-            }))
-        } else {
-            //Thêm promotion_id vào bảng sản phẩm
-            const promotionIndex =
-                allPromotions &&
-                Object.values(allPromotions)?.filter(promotion => {
-                    if (promotion) {
-                        return promotion.promotion_id === promotionId
-                    }
-                })
-
-            const newArrWithAddedPromotion = [
-                ...addProduct.promotions,
-                { promotion_id: promotionIndex[0].promotion_id },
-            ]
-
-            setAddProduct(prevState => ({
-                ...prevState,
-                promotions: [...newArrWithAddedPromotion],
             }))
         }
     }
@@ -455,28 +351,6 @@ const ProductAdd = props => {
                             </TableRow>
                             <TableRow>
                                 <TableCell className={classes.tbHeadLeft} variant='head'>
-                                    Bảo hành
-                                </TableCell>
-                                <TableCell>
-                                    {allWarantys &&
-                                        Object.values(allWarantys)?.map((ckWaranty, idx) => (
-                                            <Grid key={idx}>
-                                                <FormControlLabel
-                                                    label={ckWaranty.waranty_text}
-                                                    control={
-                                                        <Checkbox
-                                                            name='waranty'
-                                                            color='primary'
-                                                            onChange={handleChangeWaranty(ckWaranty.waranty_id)}
-                                                        />
-                                                    }
-                                                />
-                                            </Grid>
-                                        ))}
-                                </TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell className={classes.tbHeadLeft} variant='head'>
                                     FullBox ?
                                 </TableCell>
                                 <TableCell>
@@ -493,33 +367,6 @@ const ProductAdd = props => {
                                             <MenuItem value={2}>New machines</MenuItem>
                                         </Select>
                                     </FormControl>
-                                </TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell className={classes.tbHeadLeft} variant='head'>
-                                    Khuyến mãi
-                                </TableCell>
-                                <TableCell>
-                                    {allPromotions !== null &&
-                                        allPromotions !== undefined &&
-                                        Object.values(allPromotions)?.map(
-                                            (ckPromotion, idx) =>
-                                                ckPromotion && (
-                                                    <FormControlLabel
-                                                        key={idx}
-                                                        label={ckPromotion.promotion_text}
-                                                        control={
-                                                            <Checkbox
-                                                                name='promotion'
-                                                                color='primary'
-                                                                onChange={handleChangePromotion(
-                                                                    ckPromotion.promotion_id
-                                                                )}
-                                                            />
-                                                        }
-                                                    />
-                                                )
-                                        )}
                                 </TableCell>
                             </TableRow>
                             <TableRow>

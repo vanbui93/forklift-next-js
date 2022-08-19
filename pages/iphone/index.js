@@ -35,7 +35,6 @@ export default function Iphone() {
                             price={products[val].price}
                             comparePrice={products[val].compare_price}
                             newPercent={products[val].newBox}
-                            promotions={products[val].promotions}
                         />
                     )
                 )

@@ -28,7 +28,6 @@ import { AdminStyle, StyledTableCell, StyledTableRow } from './../../../admin_co
 import DiaLogPopup from './../../../admin_components/DiaLogPopup'
 import PaginationButtons from './../../../admin_components/Pagination'
 import { deleteOrder, getOrder, updateOrder } from './../../../store/actions/order'
-import { getPromotions } from './../../../store/actions/promotions'
 import { numberInputFormat } from './../../../utils/numberInputFormat'
 import numberWithCommas from './../../../utils/numberWithComas'
 import styles from './styles'
@@ -37,7 +36,6 @@ const AdminOrder = props => {
     //get state from redux
     const opensidebar = useSelector(state => state.ui.opensidebar)
     const orders = useSelector(state => state.order.data)
-    const allPromotions = useSelector(state => state.promotions.data)
     const { classes } = props
 
     const [searchTerm, setSearchTerm] = useState('')
@@ -46,10 +44,6 @@ const AdminOrder = props => {
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(getOrder())
-    }, [])
-
-    useEffect(() => {
-        dispatch(getPromotions())
     }, [])
 
     const [isView, setIsView] = useState(false)
@@ -62,7 +56,6 @@ const AdminOrder = props => {
         address: '',
         city: '',
         name: '',
-        promotion: [],
         img: '',
         price: '',
         category: '',
@@ -84,7 +77,6 @@ const AdminOrder = props => {
         product_price: '',
         product_sku: '',
         product_color: '',
-        product_promotion: [],
         product_newBox: '',
         product_fullbox: '',
     })
@@ -102,7 +94,6 @@ const AdminOrder = props => {
                 const productFullBox = orders[key].product_fullbox ? orders[key].product_fullbox : ''
                 const productColor = orders[key].color_id ? orders[key].color_id : ''
                 const productType = orders[key].product_sku ? orders[key].product_sku : ''
-                const promotion = orders[key].product_promotion ? orders[key].product_promotion : ''
                 const name = orders[key].customer_name ? orders[key].customer_name : ''
                 const phone = orders[key].customer_phone ? orders[key].customer_phone : ''
                 const email = orders[key].customer_email ? orders[key].customer_email : ''
@@ -119,7 +110,6 @@ const AdminOrder = props => {
                     fullbox: productFullBox,
                     color: productColor,
                     type: productType,
-                    promotion: promotion,
                     cusName: name,
                     phone: phone,
                     email: email,
@@ -214,59 +204,6 @@ const AdminOrder = props => {
         setIsEdit(false)
     }
 
-    //Lọc khuyến mãi từ bảng promotion dựa trên id
-    const ckPromotionId =
-        editObject.product_promotion?.length &&
-        editObject.product_promotion?.map(item => {
-            if (item !== null) {
-                return item.promotion_id
-            }
-        })
-
-    const ckPromoViewId =
-        viewObject.promotion?.length &&
-        viewObject.promotion?.map(item => {
-            if (item !== null) {
-                return item.promotion_id
-            }
-        })
-
-    //Thêm/bớt promotion
-    const handleChangePromotion = promotionId => e => {
-        if (ckPromotionId?.includes(promotionId)) {
-            //Xóa promotion có sẳn trong sản phẩm
-            const newArrWithRemovedPromotion =
-                editObject.product_promotion.length &&
-                editObject.product_promotion?.filter(e => {
-                    return e.promotion_id !== promotionId
-                })
-
-            setEditObject(prevState => ({
-                ...prevState,
-                product_promotion: newArrWithRemovedPromotion,
-            }))
-        } else {
-            //Thêm promotion_id vào bảng sản phẩm
-            const promotionIndex =
-                allPromotions &&
-                Object.values(allPromotions)?.filter(promotion => {
-                    if (promotion) {
-                        return promotion.promotion_id === promotionId
-                    }
-                })
-
-            const newArrWithAddedPromotion = [
-                ...editObject.product_promotion,
-                { promotion_id: promotionIndex[0].promotion_id },
-            ]
-
-            setEditObject(prevState => ({
-                ...prevState,
-                product_promotion: [...newArrWithAddedPromotion],
-            }))
-        }
-    }
-
     const handleEditOrder = order => {
         setIsEdit(true)
         setEditObject({
@@ -281,7 +218,6 @@ const AdminOrder = props => {
             product_price: order.price ? order.price : '',
             product_sku: order.type ? order.type : '',
             product_color: order.color,
-            product_promotion: order.promotion,
             product_newBox: order.newBox,
             product_fullbox: order.fullbox,
         })
@@ -318,7 +254,6 @@ const AdminOrder = props => {
                 name: editObject.product_name,
                 price: editObject.product_price,
                 type: editObject.product_sku,
-                promotion: editObject.product_promotion,
                 newBox: editObject.product_newBox,
                 fullbox: editObject.product_fullbox,
             })
@@ -511,59 +446,6 @@ const AdminOrder = props => {
                                                     </TableCell>
                                                     <TableCell>{viewObject.name}</TableCell>
                                                 </TableRow>
-                                                {viewObject.type ? (
-                                                    <TableRow>
-                                                        <TableCell className={classes.tbHeadLeft} variant='head'>
-                                                            Dung lượng
-                                                        </TableCell>
-                                                        <TableCell>{viewObject.type}</TableCell>
-                                                    </TableRow>
-                                                ) : (
-                                                    ''
-                                                )}
-                                                {viewObject.color ? (
-                                                    <TableRow>
-                                                        <TableCell className={classes.tbHeadLeft} variant='head'>
-                                                            Màu sắc
-                                                        </TableCell>
-                                                        <TableCell>
-                                                            <Grid style={{ display: 'flex' }}>
-                                                                <span
-                                                                    className={classes.colorStyle}
-                                                                    style={{ background: `${viewObject.color}` }}
-                                                                ></span>
-                                                            </Grid>
-                                                        </TableCell>
-                                                    </TableRow>
-                                                ) : (
-                                                    ''
-                                                )}
-                                                {ckPromoViewId ? (
-                                                    <TableRow>
-                                                        <TableCell className={classes.tbHeadLeft} variant='head'>
-                                                            Khuyến mãi
-                                                        </TableCell>
-                                                        <TableCell>
-                                                            <ul>
-                                                                {allPromotions !== null &&
-                                                                    allPromotions !== undefined &&
-                                                                    Object.values(allPromotions)?.map((item, idx) => {
-                                                                        if (
-                                                                            ckPromoViewId?.includes(item.promotion_id)
-                                                                        ) {
-                                                                            return (
-                                                                                <li key={idx}>
-                                                                                    - {item.promotion_text}
-                                                                                </li>
-                                                                            )
-                                                                        }
-                                                                    })}
-                                                            </ul>
-                                                        </TableCell>
-                                                    </TableRow>
-                                                ) : (
-                                                    ''
-                                                )}
                                                 <TableRow>
                                                     <TableCell className={classes.tbHeadLeft} variant='head'>
                                                         Hình sản phẩm
@@ -713,66 +595,6 @@ const AdminOrder = props => {
                                                             name='product_name'
                                                             onChange={handleEditOnchage}
                                                         />
-                                                    </TableCell>
-                                                </TableRow>
-                                                <TableRow>
-                                                    <TableCell className={classes.tbHeadLeft} variant='head'>
-                                                        Dung lượng
-                                                    </TableCell>
-                                                    <TableCell>
-                                                        <TextField
-                                                            id='outlined-size-small'
-                                                            size='small'
-                                                            fullWidth
-                                                            defaultValue={editObject.product_sku}
-                                                            name='product_sku'
-                                                            onChange={handleEditOnchage}
-                                                        />
-                                                    </TableCell>
-                                                </TableRow>
-                                                <TableRow>
-                                                    <TableCell className={classes.tbHeadLeft} variant='head'>
-                                                        Màu sắc
-                                                    </TableCell>
-                                                    <TableCell>
-                                                        <TextField
-                                                            id='outlined-size-small'
-                                                            size='small'
-                                                            fullWidth
-                                                            defaultValue={editObject.product_color}
-                                                            name='product_color'
-                                                            onChange={handleEditOnchage}
-                                                        />
-                                                    </TableCell>
-                                                </TableRow>
-                                                <TableRow>
-                                                    <TableCell className={classes.tbHeadLeft} variant='head'>
-                                                        Khuyến mãi
-                                                    </TableCell>
-                                                    <TableCell>
-                                                        {allPromotions !== null &&
-                                                            allPromotions !== undefined &&
-                                                            Object.values(allPromotions)?.map(
-                                                                (ckPromotion, idx) =>
-                                                                    ckPromotion && (
-                                                                        <FormControlLabel
-                                                                            key={idx}
-                                                                            label={ckPromotion.promotion_text}
-                                                                            control={
-                                                                                <Checkbox
-                                                                                    defaultChecked={ckPromotionId?.includes(
-                                                                                        ckPromotion.promotion_id
-                                                                                    )}
-                                                                                    name='ckPromotion'
-                                                                                    color='primary'
-                                                                                    onChange={handleChangePromotion(
-                                                                                        ckPromotion.promotion_id
-                                                                                    )}
-                                                                                />
-                                                                            }
-                                                                        />
-                                                                    )
-                                                            )}
                                                     </TableCell>
                                                 </TableRow>
                                                 <TableRow>

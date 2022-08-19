@@ -1,19 +1,12 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { getPromotions } from '../../store/actions/promotions'
-import numberWithCommas from './../../utils/numberWithComas'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+import { useDispatch, useSelector } from 'react-redux'
+import numberWithCommas from './../../utils/numberWithComas'
 
 export default function ProductItem(props) {
-    const { id, name, price, comparePrice, newPercent, images, promotions } = props
-    const allPromotions = useSelector(state => state.promotions.data)
+    const { id, name, price, comparePrice, newPercent, images } = props
     const mainData = useSelector(state => state.main.data)
-
-    const dispatch = useDispatch()
-    useEffect(() => {
-        dispatch(getPromotions())
-    }, [])
 
     const img = []
     images !== null &&
@@ -21,26 +14,6 @@ export default function ProductItem(props) {
         Object.values(images)?.map(item => {
             if (item !== null) {
                 img.push(item)
-            }
-        })
-
-    const getPromoDefault = promoDefault => {
-        const promo = []
-        promoDefault !== undefined &&
-            Object.values(promoDefault)?.map(item => {
-                if (item !== null) {
-                    promo.push(item)
-                }
-            })
-    }
-
-    const ckPromotionIds =
-        promotions !== null &&
-        promotions !== undefined &&
-        promotions.length &&
-        promotions?.map(item => {
-            if (item !== null) {
-                return item.promotion_id
             }
         })
 
@@ -91,40 +64,6 @@ export default function ProductItem(props) {
                             )}
                         </p>
                     </div>
-                    <SkeletonTheme baseColor='#ccc' highlightColor='#fff'>
-                        {loading.length > 0 && <Skeleton className='collections__promotion--sekeleton' />}
-                    </SkeletonTheme>
-                    {ckPromotionIds ? (
-                        <div className='collections__promotion' style={{ display: loading ? 'none' : undefined }}>
-                            <div className='promotion'>
-                                <div className='promotion__item'>
-                                    <span className='bag'>KM</span>
-                                    {getPromoDefault(promotions)}
-                                    <strong className='promotion__other'>
-                                        VÀ {promotions ? promotions.length : ''} KM KHÁC
-                                    </strong>
-                                </div>
-                            </div>
-                            <ul className='promo-list'>
-                                {allPromotions !== null &&
-                                    allPromotions !== undefined &&
-                                    Object.values(allPromotions)?.map((item, idx) => {
-                                        if (ckPromotionIds?.includes(item.promotion_id)) {
-                                            return (
-                                                item && (
-                                                    <li className='promo-list__item' key={idx}>
-                                                        <span className='bag'>KM</span>
-                                                        <span className='promotion__detail'>{item.promotion_text}</span>
-                                                    </li>
-                                                )
-                                            )
-                                        }
-                                    })}
-                            </ul>
-                        </div>
-                    ) : (
-                        ''
-                    )}
                 </a>
             </Link>
         </li>

@@ -41,14 +41,6 @@ function Sidebar(props) {
             name: 'Video',
         },
         {
-            path: '/dashboard/waranty',
-            name: 'Bảo hành',
-        },
-        {
-            path: '/dashboard/promotion',
-            name: 'Khuyến mãi',
-        },
-        {
             path: '/dashboard/user',
             name: 'Tài khoản',
         },
