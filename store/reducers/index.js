@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux'
 import accountReducer from './account'
-import cmtReducer from './cmt'
 import colorsReducer from './colors'
 import mainReducer from './main'
 import menuReducer from './menus'
@@ -27,7 +26,6 @@ const rootReducer = combineReducers({
     order: orderReducer,
     account: accountReducer,
     slides: slideReducer,
-    cmt: cmtReducer,
     colors: colorsReducer,
     skus: skusReducer,
     videos: videosReducer,
