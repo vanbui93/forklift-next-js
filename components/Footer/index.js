@@ -158,7 +158,7 @@ export default function Footer(props) {
                                     <h2 className='footer__content-logo'>
                                         <Link href='/'>
                                             <a>
-                                                <img src='../../assets/img/logo_footer.png' alt='' />
+                                                <img src='../../assets/img/logo.png' alt='' />
                                             </a>
                                         </Link>
                                     </h2>

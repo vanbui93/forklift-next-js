@@ -61,13 +61,14 @@
 
 @media screen and (min-width: 1024px) {
     .header {
-        background: var(--gray);
+        background: #223958;
         padding: 10px 0;
         margin-bottom: 30px;
 
         .header-inner {
             display: flex;
             align-items: center;
+            justify-content: space-between;
         }
 
         .logo {
@@ -119,6 +120,7 @@
             li {
                 flex: 1 1 auto;
                 margin: 0 7px;
+                font-size: 12px;
 
                 .call {
                     padding: 5px 0;
@@ -162,23 +164,27 @@
     }
 
     .menu-inner {
-        background: var(--gray);
+        background: #fff;
     }
 
     .menu {
         &__list {
             display: flex;
             border-radius: 10px;
+            padding: 20px 0;
         }
 
         &__item {
             >a {
                 display: block;
-                color: #d2d2d7;
-                padding: 20px;
+                font-size: 16px;
+                padding: 7px 30px;
+                border-radius: 3px;
+                color: var(--lightblack);
 
                 &:hover {
-                    background-color: #3f3f3f;
+                    background-color: var(--orange);
+                    color: var(--white);
                 }
             }
         }

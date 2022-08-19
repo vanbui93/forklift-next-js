@@ -7,7 +7,7 @@ import { db } from './../../utils/firebase'
 import MenuHamburger from './../MenuHamburger'
 import SearchResult from './../SearchResult'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPhone, faCreditCard, faArrowsRotate } from '@fortawesome/free-solid-svg-icons'
+import { faPhone, faEnvelope, faArrowsRotate } from '@fortawesome/free-solid-svg-icons'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 
 export default function Header(props) {
@@ -141,45 +141,10 @@ export default function Header(props) {
                                 )}
                             </SkeletonTheme>
                             <li style={{ display: loading ? 'none' : undefined }}>
-                                <a href={`tel:${headerData?.phone}`}>
-                                    <span className='phone-icon'>
-                                        <i className='fa fa-phone' aria-hidden='true' />
-                                    </span>
-                                    <span className='call'>
-                                        <span className='call-phone'>
-                                            <FontAwesomeIcon
-                                                icon={faPhone}
-                                                style={{
-                                                    fontSize: 25,
-                                                    color: '#d2d2d7',
-                                                }}
-                                            />
-                                        </span>
-                                        <span className='call-text'>
-                                            <span>{headerData?.phone_text}</span>
-                                            <span className='hotline'>{headerData?.phone}</span>
-                                        </span>
-                                    </span>
-                                </a>
-                            </li>
-                            <SkeletonTheme baseColor='#ccc' highlightColor='#fff' borderRadius='0.5rem'>
-                                {loading && (
-                                    <Skeleton
-                                        width={130}
-                                        height={33}
-                                        style={{ marginRight: '20px' }}
-                                        containerClassName='avatar-skeleton'
-                                    />
-                                )}
-                            </SkeletonTheme>
-                            <li style={{ display: loading ? 'none' : undefined }}>
-                                <Link href={`/page/${headerData.header_content?.header_link_01}`}>
+                                <Link href={`tel:0086-510-68937216`}>
                                     <a>
-                                        <FontAwesomeIcon
-                                            icon={faCreditCard}
-                                            style={{ fontSize: 25, color: '#d2d2d7' }}
-                                        />
-                                        {headerData.header_content?.header_text_01}
+                                        <FontAwesomeIcon icon={faPhone} style={{ fontSize: 16, color: '#d2d2d7' }} />
+                                        0086-510-68937216
                                     </a>
                                 </Link>
                             </li>
@@ -187,13 +152,10 @@ export default function Header(props) {
                                 {loading && <Skeleton width={130} height={33} containerClassName='avatar-skeleton' />}
                             </SkeletonTheme>
                             <li style={{ display: loading ? 'none' : undefined }}>
-                                <Link href={`/page/${headerData.header_content?.header_link_02}`}>
+                                <Link href={`mailto:someone@example.com`}>
                                     <a>
-                                        <FontAwesomeIcon
-                                            icon={faArrowsRotate}
-                                            style={{ fontSize: 25, color: '#d2d2d7' }}
-                                        />
-                                        {headerData.header_content?.header_text_02}
+                                        <FontAwesomeIcon icon={faEnvelope} style={{ fontSize: 16, color: '#d2d2d7' }} />
+                                        sales@yi-lift.com
                                     </a>
                                 </Link>
                             </li>
@@ -267,7 +229,7 @@ export default function Header(props) {
                     </SkeletonTheme>
                     <input
                         type='text'
-                        placeholder='Bạn cần tìm gì?'
+                        placeholder='คุณกำลังมองหาอะไร ?'
                         id='search'
                         className='text-input'
                         onChange={handleSearch}
