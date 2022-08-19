@@ -67,6 +67,7 @@ const AdminProduct = props => {
         videos: [],
         update_date: '',
         isDisplay: '1',
+        collection: '',
     })
     const [imgsSrc, setImgsSrc] = useState([])
 
@@ -537,12 +538,13 @@ const AdminProduct = props => {
                                                     <Select
                                                         labelId='demo-simple-select-label'
                                                         id='demo-simple-select'
-                                                        defaultValue={editObject.category}
-                                                        name='category'
+                                                        defaultValue={editObject.collection}
+                                                        name='collection'
                                                         onChange={handleEditOnchage}
                                                     >
                                                         <MenuItem value={1}>Iphone</MenuItem>
                                                         <MenuItem value={2}>Phụ kiện</MenuItem>
+                                                        <MenuItem value={3}>Đã sử dụng</MenuItem>
                                                     </Select>
                                                 </FormControl>
                                             </TableCell>
