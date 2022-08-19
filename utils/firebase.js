@@ -1,17 +1,17 @@
 import firebase from 'firebase/compat/app'
 import 'firebase/compat/auth'
-import { getStorage, ref, uploadBytes } from 'firebase/storage'
 import { getDatabase } from 'firebase/database'
+import { getStorage } from 'firebase/storage'
 
 const firebaseConfig = {
-    apiKey: 'AIzaSyBWCr5NIOAHS_Oqen0bMFa_EyU8U5_qqzQ',
-    authDomain: 'tuantao-iphone.firebaseapp.com',
-    databaseURL: 'https://tuantao-iphone-default-rtdb.asia-southeast1.firebasedatabase.app',
-    projectId: 'tuantao-iphone',
-    storageBucket: 'tuantao-iphone.appspot.com',
-    messagingSenderId: '41319189075',
-    appId: '1:41319189075:web:d97ca251f0b89240f8d4a6',
-    measurementId: 'G-HN6JTMD1GX',
+    apiKey: 'AIzaSyC_wAS_hvMYt07HcWIeGETK3lNS-KJCd5I',
+    authDomain: 'tanatforklift-2a513.firebaseapp.com',
+    databaseURL: 'https://tanatforklift-2a513-default-rtdb.asia-southeast1.firebasedatabase.app',
+    projectId: 'tanatforklift-2a513',
+    storageBucket: 'tanatforklift-2a513.appspot.com',
+    messagingSenderId: '837375198367',
+    appId: '1:837375198367:web:b602e6e738ca849c7a0eaa',
+    measurementId: 'G-54T02PX46B',
 }
 
 export const firebaseAuth = firebase.initializeApp(firebaseConfig)

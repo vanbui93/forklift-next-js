@@ -14,6 +14,20 @@ import 'react-loading-skeleton/dist/skeleton.css'
 
 function MyApp({ Component, pageProps }) {
     const theme = createTheme({
+        palette: {
+            primary: {
+                light: 'transparent',
+                main: '#3f50b5',
+                dark: '#002884',
+                contrastText: '#fff',
+            },
+            secondary: {
+                light: '#ff7961',
+                main: '#f44336',
+                dark: '#ba000d',
+                contrastText: '#000',
+            },
+        },
         zIndex: {
             appBar: 1200,
             drawer: 1900,
