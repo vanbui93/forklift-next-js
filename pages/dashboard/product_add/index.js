@@ -489,8 +489,8 @@ const ProductAdd = props => {
                                             value={addProduct.fullbox}
                                             onChange={handleEditOnchage}
                                         >
-                                            <MenuItem value={1}>Đã sử dụng</MenuItem>
-                                            <MenuItem value={2}>FullBox</MenuItem>
+                                            <MenuItem value={1}>Used Forklifts</MenuItem>
+                                            <MenuItem value={2}>New machines</MenuItem>
                                         </Select>
                                     </FormControl>
                                 </TableCell>

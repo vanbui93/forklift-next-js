@@ -30,6 +30,7 @@ const Main = props => {
     const [editMain, setEditMain] = useState({
         logo_img: '',
         logo_alt: '',
+        page_title: '',
         phone: '',
         phone_text: '',
         hotline: '',
@@ -81,6 +82,7 @@ const Main = props => {
         setEditMain({
             logo_img: mainData.logo_img,
             logo_alt: mainData.logo_alt,
+            page_title: mainData.page_title,
             phone: mainData.phone,
             phone_text: mainData.phone_text,
             address: mainData.address,
@@ -288,6 +290,12 @@ const Main = props => {
                                     </TableRow>
                                     <TableRow>
                                         <TableCell className={classes.tbHeadLeft} variant='head'>
+                                            Tiêu đề trang
+                                        </TableCell>
+                                        <TableCell>{mainData?.page_title}</TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell className={classes.tbHeadLeft} variant='head'>
                                             Số điện thoại
                                         </TableCell>
                                         <TableCell>{mainData?.phone}</TableCell>
@@ -442,6 +450,21 @@ const Main = props => {
                                                     />
                                                 </Grid>
                                             </Grid>
+                                        </TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell className={classes.tbHeadLeft} variant='head'>
+                                            Tiêu đề trang
+                                        </TableCell>
+                                        <TableCell>
+                                            <TextField
+                                                id='outlined-size-small'
+                                                size='small'
+                                                fullWidth
+                                                defaultValue={editMain.page_title}
+                                                name='page_title'
+                                                onChange={handleEditOnchage}
+                                            />
                                         </TableCell>
                                     </TableRow>
                                     <TableRow>

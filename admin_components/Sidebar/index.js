@@ -37,18 +37,6 @@ function Sidebar(props) {
             name: 'Hình slide trang chủ',
         },
         {
-            path: '/dashboard/comment',
-            name: 'Nhận xét khách hàng',
-        },
-        {
-            path: '/dashboard/color',
-            name: 'Màu Sản phẩm',
-        },
-        {
-            path: '/dashboard/sku',
-            name: 'Dung lượng',
-        },
-        {
             path: '/dashboard/video',
             name: 'Video',
         },
