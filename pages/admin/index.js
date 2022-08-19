@@ -64,7 +64,7 @@ function Login(props) {
 
     const handleLogout = e => {
         e.preventDefault()
-        router.push('/login')
+        router.push('/admin')
         sessionStorage.clear('user')
     }
 

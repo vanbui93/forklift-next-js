@@ -29,7 +29,7 @@ function HeaderAdmin(props) {
   const handleLogout = e => {
     setAnchorEl(null)
     e.preventDefault()
-    router.push('/login')
+    router.push('/admin')
     sessionStorage.clear('user')
   }
 

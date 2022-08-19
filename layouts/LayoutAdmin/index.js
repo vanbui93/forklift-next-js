@@ -26,7 +26,7 @@ function LayoutAdmin({ children }) {
   }
 
   if (!sessionStorage.getItem('user')) {
-    router.push('/login')
+    router.push('/admin')
   }
   else {
     return (
