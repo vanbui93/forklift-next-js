@@ -62,8 +62,6 @@ const AdminProduct = props => {
         name: '',
         price: '',
         compare_price: '',
-        category: '',
-        fullbox: '',
         videos: [],
         update_date: '',
         isDisplay: '1',
@@ -83,10 +81,9 @@ const AdminProduct = props => {
             if (products[key] !== null) {
                 const name = products[key].name ? products[key].name : ''
                 const images = products[key].images ? products[key].images : ''
-                const category = products[key].category ? products[key].category : ''
                 const price = products[key].price ? products[key].price : ''
+                const collection = products[key].collection ? products[key].collection : ''
                 const compare_price = products[key].compare_price ? products[key].compare_price : ''
-                const fullbox = products[key].fullbox ? products[key].fullbox : ''
                 const videos = products[key].videos ? products[key].videos : []
                 const createDate = products[key].create_date ? products[key].create_date : ''
                 const updateDate = products[key].update_date ? products[key].update_date : ''
@@ -95,10 +92,9 @@ const AdminProduct = props => {
                     id: key,
                     name: name,
                     images: images,
-                    category: category,
                     price: price,
+                    collection: collection,
                     compare_price: compare_price,
-                    fullbox: fullbox,
                     videos: videos,
                     create_date: createDate,
                     update_date: updateDate,
@@ -274,7 +270,7 @@ const AdminProduct = props => {
 
     const onPageChanged = value => {
         let offset = (value - 1) * pageLimit
-        const currentList = [...allList].slice(offset, offset + pageLimit)
+        const currentList = [...searchResults].slice(offset, offset + pageLimit)
         setCurrentList(currentList)
     }
 
@@ -340,8 +336,6 @@ const AdminProduct = props => {
                                     <TableRow>
                                         <StyledTableCell>Tên sản phẩm</StyledTableCell>
                                         <StyledTableCell align='left'>Hình sản phẩm</StyledTableCell>
-                                        <StyledTableCell align='left'>Nhóm sản phẩm</StyledTableCell>
-                                        <StyledTableCell align='left'>FullBox</StyledTableCell>
                                         <StyledTableCell align='left'>Giá</StyledTableCell>
                                         <StyledTableCell align='left'>Ngày tạo</StyledTableCell>
                                         <StyledTableCell align='left'>Ngày cập nhật</StyledTableCell>
@@ -360,12 +354,6 @@ const AdminProduct = props => {
                                                 </StyledTableCell>
                                                 <StyledTableCell align='left' className={classes.thumbnail}>
                                                     {getImgThumb(product?.images)}
-                                                </StyledTableCell>
-                                                <StyledTableCell>
-                                                    {product?.category === 1 ? 'iPhone' : 'Phụ kiện'}
-                                                </StyledTableCell>
-                                                <StyledTableCell>
-                                                    {product?.fullbox === 1 ? 'Đã sử dụng' : 'Mới fullbox'}
                                                 </StyledTableCell>
                                                 <StyledTableCell align='left'>
                                                     {product?.price
@@ -545,25 +533,6 @@ const AdminProduct = props => {
                                                         <MenuItem value={1}>Iphone</MenuItem>
                                                         <MenuItem value={2}>Phụ kiện</MenuItem>
                                                         <MenuItem value={3}>Đã sử dụng</MenuItem>
-                                                    </Select>
-                                                </FormControl>
-                                            </TableCell>
-                                        </TableRow>
-                                        <TableRow>
-                                            <TableCell className={classes.tbHeadLeft} variant='head'>
-                                                Mới ?
-                                            </TableCell>
-                                            <TableCell>
-                                                <FormControl>
-                                                    <Select
-                                                        labelId='demo-simple-select-label'
-                                                        id='demo-simple-select'
-                                                        value={editObject.fullbox}
-                                                        name='fullbox'
-                                                        onChange={handleEditOnchage}
-                                                    >
-                                                        <MenuItem value={1}>Đã sử dụng</MenuItem>
-                                                        <MenuItem value={2}>FullBox</MenuItem>
                                                     </Select>
                                                 </FormControl>
                                             </TableCell>

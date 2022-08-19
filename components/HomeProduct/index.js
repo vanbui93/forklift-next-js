@@ -18,12 +18,12 @@ const HomeProduct = props => {
         data !== undefined &&
         Object.keys(data)?.map(element => {
             const key = element
-            if (data[key] !== null && data[key].fullbox) {
+            if (data[key] !== null && data[key].collection) {
                 const name = data[key].name ? data[key].name : ''
                 const price = data[key].price ? data[key].price : ''
                 const comparePrice = data[key].compare_price ? data[key].compare_price : ''
                 const images = data[key].images ? data[key].images : ''
-                const fullbox = data[key].fullbox ? data[key].fullbox : ''
+                const collection = data[key].collection ? data[key].collection : ''
                 const isDisplay = data[key].isDisplay ? data[key].isDisplay : ''
                 arrayHomeProduct.push({
                     id: key,
@@ -31,21 +31,21 @@ const HomeProduct = props => {
                     price: price,
                     comparePrice: comparePrice,
                     images: images,
-                    fullbox: fullbox,
+                    collection: collection,
                     isDisplay: isDisplay,
                 })
             }
         })
 
     const currentList = [...arrayHomeProduct]
-    const getDulieu = (fullbox, litmits) => {
-        const arrFullbox = currentList?.filter(item => {
-            if (fullbox === item.fullbox) {
+    const getDulieu = (collection, litmits) => {
+        const arrCollection = currentList?.filter(item => {
+            if (collection === item.collection) {
                 return item
             }
         })
 
-        return arrFullbox.slice(0, litmits).map((item, idx) => {
+        return arrCollection.slice(0, litmits).map((item, idx) => {
             return (
                 item?.isDisplay === '1' && (
                     <ProductItem
@@ -68,18 +68,27 @@ const HomeProduct = props => {
                     {loading && <Skeleton containerClassName='avatar-skeleton' className='page-title--seleketon' />}
                 </SkeletonTheme>
                 <div className='page-title' style={{ display: loading ? 'none' : undefined }}>
-                    <h3>Forklift cũ</h3>
+                    <h3>Forklift used</h3>
                 </div>
-                <ul className='collections__list'>{getDulieu(1, 15)}</ul>
+                <ul className='collections__list'>{getDulieu('used-forklifts', 10)}</ul>
             </div>
             <div className='home-collect02 container'>
                 <SkeletonTheme baseColor='#ccc' highlightColor='#fff' borderRadius='0.5rem'>
                     {loading && <Skeleton containerClassName='avatar-skeleton' className='page-title--seleketon' />}
                 </SkeletonTheme>
                 <div className='page-title' style={{ display: loading ? 'none' : undefined }}>
-                    <h3>Forklift Mới</h3>
+                    <h3>Forklift For Rental / Hire</h3>
                 </div>
-                <ul className='collections__list'>{getDulieu(2, 15)}</ul>
+                <ul className='collections__list'>{getDulieu('rental-hire', 10)}</ul>
+            </div>
+            <div className='home-collect02 container'>
+                <SkeletonTheme baseColor='#ccc' highlightColor='#fff' borderRadius='0.5rem'>
+                    {loading && <Skeleton containerClassName='avatar-skeleton' className='page-title--seleketon' />}
+                </SkeletonTheme>
+                <div className='page-title' style={{ display: loading ? 'none' : undefined }}>
+                    <h3>New Machines</h3>
+                </div>
+                <ul className='collections__list'>{getDulieu('new-machines', 10)}</ul>
             </div>
         </section>
     )

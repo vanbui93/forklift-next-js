@@ -38,7 +38,6 @@ const ProductAdd = props => {
         price: '',
         compare_price: '',
         category: '',
-        fullbox: '',
         videos: [],
         create_date: new Date().toString().replace(/GMT.*/g, ''),
         isDisplay: '1',
@@ -68,7 +67,6 @@ const ProductAdd = props => {
                 const category = products[key].category ? products[key].category : ''
                 const price = products[key].price ? products[key].price : ''
                 const compare_price = products[key].compare_price ? products[key].compare_price : ''
-                const fullbox = products[key].fullbox ? products[key].fullbox : ''
                 const videos = products[key].videos ? products[key].videos : []
                 arrayProduct.push({
                     name: name,
@@ -76,7 +74,6 @@ const ProductAdd = props => {
                     category: category,
                     price: price,
                     compare_price: compare_price,
-                    fullbox: fullbox,
                     videos: videos,
                 })
             }
@@ -324,26 +321,6 @@ const ProductAdd = props => {
                                         >
                                             <MenuItem value={1}>Iphone</MenuItem>
                                             <MenuItem value={2}>Phụ kiện</MenuItem>
-                                        </Select>
-                                    </FormControl>
-                                </TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell className={classes.tbHeadLeft} variant='head'>
-                                    FullBox ?
-                                </TableCell>
-                                <TableCell>
-                                    <FormControl>
-                                        <Select
-                                            labelId='demo-simple-select-label'
-                                            id='demo-simple-select'
-                                            defaultValue={1}
-                                            name='fullbox'
-                                            value={addProduct.fullbox}
-                                            onChange={handleEditOnchage}
-                                        >
-                                            <MenuItem value={1}>Used Forklifts</MenuItem>
-                                            <MenuItem value={2}>New machines</MenuItem>
                                         </Select>
                                     </FormControl>
                                 </TableCell>

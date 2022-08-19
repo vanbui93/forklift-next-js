@@ -80,7 +80,6 @@ export default function ProductDetail(props) {
             query: {
                 productName: product.name ? product.name : '',
                 productPrice: product.price ? product.price : '',
-                productFullBox: product.fullbox ? product.fullbox : '',
                 productImage: getThumbnail(),
             },
         })
