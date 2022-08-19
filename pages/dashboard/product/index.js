@@ -29,6 +29,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import DiaLogPopup from '../../../admin_components/DiaLogPopup'
 import PaginationButtons from '../../../admin_components/Pagination'
 import LayoutAdmin from '../../../layouts/LayoutAdmin'
+import { getCollection } from '../../../store/actions/collection'
 import { deleteProduct, getProduct, updateImgProduct, updateProduct } from '../../../store/actions/products'
 import { getVideo } from '../../../store/actions/videos'
 import { db } from '../../../utils/firebase'
@@ -46,7 +47,7 @@ const AdminProduct = props => {
     //Giá trị nhập vào input searchTerm, kết quả search searchResults
     const [searchTerm, setSearchTerm] = useState('')
     const [searchResults, setSearchResults] = useState([])
-    const [collect, setCollect] = useState([])
+    const collectAll = useSelector(state => state.collection.data)
 
     //Thiết lập trạng thái DiaLog
     const [dialog, setDialog] = useState({
@@ -61,17 +62,7 @@ const AdminProduct = props => {
     }, [])
 
     useEffect(() => {
-        const collectionRef = ref(db, `collections`)
-        onValue(collectionRef, snapshot => {
-            if (snapshot.val() !== null) {
-                setCollect({ ...snapshot.val() })
-            } else {
-                setCollect({})
-            }
-        })
-        return () => {
-            setCollect({})
-        }
+        dispatch(getCollection())
     }, [])
 
     const [isEdit, setIsEdit] = useState(false)
@@ -547,8 +538,8 @@ const AdminProduct = props => {
                                                         name='collection'
                                                         onChange={handleEditOnchage}
                                                     >
-                                                        {collect &&
-                                                            Object.values(collect)?.map((item, idx) => (
+                                                        {collectAll &&
+                                                            Object.values(collectAll)?.map((item, idx) => (
                                                                 <MenuItem value={item.collection} key={idx}>
                                                                     {item.name}
                                                                 </MenuItem>

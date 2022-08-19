@@ -20,6 +20,7 @@ import { useEffect, useState } from 'react'
 import nextId, { setPrefix } from 'react-id-generator'
 import { useDispatch, useSelector } from 'react-redux'
 import LayoutAdmin from '../../../layouts/LayoutAdmin'
+import { getCollection } from '../../../store/actions/collection'
 import { addProductObject, getProduct } from '../../../store/actions/products'
 import { getVideo } from '../../../store/actions/videos'
 import { numberInputFormat } from '../../../utils/numberInputFormat'
@@ -30,6 +31,7 @@ const ProductAdd = props => {
     const opensidebar = useSelector(state => state.ui.opensidebar)
     const products = useSelector(state => state.products.data)
     const allVideos = useSelector(state => state.videos.data)
+    const collectAll = useSelector(state => state.collection.data)
     const { classes } = props
     let router = useRouter()
 
@@ -37,7 +39,7 @@ const ProductAdd = props => {
         name: '',
         price: '',
         compare_price: '',
-        category: '',
+        collection: '',
         videos: [],
         create_date: new Date().toString().replace(/GMT.*/g, ''),
         isDisplay: '1',
@@ -55,6 +57,10 @@ const ProductAdd = props => {
         dispatch(getProduct())
     }, []) //Load lại trang sau khi add, uporderByChild, delete thành công
 
+    useEffect(() => {
+        dispatch(getCollection())
+    }, [])
+
     const arrayProduct = []
     // eslint-disable-next-line array-callback-return
     products !== null &&
@@ -64,14 +70,14 @@ const ProductAdd = props => {
             if (products[key] !== null) {
                 const name = products[key].name ? products[key].name : ''
                 const images = products[key].images ? products[key].images : []
-                const category = products[key].category ? products[key].category : ''
+                const collection = products[key].collection ? products[key].collection : ''
                 const price = products[key].price ? products[key].price : ''
                 const compare_price = products[key].compare_price ? products[key].compare_price : ''
                 const videos = products[key].videos ? products[key].videos : []
                 arrayProduct.push({
                     name: name,
                     images: images,
-                    category: category,
+                    collection: collection,
                     price: price,
                     compare_price: compare_price,
                     videos: videos,
@@ -314,13 +320,16 @@ const ProductAdd = props => {
                                         <Select
                                             labelId='demo-simple-select-label'
                                             id='demo-simple-select'
-                                            value={addProduct.category}
-                                            defaultValue={1}
-                                            name='category'
+                                            value={addProduct.collection}
+                                            name='collection'
                                             onChange={handleEditOnchage}
                                         >
-                                            <MenuItem value={1}>Iphone</MenuItem>
-                                            <MenuItem value={2}>Phụ kiện</MenuItem>
+                                            {collectAll &&
+                                                Object.values(collectAll)?.map((item, idx) => (
+                                                    <MenuItem value={item.collection} key={idx}>
+                                                        {item.name}
+                                                    </MenuItem>
+                                                ))}
                                         </Select>
                                     </FormControl>
                                 </TableCell>
