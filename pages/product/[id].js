@@ -96,7 +96,7 @@ export default function ProductDetail(props) {
                 {product && (
                     <div className='product-detail'>
                         <div className='container'>
-                            <BreadCrumb productName={product.name} category={product.category} />
+                            <BreadCrumb productName={product.name} collection={product.collection} />
                             <h2 className='product-detail__title'>{product.name}</h2>
                             <div className='product-detail__content'>
                                 <div className='product-detail__info'>
