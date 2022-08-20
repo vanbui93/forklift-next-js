@@ -75,14 +75,17 @@ export default function ProductDetail(props) {
     //Đi tới trang giỏ hàng
     const gotoCheckout = e => {
         e.preventDefault()
-        router.push({
-            pathname: '/checkout',
-            query: {
-                productName: product.name ? product.name : '',
-                productPrice: product.price ? product.price : '',
-                productImage: getThumbnail(),
+        router.push(
+            {
+                pathname: '/checkout',
+                query: {
+                    productName: product.name ? product.name : '',
+                    productPrice: product.price ? product.price : '',
+                    productImage: getThumbnail(),
+                },
             },
-        })
+            '/checkout'
+        )
     }
 
     return (
@@ -123,10 +126,21 @@ export default function ProductDetail(props) {
                                                     onClick={e => gotoCheckout(e)}
                                                 >
                                                     <strong className='purchase__action'>MUA NGAY</strong>
-                                                    <span> Giao tận nhà (COD) hoặc Nhận tại cửa hàng</span>
                                                 </button>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div className='product-detail__short-des'>
+                                        HNF-160LNG Rated load: 16,000 kgs <br />
+                                        Load center: 900 mm <br />
+                                        Operating weight: 24,000 kgs Wheel base: 3,800 mm
+                                        <br />
+                                        ◆ Compact Design, extremely maneuverable, esay operation.
+                                        <br />
+                                        ◆ Pulling trolley, baggage carts.
+                                        <br />
+                                        ◆ Standard manual hook electric hook for model YL-SM1000d.
+                                        <br />◆ Economic type for model XFT.
                                     </div>
                                 </div>
                                 <div className='product-detail__related'>

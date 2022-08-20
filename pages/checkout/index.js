@@ -123,22 +123,25 @@ function Checkout(props) {
                 create_date: new Date().toString().replace(/GMT.*/g, ''),
             })
 
-            router.push({
-                pathname: '/cam-on-ban-da-mua-hang',
-                query: {
-                    id_order: key,
-                    product_image: state.productImage,
-                    product_name: state.productName,
-                    product_price: state.productPrice,
-                    customer_name: orderData.customer_name,
-                    customer_address: orderData.customer_address,
-                    customer_city: orderData.customer_city,
-                    customer_phone: orderData.customer_phone,
-                    customer_email: orderData.customer_email,
-                    customer_notes: orderData.customer_notes,
-                    create_date: orderData.create_date,
+            router.push(
+                {
+                    pathname: '/cam-on-ban-da-mua-hang',
+                    query: {
+                        id_order: key,
+                        product_image: state.productImage,
+                        product_name: state.productName,
+                        product_price: state.productPrice,
+                        customer_name: orderData.customer_name,
+                        customer_address: orderData.customer_address,
+                        customer_city: orderData.customer_city,
+                        customer_phone: orderData.customer_phone,
+                        customer_email: orderData.customer_email,
+                        customer_notes: orderData.customer_notes,
+                        create_date: orderData.create_date,
+                    },
                 },
-            })
+                '/cam-on-ban-da-mua-hang'
+            )
         } else {
             setErrorsMessage({
                 ...valiErrors(),
@@ -204,7 +207,7 @@ function Checkout(props) {
                                                 <span className='checkout__product-title'></span>
                                                 <span>
                                                     <Link href='/'>
-                                                        <img src={state.productImage} alt='' />
+                                                        <img src={state?.productImage} alt='' />
                                                     </Link>
                                                 </span>
                                             </div>
@@ -214,13 +217,13 @@ function Checkout(props) {
                                                     <dt className='variation__select-color'>Chọn màu:</dt>
                                                     {state.productColor && (
                                                         <dd className='variation__select-color'>
-                                                            <p>{state.productColor}</p>
+                                                            <p>{state?.productColor}</p>
                                                         </dd>
                                                     )}
                                                     <dt className='variation__select-memory'>Chọn dung lượng:</dt>
                                                     {state.productSku && (
                                                         <dd className='variation__select-memory'>
-                                                            <p>{state.productSku}</p>
+                                                            <p>{state?.productSku}</p>
                                                         </dd>
                                                     )}
                                                 </dl>
@@ -229,7 +232,7 @@ function Checkout(props) {
                                                 <span className='checkout__product-title'>Tạm tính</span>
                                                 <span>
                                                     {state.productPrice
-                                                        ? `${numberInputFormat(state.productPrice.toString())} đ`
+                                                        ? `${numberInputFormat(state.productPrice?.toString())} đ`
                                                         : 'Liên hệ'}
                                                 </span>
                                             </div>
