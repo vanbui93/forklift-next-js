@@ -2,6 +2,7 @@ import { onValue, ref } from 'firebase/database'
 import { useEffect, useState } from 'react'
 import { db } from './../../utils/firebase'
 
+import parse from 'html-react-parser'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
@@ -143,6 +144,7 @@ export default function ProductDetail(props) {
                                         <br />◆ Economic type for model XFT.
                                     </div>
                                 </div>
+                                <div className='product-detail__long-des'>{parse(product?.content)}</div>
                                 <div className='product-detail__related'>
                                     <div className='page-title'>
                                         <h3>Gợi ý cho bạn</h3>

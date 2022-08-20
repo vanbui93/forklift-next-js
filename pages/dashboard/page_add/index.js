@@ -149,7 +149,7 @@ const PageAdd = props => {
                             </TableRow>
                             <TableRow>
                                 <TableCell className={classes.tbHeadLeft} variant='head'>
-                                    Noi dung
+                                    Nội dung
                                 </TableCell>
                                 <TableCell>
                                     <Editor

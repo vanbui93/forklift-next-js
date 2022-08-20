@@ -15,6 +15,10 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete'
 import { FormControlLabel, Stack, TextField } from '@mui/material'
 import Paper from '@mui/material/Paper'
+import { convertToRaw, EditorState } from 'draft-js'
+import draftToHtml from 'draftjs-to-html'
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
+import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import nextId, { setPrefix } from 'react-id-generator'
@@ -26,6 +30,9 @@ import { getVideo } from '../../../store/actions/videos'
 import { numberInputFormat } from '../../../utils/numberInputFormat'
 import { AdminStyle } from './../../../admin_components/AdminStyle'
 import styles from './styles'
+
+const Editor = dynamic(() => import('react-draft-wysiwyg').then(mod => mod.Editor), { ssr: false })
+const htmlToDraft = typeof window === 'object' && require('html-to-draftjs').default
 
 const ProductAdd = props => {
     const opensidebar = useSelector(state => state.ui.opensidebar)
@@ -41,9 +48,12 @@ const ProductAdd = props => {
         compare_price: '',
         collection: '',
         videos: [],
+        content: '',
         create_date: new Date().toString().replace(/GMT.*/g, ''),
         isDisplay: '1',
     })
+
+    const [editorState, setEditorState] = useState(EditorState.createEmpty())
 
     const dispatch = useDispatch()
 
@@ -198,6 +208,49 @@ const ProductAdd = props => {
                 videos: [...newArrWithAddedVideo],
             }))
         }
+    }
+
+    //onChange editor
+    const onEditorStateChange = editorState => {
+        const currentContent = draftToHtml(convertToRaw(editorState.getCurrentContent()))
+        setEditorState(editorState)
+
+        setAddProduct(prevState => ({
+            ...prevState,
+            content: currentContent,
+        }))
+    }
+
+    function uploadImageCallBack(file) {
+        const imagesRef = ref(storage, `media/${file.name}`)
+        const uploadTask = uploadBytesResumable(imagesRef, file)
+
+        return new Promise((resolve, reject) => {
+            // Listen for state changes, errors, and completion of the upload.
+            uploadTask.on(
+                'state_changed',
+                snapshot => {},
+                error => {
+                    console.log(error)
+                    reject(error)
+                },
+                () => {
+                    // Upload completed successfully, now we can get the download URL
+                    getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
+                        resolve({ data: { link: downloadURL } })
+                    })
+                }
+            )
+        })
+    }
+
+    const embedVideoCallBack = link => {
+        if (link.indexOf('youtube') >= 0) {
+            link = link.replace('watch?v=', 'embed/')
+            link = link.replace('/watch/', '/embed/')
+            link = link.replace('youtu.be/', 'youtube.com/embed/')
+        }
+        return link
     }
 
     return (
@@ -357,6 +410,34 @@ const ProductAdd = props => {
                                                     />
                                                 )
                                         )}
+                                </TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell className={classes.tbHeadLeft} variant='head'>
+                                    Nội dung
+                                </TableCell>
+                                <TableCell>
+                                    <Editor
+                                        editorState={editorState}
+                                        toolbarClassName='toolbarClassName'
+                                        wrapperClassName='wrapperClassName'
+                                        editorClassName='editorClassName'
+                                        onEditorStateChange={onEditorStateChange}
+                                        toolbar={{
+                                            inline: { inDropdown: true },
+                                            list: { inDropdown: true },
+                                            textAlign: { inDropdown: true },
+                                            link: { inDropdown: true },
+                                            history: { inDropdown: true },
+                                            embedded: {
+                                                embedCallback: embedVideoCallBack,
+                                            },
+                                            image: {
+                                                uploadCallback: uploadImageCallBack,
+                                                alt: { present: true, mandatory: false },
+                                            },
+                                        }}
+                                    />
                                 </TableCell>
                             </TableRow>
                         </TableBody>

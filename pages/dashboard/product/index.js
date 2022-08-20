@@ -1,6 +1,5 @@
 import {
     Button,
-    Checkbox,
     Fab,
     FormControl,
     Grid,
@@ -22,9 +21,13 @@ import EditIcon from '@mui/icons-material/Edit'
 import SearchIcon from '@mui/icons-material/Search'
 import { FormControlLabel, IconButton, InputBase, Stack, TextField } from '@mui/material'
 import Paper from '@mui/material/Paper'
-import { onValue, ref } from 'firebase/database'
+import { ContentState, convertToRaw, EditorState } from 'draft-js'
+import draftToHtml from 'draftjs-to-html'
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
+import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import { useDispatch, useSelector } from 'react-redux'
 import DiaLogPopup from '../../../admin_components/DiaLogPopup'
 import PaginationButtons from '../../../admin_components/Pagination'
@@ -32,10 +35,13 @@ import LayoutAdmin from '../../../layouts/LayoutAdmin'
 import { getCollection } from '../../../store/actions/collection'
 import { deleteProduct, getProduct, updateImgProduct, updateProduct } from '../../../store/actions/products'
 import { getVideo } from '../../../store/actions/videos'
-import { db } from '../../../utils/firebase'
+import { storage } from '../../../utils/firebase'
 import { numberInputFormat } from '../../../utils/numberInputFormat'
 import { AdminStyle, StyledTableCell, StyledTableRow } from './../../../admin_components/AdminStyle'
 import styles from './styles'
+
+const Editor = dynamic(() => import('react-draft-wysiwyg').then(mod => mod.Editor), { ssr: false })
+const htmlToDraft = typeof window === 'object' && require('html-to-draftjs').default
 
 const AdminProduct = props => {
     const opensidebar = useSelector(state => state.ui.opensidebar)
@@ -47,6 +53,7 @@ const AdminProduct = props => {
     //Giá trị nhập vào input searchTerm, kết quả search searchResults
     const [searchTerm, setSearchTerm] = useState('')
     const [searchResults, setSearchResults] = useState([])
+    const [editorState, setEditorState] = useState(EditorState.createEmpty())
     const collectAll = useSelector(state => state.collection.data)
 
     //Thiết lập trạng thái DiaLog
@@ -73,6 +80,7 @@ const AdminProduct = props => {
         videos: [],
         update_date: '',
         isDisplay: '1',
+        content: '',
         collection: '',
     })
     const [imgsSrc, setImgsSrc] = useState([])
@@ -93,6 +101,7 @@ const AdminProduct = props => {
                 const collection = products[key].collection ? products[key].collection : ''
                 const compare_price = products[key].compare_price ? products[key].compare_price : ''
                 const videos = products[key].videos ? products[key].videos : []
+                const content = products[key].content ? products[key].content : []
                 const createDate = products[key].create_date ? products[key].create_date : ''
                 const updateDate = products[key].update_date ? products[key].update_date : ''
                 const isDisplay = products[key].isDisplay ? products[key].isDisplay : ''
@@ -104,6 +113,7 @@ const AdminProduct = props => {
                     collection: collection,
                     compare_price: compare_price,
                     videos: videos,
+                    content: content,
                     create_date: createDate,
                     update_date: updateDate,
                     isDisplay: isDisplay.toString(),
@@ -143,7 +153,10 @@ const AdminProduct = props => {
         idRef.current = product.id
         setIsEdit(true)
         setEditObject(product)
-        setImgsSrc(product.images)
+        setImgsSrc(product?.images)
+        const blocksFromHtml = htmlToDraft(product.content ? product.content : '')
+        const { contentBlocks, entityMap } = blocksFromHtml
+        setEditorState(EditorState.createWithContent(ContentState.createFromBlockArray(contentBlocks, entityMap)))
     }
 
     //Edit nội dung onChange
@@ -298,6 +311,48 @@ const AdminProduct = props => {
         setSearchResults(results)
         setCurrentList([...results].slice(0, pageLimit))
     }, [searchTerm, products])
+
+    const onEditorStateChange = editorState => {
+        const currentContent = draftToHtml(convertToRaw(editorState.getCurrentContent()))
+        setEditorState(editorState)
+
+        setEditObject(prevState => ({
+            ...prevState,
+            content: currentContent,
+        }))
+    }
+
+    function uploadImageCallBack(file) {
+        const imagesRef = ref(storage, `media/${file.name}`)
+        const uploadTask = uploadBytesResumable(imagesRef, file)
+
+        return new Promise((resolve, reject) => {
+            // Listen for state changes, errors, and completion of the upload.
+            uploadTask.on(
+                'state_changed',
+                snapshot => {},
+                error => {
+                    console.log(error)
+                    reject(error)
+                },
+                () => {
+                    // Upload completed successfully, now we can get the download URL
+                    getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
+                        resolve({ data: { link: downloadURL } })
+                    })
+                }
+            )
+        })
+    }
+
+    const embedVideoCallBack = link => {
+        if (link.indexOf('youtube') >= 0) {
+            link = link.replace('watch?v=', 'embed/')
+            link = link.replace('/watch/', '/embed/')
+            link = link.replace('youtu.be/', 'youtube.com/embed/')
+        }
+        return link
+    }
 
     return (
         <AdminStyle open={!opensidebar}>
@@ -548,40 +603,35 @@ const AdminProduct = props => {
                                                 </FormControl>
                                             </TableCell>
                                         </TableRow>
-                                        {ckVideoIds ? (
-                                            <TableRow>
-                                                <TableCell className={classes.tbHeadLeft} variant='head'>
-                                                    Video
-                                                </TableCell>
-                                                <TableCell>
-                                                    {allVideos !== null &&
-                                                        allVideos !== undefined &&
-                                                        Object.values(allVideos)?.map(
-                                                            (ckVideo, idx) =>
-                                                                ckVideo && (
-                                                                    <FormControlLabel
-                                                                        key={idx}
-                                                                        label={ckVideo.video_text}
-                                                                        control={
-                                                                            <Checkbox
-                                                                                defaultChecked={ckVideoIds?.includes(
-                                                                                    ckVideo.video_id
-                                                                                )}
-                                                                                name='ckVideo'
-                                                                                color='primary'
-                                                                                onChange={handleChangeVideo(
-                                                                                    ckVideo.video_id
-                                                                                )}
-                                                                            />
-                                                                        }
-                                                                    />
-                                                                )
-                                                        )}
-                                                </TableCell>
-                                            </TableRow>
-                                        ) : (
-                                            ''
-                                        )}
+
+                                        <TableRow>
+                                            <TableCell className={classes.tbHeadLeft} variant='head'>
+                                                Nội dung chi tiết
+                                            </TableCell>
+                                            <TableCell>
+                                                <Editor
+                                                    editorState={editorState}
+                                                    toolbarClassName='toolbarClassName'
+                                                    wrapperClassName='wrapperClassName'
+                                                    editorClassName='editorClassName'
+                                                    onEditorStateChange={onEditorStateChange}
+                                                    toolbar={{
+                                                        inline: { inDropdown: true },
+                                                        list: { inDropdown: true },
+                                                        textAlign: { inDropdown: true },
+                                                        link: { inDropdown: true },
+                                                        history: { inDropdown: true },
+                                                        embedded: {
+                                                            embedCallback: embedVideoCallBack,
+                                                        },
+                                                        image: {
+                                                            uploadCallback: uploadImageCallBack,
+                                                            alt: { present: true, mandatory: false },
+                                                        },
+                                                    }}
+                                                />
+                                            </TableCell>
+                                        </TableRow>
                                         <TableRow>
                                             <TableCell className={classes.tbHeadLeft} variant='head'>
                                                 Hiển thị

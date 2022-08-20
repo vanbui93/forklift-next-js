@@ -60,7 +60,7 @@ export default function Collections() {
         currentPage?.isDisplay === '1' && (
             <div>
                 <Head>
-                    <title>{collection}</title>
+                    <title>{colllectName[0]?.name}</title>
                     <meta name='description' content='Tuấn táo apple - iPhone' />
                     <meta
                         name='viewport'
