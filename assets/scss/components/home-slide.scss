@@ -15,10 +15,10 @@
     height: 100%;
 
     .swiper-slide {
-      max-height: 440px;
+      height: 440px;
 
       img {
-        max-height: 440px;
+        height: 440px;
       }
     }
   }
@@ -100,6 +100,14 @@
 
     .mySwiper2 {
       height: auto;
+
+      .swiper-slide {
+        height: 200px;
+
+        img {
+          height: 200px;
+        }
+      }
 
       .swiper-button-next,
       .swiper-button-prev {

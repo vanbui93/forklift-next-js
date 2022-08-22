@@ -44,7 +44,7 @@ export default function HomeSlide(props) {
                             return (
                                 val && (
                                     <SwiperSlide key={idx}>
-                                        <img src={val.image_url} alt={val} />
+                                        <img src={val.image_url} alt={val.text} />
                                     </SwiperSlide>
                                 )
                             )

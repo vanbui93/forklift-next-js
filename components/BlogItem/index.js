@@ -14,10 +14,10 @@ export default function BlogItem(props) {
                         <Link href={`blogs/${item.slug}`}>
                             <a className='blogs__link'>
                                 <div className='blogs__img'>
-                                    <img src='./assets/img/news/4.png' alt='' />
+                                    <img src={item?.image} alt='' />
                                 </div>
                                 <div className='blogs__text'>
-                                    <h3 className='blogs__sub-title'>{item.title}</h3>
+                                    <h3 className='blogs__sub-title'>{item?.title}</h3>
                                     <div className='blogs__des'>
                                         <p>{short_des}</p>
                                     </div>

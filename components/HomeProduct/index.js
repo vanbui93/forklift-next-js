@@ -95,7 +95,7 @@ const HomeProduct = props => {
                 </div>
                 <ul className='collections__list'>{getDulieu('rental-hire', 10)}</ul>
             </div>
-            <div className='home-collect02 container'>
+            <div className='home-collect03 container'>
                 <SkeletonTheme baseColor='#ccc' highlightColor='#fff' borderRadius='0.5rem'>
                     {loading && <Skeleton containerClassName='avatar-skeleton' className='page-title--seleketon' />}
                 </SkeletonTheme>
