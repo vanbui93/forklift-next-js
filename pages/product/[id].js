@@ -89,6 +89,8 @@ export default function ProductDetail(props) {
         )
     }
 
+    const isShortDes = product?.content?.includes('|||')
+
     return (
         <div>
             <Head>
@@ -114,7 +116,6 @@ export default function ProductDetail(props) {
                                                     ? `${numberInputFormat(product.price.toString())} đ`
                                                     : `Liên hệ : ${mainData?.phone ? mainData?.phone : ''}`}
                                             </strong>
-                                            &nbsp;&nbsp; | <i>Giá đã bao gồm 10% VAT</i>
                                         </div>
                                         <p className='product-detail__free-ship'>
                                             <span>Miễn phí vận chuyển toàn quốc</span>
@@ -132,19 +133,12 @@ export default function ProductDetail(props) {
                                         </div>
                                     </div>
                                     <div className='product-detail__short-des'>
-                                        HNF-160LNG Rated load: 16,000 kgs <br />
-                                        Load center: 900 mm <br />
-                                        Operating weight: 24,000 kgs Wheel base: 3,800 mm
-                                        <br />
-                                        ◆ Compact Design, extremely maneuverable, esay operation.
-                                        <br />
-                                        ◆ Pulling trolley, baggage carts.
-                                        <br />
-                                        ◆ Standard manual hook electric hook for model YL-SM1000d.
-                                        <br />◆ Economic type for model XFT.
+                                        {isShortDes ? parse(product?.content.split('|||')[0]) : ''}
                                     </div>
                                 </div>
-                                <div className='product-detail__long-des'>{parse(product?.content)}</div>
+                                <div className='product-detail__long-des'>
+                                    {isShortDes ? parse(product?.content.split('|||')[1]) : parse(product?.content)}
+                                </div>
                                 <div className='product-detail__related'>
                                     <div className='page-title'>
                                         <h3>Gợi ý cho bạn</h3>

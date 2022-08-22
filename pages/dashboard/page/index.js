@@ -110,7 +110,7 @@ function AdminPage(props) {
         setIsEdit(true)
         setEditPageObject(page)
 
-        const blocksFromHtml = htmlToDraft(page.content)
+        const blocksFromHtml = htmlToDraft(page.content.toString())
         const { contentBlocks, entityMap } = blocksFromHtml
         setEditorState(EditorState.createWithContent(ContentState.createFromBlockArray(contentBlocks, entityMap)))
     }

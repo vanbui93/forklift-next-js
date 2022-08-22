@@ -14,6 +14,7 @@
     }
 
     &__images {
+        width: 21vw;
         margin-right: 15px;
     }
 
@@ -75,86 +76,8 @@
         width: 23vw;
     }
 
-    &__color {
-        margin-top: 15px;
-    }
-
-    &__version {
-        margin-bottom: 10px;
-    }
-
-    .color {
-        display: flex;
-
-        &__item {
-            width: 30px;
-            height: 30px;
-            margin: 4px 8px 4px 0;
-            padding: 2px;
-            background-color: #fff;
-            box-shadow: 0 0 0 1px #f5f5f7;
-            border-radius: 50%;
-            overflow: hidden;
-            cursor: pointer;
-
-            &.selected {
-                box-shadow: 0 0 0 1px #2971e3;
-            }
-        }
-
-        &__option {
-            display: block;
-            width: 100%;
-            height: 100%;
-            box-shadow: inset 0 0 1px 0 rgb(0 0 0 / 50%);
-            border-radius: 100%;
-        }
-    }
-
-    .option {
-        &__title {
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        &__highlight {
-            color: red;
-        }
-
-        &__list {
-            display: flex;
-            flex-wrap: wrap;
-        }
-
-        &__item {
-            display: block;
-            width: 70px;
-            margin-right: 7px;
-            margin-bottom: 7px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            background: var(--white);
-            position: relative;
-
-            &.selected {
-                border: 1px solid var(--darkgray);
-            }
-        }
-
-        &__label {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            >strong {
-                display: block;
-                padding: 10px;
-                font-weight: normal;
-                color: #333;
-                line-height: 1;
-                cursor: pointer;
-            }
-        }
+    &__short-des {
+        width: calc(100% - 44vw);
     }
 
     &__purchase {
@@ -331,22 +254,6 @@
 
             >span {
                 font-size: 12px;
-            }
-        }
-
-        .option {
-            &__label {
-                >strong {
-                    font-size: 14px;
-                    font-weight: normal;
-                }
-            }
-
-            &__title {
-                >strong {
-                    display: block;
-                    margin-bottom: 7px;
-                }
             }
         }
 
