@@ -289,13 +289,11 @@ function AdminPage(props) {
     const totalLists = allList.length
     const pageLimit = 10
     const [currentList, setCurrentList] = useState([])
-
     const onPageChanged = value => {
         let offset = (value - 1) * pageLimit
         const currentList = [...searchResults].slice(offset, offset + pageLimit)
         setCurrentList(currentList)
     }
-
     useEffect(() => {
         setCurrentList([...allList].slice(0, pageLimit))
     }, [blogData])

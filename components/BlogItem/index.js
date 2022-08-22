@@ -3,10 +3,11 @@ import Link from 'next/link'
 import React from 'react'
 
 export default function BlogItem(props) {
-    const { blogData } = props
+    const { arrayBlog } = props
+
     return (
-        blogData &&
-        Object.values(blogData)?.map((item, idx) => {
+        arrayBlog &&
+        arrayBlog?.map((item, idx) => {
             const short_des = item.content.replace(/(<([^>]+)>)/gi, '')
             return (
                 item && (

@@ -6,10 +6,17 @@ import FacebookIcon from '@mui/icons-material/Facebook'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import methods from 'validator'
+import { getCollection } from '../../store/actions/collection'
+import { useDispatch, useSelector } from 'react-redux'
+import { getMenu } from '../../store/actions/menu'
 
 export default function Footer(props) {
     const { footerData } = props
+    const collectAll = useSelector(state => state.collection.data)
+    const menus = useSelector(state => state.menu.data)
     const [loading, setLoading] = useState(true)
+
+    const dispatch = useDispatch()
 
     const rules = [
         {
@@ -25,6 +32,14 @@ export default function Footer(props) {
             message: 'This field is required',
         },
     ]
+
+    useEffect(() => {
+        dispatch(getCollection())
+    }, [])
+
+    useEffect(() => {
+        dispatch(getMenu())
+    }, [])
 
     useEffect(() => {
         if (Object.keys(footerData)?.length > 0) {
@@ -109,6 +124,38 @@ export default function Footer(props) {
 
     const handleOpenModalContact = () => {}
 
+    const arrayCollection = []
+    collectAll !== null &&
+        collectAll !== undefined &&
+        Object.keys(collectAll)?.map(element => {
+            const key = element
+            if (collectAll[key] !== null) {
+                const name = collectAll[key].name ? collectAll[key].name : ''
+                const collection = collectAll[key].collection ? collectAll[key].collection : ''
+                arrayCollection.push({
+                    id: key,
+                    name: name,
+                    collection: collection,
+                })
+            }
+        })
+
+    const arrayMenu = []
+    menus !== null &&
+        menus !== undefined &&
+        Object.keys(menus)?.map(element => {
+            const key = element
+            if (menus[key] !== null) {
+                const name = menus[key].name ? menus[key].name : ''
+                const link = menus[key].link ? menus[key].link : ''
+                arrayMenu.push({
+                    id: key,
+                    name: name,
+                    link: link,
+                })
+            }
+        })
+
     return (
         <footer className='footer'>
             <div className='container-fluid'>
@@ -177,51 +224,30 @@ export default function Footer(props) {
                                 <Grid item md={2} xs={12}>
                                     <h3>QUICK LINKS</h3>
                                     <ul className='footer__link_01'>
-                                        <li className='footer__link-item'>
-                                            <Link href='/'>
-                                                <a>About Us</a>
-                                            </Link>
-                                        </li>
-                                        <li className='footer__link-item'>
-                                            <Link href='/'>
-                                                <a>Products</a>
-                                            </Link>
-                                        </li>
-                                        <li className='footer__link-item'>
-                                            <Link href='/'>
-                                                <a>FAQ</a>
-                                            </Link>
-                                        </li>
-                                        <li className='footer__link-item'>
-                                            <Link href='/'>
-                                                <a>Contact Us</a>
-                                            </Link>
-                                        </li>
+                                        {arrayMenu?.map((item, idx) => {
+                                            return (
+                                                <li className='footer__link-item'>
+                                                    <Link href={`/${item.link}`}>
+                                                        <a>{item.name}</a>
+                                                    </Link>
+                                                </li>
+                                            )
+                                        })}
                                     </ul>
                                 </Grid>
                                 <Grid item md={2} xs={12}>
                                     <h3>Products</h3>
                                     <ul className='footer__link_01'>
-                                        <li className='footer__link-item'>
-                                            <Link href='/'>
-                                                <a>Pallet Trucks</a>
-                                            </Link>
-                                        </li>
-                                        <li className='footer__link-item'>
-                                            <Link href='/'>
-                                                <a>Pallet Stacker</a>
-                                            </Link>
-                                        </li>
-                                        <li className='footer__link-item'>
-                                            <Link href='/'>
-                                                <a>Lift Tables</a>
-                                            </Link>
-                                        </li>
-                                        <li className='footer__link-item'>
-                                            <Link href='/'>
-                                                <a>Others</a>
-                                            </Link>
-                                        </li>
+                                        {console.log(arrayCollection)}
+                                        {arrayCollection?.map((item, idx) => {
+                                            return (
+                                                <li className='footer__link-item'>
+                                                    <Link href={`/collections/${item.collection}`}>
+                                                        <a>{item.name}</a>
+                                                    </Link>
+                                                </li>
+                                            )
+                                        })}
                                     </ul>
                                 </Grid>
                                 <Grid item md={4} xs={12}>
