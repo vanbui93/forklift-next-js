@@ -1,0 +1,26 @@
+.blog-detail {
+    margin: 0 10px 100px;
+
+    h2 {
+        margin: 70px 0 40px;
+        font-size: 40px;
+        text-align: center;
+    }
+
+    table {
+        width: 100%;
+    }
+
+    p {
+        margin-top: 20px;
+    }
+}
+
+@media screen and (max-width: 1023px) {
+    .blog-detail {
+        h2 {
+            margin: 20px 0;
+            font-size: 30px;
+        }
+    }
+}

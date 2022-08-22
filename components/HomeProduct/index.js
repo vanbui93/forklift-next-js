@@ -1,10 +1,18 @@
 import { useEffect, useState } from 'react'
-import ProductItem from './../../components/ProductItem'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+import { useDispatch, useSelector } from 'react-redux'
+import { getCollection } from '../../store/actions/collection'
+import ProductItem from './../../components/ProductItem'
 
 const HomeProduct = props => {
     const { products } = props
     let data = { ...products }
+
+    const collectAll = useSelector(state => state.collection.data)
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(getCollection())
+    }, [])
 
     const [loading, setLoading] = useState(true)
     useEffect(() => {
@@ -61,6 +69,12 @@ const HomeProduct = props => {
         })
     }
 
+    const collectName =
+        collectAll &&
+        Object.values(collectAll)?.map((item, idx) => {
+            return item?.name
+        })
+
     return (
         <section className='collections'>
             <div className='home-collect01 container'>
@@ -68,7 +82,7 @@ const HomeProduct = props => {
                     {loading && <Skeleton containerClassName='avatar-skeleton' className='page-title--seleketon' />}
                 </SkeletonTheme>
                 <div className='page-title' style={{ display: loading ? 'none' : undefined }}>
-                    <h3>Forklift used</h3>
+                    <h3>{collectName?.[0]}</h3>
                 </div>
                 <ul className='collections__list'>{getDulieu('used-forklifts', 10)}</ul>
             </div>
@@ -77,7 +91,7 @@ const HomeProduct = props => {
                     {loading && <Skeleton containerClassName='avatar-skeleton' className='page-title--seleketon' />}
                 </SkeletonTheme>
                 <div className='page-title' style={{ display: loading ? 'none' : undefined }}>
-                    <h3>Forklift For Rental / Hire</h3>
+                    <h3>{collectName?.[1]}</h3>
                 </div>
                 <ul className='collections__list'>{getDulieu('rental-hire', 10)}</ul>
             </div>
@@ -86,7 +100,7 @@ const HomeProduct = props => {
                     {loading && <Skeleton containerClassName='avatar-skeleton' className='page-title--seleketon' />}
                 </SkeletonTheme>
                 <div className='page-title' style={{ display: loading ? 'none' : undefined }}>
-                    <h3>New Machines</h3>
+                    <h3>{collectName?.[2]}</h3>
                 </div>
                 <ul className='collections__list'>{getDulieu('new-machines', 10)}</ul>
             </div>

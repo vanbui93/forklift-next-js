@@ -1,8 +1,7 @@
-import parse from 'html-react-parser'
 import Head from 'next/head'
-import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import BlogItem from '../../components/BlogItem'
 import LayoutUser from '../../layouts/LayoutUser'
 import { getBlog } from '../../store/actions/blogs'
 
@@ -13,8 +12,6 @@ export default function PagesContent() {
     useEffect(() => {
         dispatch(getBlog())
     }, [])
-
-    console.log(blogData)
 
     return (
         <div>
@@ -28,8 +25,15 @@ export default function PagesContent() {
                 <link rel='icon' href='/favicon.ico' />
             </Head>
             <LayoutUser>
-                <div className='post'>
-                    <div className='container'>sdsdsd</div>
+                <div className='blogs'>
+                    <h2 className='blogs__title'>News</h2>
+                    <div className='blogs__content'>
+                        <div className='container'>
+                            <ul className='blogs__list'>
+                                <BlogItem blogData={blogData} />
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </LayoutUser>
         </div>
