@@ -19,7 +19,7 @@ import AddIcon from '@mui/icons-material/Add'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import SearchIcon from '@mui/icons-material/Search'
-import { FormControlLabel, IconButton, InputBase, Stack, TextField } from '@mui/material'
+import { Checkbox, FormControlLabel, IconButton, InputBase, Stack, TextField } from '@mui/material'
 import Paper from '@mui/material/Paper'
 import { ContentState, convertToRaw, EditorState } from 'draft-js'
 import draftToHtml from 'draftjs-to-html'
@@ -289,13 +289,11 @@ const AdminProduct = props => {
     const totalLists = allList.length
     const pageLimit = 10
     const [currentList, setCurrentList] = useState([])
-
     const onPageChanged = value => {
         let offset = (value - 1) * pageLimit
         const currentList = [...searchResults].slice(offset, offset + pageLimit)
         setCurrentList(currentList)
     }
-
     useEffect(() => {
         setCurrentList([...allList].slice(0, pageLimit))
     }, [products])
@@ -635,6 +633,40 @@ const AdminProduct = props => {
                                                 />
                                             </TableCell>
                                         </TableRow>
+                                        {ckVideoIds ? (
+                                            <TableRow>
+                                                <TableCell className={classes.tbHeadLeft} variant='head'>
+                                                    Video
+                                                </TableCell>
+                                                <TableCell>
+                                                    {allVideos !== null &&
+                                                        allVideos !== undefined &&
+                                                        Object.values(allVideos)?.map(
+                                                            (ckVideo, idx) =>
+                                                                ckVideo && (
+                                                                    <FormControlLabel
+                                                                        key={idx}
+                                                                        label={ckVideo.video_text}
+                                                                        control={
+                                                                            <Checkbox
+                                                                                defaultChecked={ckVideoIds?.includes(
+                                                                                    ckVideo.video_id
+                                                                                )}
+                                                                                name='ckVideo'
+                                                                                color='primary'
+                                                                                onChange={handleChangeVideo(
+                                                                                    ckVideo.video_id
+                                                                                )}
+                                                                            />
+                                                                        }
+                                                                    />
+                                                                )
+                                                        )}
+                                                </TableCell>
+                                            </TableRow>
+                                        ) : (
+                                            ''
+                                        )}
                                         <TableRow>
                                             <TableCell className={classes.tbHeadLeft} variant='head'>
                                                 Hiển thị

@@ -226,7 +226,7 @@ export default function Footer(props) {
                                     <ul className='footer__link_01'>
                                         {arrayMenu?.map((item, idx) => {
                                             return (
-                                                <li className='footer__link-item'>
+                                                <li className='footer__link-item' key={idx}>
                                                     <Link href={`/${item.link}`}>
                                                         <a>{item.name}</a>
                                                     </Link>
@@ -238,10 +238,9 @@ export default function Footer(props) {
                                 <Grid item md={2} xs={12}>
                                     <h3>Products</h3>
                                     <ul className='footer__link_01'>
-                                        {console.log(arrayCollection)}
                                         {arrayCollection?.map((item, idx) => {
                                             return (
-                                                <li className='footer__link-item'>
+                                                <li className='footer__link-item' key={idx}>
                                                     <Link href={`/collections/${item.collection}`}>
                                                         <a>{item.name}</a>
                                                     </Link>

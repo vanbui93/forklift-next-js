@@ -1,7 +1,8 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import PaginationButtons from '../../admin_components/Pagination'
 import ProductItem from '../../components/ProductItem'
 import LayoutUser from '../../layouts/LayoutUser'
 import { getMenu } from '../../store/actions/menu'
@@ -29,25 +30,54 @@ export default function Collections() {
             return item.link.split('/')[1] == collection
         })
 
-    const currentPage =
-        products !== null &&
-        products !== undefined &&
-        Object.values(products)?.find(collect => collect.collection === collection)
+    const arrayProduct = []
+    products &&
+        Object.keys(products)?.map((val, key) => {
+            if (products[val] !== undefined && products[val].collection == collection) {
+                const item = products[val]
+                arrayProduct.push({
+                    key: key,
+                    id: val,
+                    images: item.images,
+                    name: item.name,
+                    collection: item.collection,
+                    isDisplay: item.isDisplay,
+                    price: item.price,
+                    comparePrice: item.comparePrice,
+                })
+            }
+        })
+
+    //Phân trang
+    const allList = [...arrayProduct].sort(
+        (a, b) => new Date(b.create_date) - new Date(a.create_date) || new Date(b.update_date) - new Date(a.update_date)
+    )
+    const totalLists = allList?.length
+    const pageLimit = 20
+    const [currentList, setCurrentList] = useState([])
+    useEffect(() => {
+        setCurrentList([...allList].slice(0, pageLimit))
+    }, [products, collection])
+    const onPageChanged = value => {
+        let offset = (value - 1) * pageLimit
+        const currentList = [...allList].slice(offset, offset + pageLimit)
+        setCurrentList(currentList)
+    }
 
     const getDulieu = collection => {
         return (
-            products &&
-            Object.keys(products)?.map((val, key) => {
-                if (collection === products[val].collection) {
+            currentList &&
+            currentList?.map((item, key) => {
+                if (collection === item.collection) {
                     return (
-                        products[val]?.isDisplay === '1' && (
+                        item?.isDisplay === '1' && (
                             <ProductItem
                                 key={key}
-                                id={val}
-                                images={products[val].images}
-                                name={products[val].name}
-                                price={products[val].price}
-                                comparePrice={products[val].compare_price}
+                                id={item.id}
+                                images={item.images}
+                                name={item.name}
+                                price={item.price}
+                                comparePrice={item.compare_price}
                             />
                         )
                     )
@@ -57,26 +87,32 @@ export default function Collections() {
     }
 
     return (
-        currentPage?.isDisplay === '1' && (
-            <div>
-                <Head>
-                    <title>{colllectName[0]?.name}</title>
-                    <meta name='description' content='Tuấn táo apple - iPhone' />
-                    <meta
-                        name='viewport'
-                        content='width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0'
-                    />
-                    <link rel='icon' href='/favicon.ico' />
-                </Head>
-                <LayoutUser>
-                    <div className='collections'>
-                        <div className='container'>
-                            <h2 className='collection__title'>{colllectName[0]?.name}</h2>
-                            <ul className='collections__list'>{getDulieu(collection)}</ul>
+        <div>
+            <Head>
+                <title>{colllectName[0]?.name}</title>
+                <meta name='description' content='Tuấn táo apple - iPhone' />
+                <meta
+                    name='viewport'
+                    content='width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0'
+                />
+                <link rel='icon' href='/favicon.ico' />
+            </Head>
+            <LayoutUser>
+                <div className='collections'>
+                    <div className='container'>
+                        <h2 className='collection__title'>{colllectName[0]?.name}</h2>
+                        <ul className='collections__list'>{getDulieu(collection)}</ul>
+                        <div className='blogs__pagination'>
+                            <PaginationButtons
+                                count={Math.ceil(totalLists / pageLimit)}
+                                handleChangePage={value => {
+                                    onPageChanged(value)
+                                }}
+                            />
                         </div>
                     </div>
-                </LayoutUser>
-            </div>
-        )
+                </div>
+            </LayoutUser>
+        </div>
     )
 }
