@@ -28,14 +28,13 @@ import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import DiaLogPopup from '../../../admin_components/DiaLogPopup'
 import LayoutAdmin from '../../../layouts/LayoutAdmin'
-import { deletePageDetail, getPageDetail } from '../../../store/actions/page'
 import { storage } from '../../../utils/firebase'
 import { AdminStyle, StyledTableCell, StyledTableRow } from './../../../admin_components/AdminStyle'
 import styles from './styles'
 
 import draftToHtml from 'draftjs-to-html'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
-import { getBlog, updateBlogDetail } from '../../../store/actions/blogs'
+import { deleteBlogDetail, getBlog, updateBlogDetail } from '../../../store/actions/blogs'
 
 const Editor = dynamic(() => import('react-draft-wysiwyg').then(mod => mod.Editor), { ssr: false })
 const htmlToDraft = typeof window === 'object' && require('html-to-draftjs').default
@@ -130,8 +129,8 @@ function AdminPage(props) {
     // Bạn có chắc chắn muốn xóa
     const areUSureDelete = status => {
         if (status) {
-            dispatch(deletePageDetail(idPageRef.current))
-            dispatch(getPageDetail())
+            dispatch(deleteBlogDetail(idPageRef.current))
+            dispatch(getBlog())
             handleDialog('', false)
         } else {
             handleDialog('', false)
