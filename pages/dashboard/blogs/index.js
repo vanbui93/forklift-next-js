@@ -18,7 +18,8 @@ import {
 import AddIcon from '@mui/icons-material/Add'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
-import { Stack } from '@mui/material'
+import SearchIcon from '@mui/icons-material/Search'
+import { IconButton, InputBase, Stack } from '@mui/material'
 import Paper from '@mui/material/Paper'
 import { ContentState, convertToRaw, EditorState } from 'draft-js'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
@@ -27,6 +28,7 @@ import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import DiaLogPopup from '../../../admin_components/DiaLogPopup'
+import PaginationButtons from '../../../admin_components/Pagination'
 import LayoutAdmin from '../../../layouts/LayoutAdmin'
 import { storage } from '../../../utils/firebase'
 import { AdminStyle, StyledTableCell, StyledTableRow } from './../../../admin_components/AdminStyle'
@@ -46,6 +48,10 @@ function AdminPage(props) {
     const dispatch = useDispatch()
     const router = useRouter()
     const refs = useRef()
+
+    //Giá trị nhập vào input searchTerm, kết quả search searchResults
+    const [searchTerm, setSearchTerm] = useState('')
+    const [searchResults, setSearchResults] = useState([])
 
     // Thiết lập trạng thái DiaLog
     const [dialog, setDialog] = useState({
@@ -261,6 +267,52 @@ function AdminPage(props) {
         }))
     }, [result])
 
+    const arrayBlog = []
+    blogData &&
+        Object.values(blogData)?.map((item, idx) => {
+            arrayBlog.push({
+                id: item.id,
+                slug: item.slug,
+                title: item.title,
+                image: item.image,
+                content: item.content,
+                isDisplay: item.isDisplay,
+                create_date: item.create_date,
+                update_date: item.update_date,
+            })
+        })
+
+    //Phân trang
+    const allList = [...arrayBlog].sort(
+        (a, b) => new Date(b.create_date) - new Date(a.create_date) || new Date(b.update_date) - new Date(a.update_date)
+    )
+    const totalLists = allList.length
+    const pageLimit = 10
+    const [currentList, setCurrentList] = useState([])
+
+    const onPageChanged = value => {
+        let offset = (value - 1) * pageLimit
+        const currentList = [...searchResults].slice(offset, offset + pageLimit)
+        setCurrentList(currentList)
+    }
+
+    useEffect(() => {
+        setCurrentList([...allList].slice(0, pageLimit))
+    }, [blogData])
+
+    //Kết quả Search
+    const handleSearch = e => {
+        let value = e.target.value
+        setSearchTerm(value)
+    }
+    useEffect(() => {
+        const results = arrayBlog?.filter(e => {
+            return Object.values(e).join('').toLowerCase().includes(searchTerm.toLowerCase())
+        })
+        setSearchResults(results)
+        setCurrentList([...results].slice(0, pageLimit))
+    }, [searchTerm, blogData])
+
     return (
         <AdminStyle open={!opensidebar}>
             <LayoutAdmin>
@@ -279,6 +331,27 @@ function AdminPage(props) {
                                 &nbsp;&nbsp;Tạo bài viết mới
                             </Button>
                         </Grid>
+                        <Paper
+                            component='form'
+                            sx={{
+                                p: '2px 4px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                width: 400,
+                                marginBottom: '10px',
+                            }}
+                        >
+                            <InputBase
+                                sx={{ ml: 1, flex: 1 }}
+                                placeholder='Tìm kiếm bài viết'
+                                value={searchTerm}
+                                inputProps={{ 'aria-label': 'Tìm kiếm bài viết' }}
+                                onChange={handleSearch}
+                            />
+                            <IconButton type='button' sx={{ p: '10px' }} aria-label='search'>
+                                <SearchIcon />
+                            </IconButton>
+                        </Paper>
                         <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 700 }} aria-label='customized table'>
                                 <TableHead>
@@ -294,9 +367,9 @@ function AdminPage(props) {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {arrayPage !== null &&
-                                        arrayPage !== undefined &&
-                                        Object.values(arrayPage)?.map(
+                                    {currentList !== null &&
+                                        currentList !== undefined &&
+                                        Object.values(currentList)?.map(
                                             (post, idx) =>
                                                 post !== null &&
                                                 post !== undefined && (
@@ -341,6 +414,12 @@ function AdminPage(props) {
                                 </TableBody>
                             </Table>
                         </TableContainer>
+                        <PaginationButtons
+                            count={Math.ceil(totalLists / pageLimit)}
+                            handleChangePage={value => {
+                                onPageChanged(value)
+                            }}
+                        />
                     </div>
                 ) : (
                     <Grid ref={refs}>

@@ -14,8 +14,8 @@ export default function BreadCrumb(props) {
         dispatch(getMenu())
     }, [])
     const colllectName =
-        menus.length &&
-        menus?.filter(item => {
+        menus &&
+        Object.values(menus)?.filter(item => {
             return item.link.split('/')[1] == collection
         })
 
