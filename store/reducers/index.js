@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux'
 import accountReducer from './account'
 import blogReducer from './blogs'
-import blogDetailReducer from './blogDetail'
 import collectionReducer from './collections'
 import mainReducer from './main'
 import menuReducer from './menus'
@@ -29,7 +28,6 @@ const rootReducer = combineReducers({
     videos: videosReducer,
     page: pageReducer,
     blog: blogReducer,
-    blogDetail: blogDetailReducer,
     mediaStorage: storageReducer,
 })
 

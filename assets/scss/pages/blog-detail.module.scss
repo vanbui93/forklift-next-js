@@ -12,7 +12,20 @@
     }
 
     p {
-        margin-top: 20px;
+        margin-top: 15px;
+        font-size: 17px;
+        font-family: "Times New Roman";
+        line-height: 24px;
+    }
+
+    &__content {
+        margin-bottom: 50px;
+    }
+
+    &__date {
+        strong {
+            margin-right: 10px;
+        }
     }
 }
 

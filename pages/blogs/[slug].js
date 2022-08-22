@@ -4,16 +4,16 @@ import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import LayoutUser from '../../layouts/LayoutUser'
-import { getBlogDetail } from '../../store/actions/blogDetail'
+import { getBlog } from '../../store/actions/blogs'
 
 export default function PagesContent() {
-    const blogData = useSelector(state => state.blogDetail.data)
+    const blogData = useSelector(state => state.blog.data)
     const router = useRouter()
     const { slug } = router.query
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(getBlogDetail())
+        dispatch(getBlog())
     }, [])
 
     const currentPage =
@@ -34,7 +34,13 @@ export default function PagesContent() {
                 <div className='blog-detail'>
                     <div className='container'>
                         <h2>{currentPage?.title}</h2>
-                        <div>{parse(currentPage?.content ? currentPage?.content : '')}</div>
+                        <div className='blog-detail__content'>
+                            {parse(currentPage?.content ? currentPage?.content : '')}
+                        </div>
+                        <div className='blog-detail__date'>
+                            <strong>Ngày đăng</strong>
+                            {currentPage?.create_date}
+                        </div>
                     </div>
                 </div>
             </LayoutUser>
