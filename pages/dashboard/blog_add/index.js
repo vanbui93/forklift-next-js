@@ -21,6 +21,7 @@ import nextId, { setPrefix } from 'react-id-generator'
 import { useDispatch, useSelector } from 'react-redux'
 import LayoutAdmin from '../../../layouts/LayoutAdmin'
 import { addBlogObject, getBlog } from '../../../store/actions/blogs'
+import { changeToSlug } from '../../../utils/changeToSlug'
 import { storage } from '../../../utils/firebase'
 import { AdminStyle } from './../../../admin_components/AdminStyle'
 import styles from './styles'
@@ -54,6 +55,13 @@ const BlogAdd = props => {
             ...prevState,
             [name]: value,
         }))
+
+        if (name === 'title') {
+            setAddBlog(prevState => ({
+                ...prevState,
+                slug: changeToSlug(e.target.value),
+            }))
+        }
     }
 
     setPrefix('')
@@ -136,7 +144,7 @@ const BlogAdd = props => {
     const { result, uploader } = useDisplayImage()
 
     //Button 'Thêm 1 hình slide'
-    const UploadControl = ({ children, value, onChange, disabled }) => {
+    const UploadControl = ({ children, value, disabled }) => {
         return (
             <label htmlFor='contained-button-file' className='m-0 w-100'>
                 <input
@@ -163,6 +171,8 @@ const BlogAdd = props => {
             image: result,
         }))
     }, [result])
+
+    console.log(addBlog)
 
     return (
         <AdminStyle open={!opensidebar}>
@@ -243,7 +253,8 @@ const BlogAdd = props => {
                                         size='small'
                                         fullWidth
                                         name='slug'
-                                        onChange={handleEditOnchage}
+                                        readOnly={true}
+                                        value={changeToSlug(addBlog.title)}
                                     />
                                 </TableCell>
                             </TableRow>

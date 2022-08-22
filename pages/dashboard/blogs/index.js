@@ -35,6 +35,7 @@ import styles from './styles'
 import draftToHtml from 'draftjs-to-html'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import { deleteBlogDetail, getBlog, updateBlogDetail } from '../../../store/actions/blogs'
+import { changeToSlug } from '../../../utils/changeToSlug'
 
 const Editor = dynamic(() => import('react-draft-wysiwyg').then(mod => mod.Editor), { ssr: false })
 const htmlToDraft = typeof window === 'object' && require('html-to-draftjs').default
@@ -144,6 +145,13 @@ function AdminPage(props) {
             ...prevState,
             [name]: value,
         }))
+
+        if (name === 'title') {
+            setEditBlogObject(prevState => ({
+                ...prevState,
+                slug: changeToSlug(e.target.value),
+            }))
+        }
     }
 
     const handleCancel = () => {
@@ -414,8 +422,8 @@ function AdminPage(props) {
                                                     id='outlined-size-small'
                                                     size='small'
                                                     fullWidth
-                                                    defaultValue={editBlogObject.slug}
                                                     name='slug'
+                                                    value={changeToSlug(editBlogObject.slug)}
                                                     onChange={handleEditOnchage}
                                                 />
                                             </TableCell>
