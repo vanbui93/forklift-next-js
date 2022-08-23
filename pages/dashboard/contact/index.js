@@ -3,7 +3,6 @@ import {
     Fab,
     Grid,
     IconButton,
-    InputBase,
     Table,
     TableBody,
     TableCell,
@@ -16,7 +15,7 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
 import DeleteIcon from '@mui/icons-material/Delete'
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
 import SearchIcon from '@mui/icons-material/Search'
-import { Stack } from '@mui/material'
+import { InputBase, Stack } from '@mui/material'
 import Paper from '@mui/material/Paper'
 import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -111,15 +110,15 @@ const AdminContact = props => {
     }
 
     //Phân trang
-    const allList = [...arrayContact].sort(
-        (a, b) => new Date(b.create_date) - new Date(a.create_date) || new Date(b.update_date) - new Date(a.update_date)
-    )
-    const totalLists = allList.length
+    const allList = [...arrayContact].sort((a, b) => new Date(b.create_date) - new Date(a.create_date))
+    const totalLists = arrayContact.length
     const pageLimit = 10
     const [currentList, setCurrentList] = useState([])
     const onPageChanged = value => {
         let offset = (value - 1) * pageLimit
-        const currentList = [...searchResults].slice(offset, offset + pageLimit)
+        const currentList = [...searchResults]
+            .slice(offset, offset + pageLimit)
+            .sort((a, b) => new Date(b.create_date) - new Date(a.create_date))
         setCurrentList(currentList)
     }
     useEffect(() => {
@@ -136,20 +135,10 @@ const AdminContact = props => {
             return Object.values(e).join('').toLowerCase().includes(searchTerm.toLowerCase())
         })
         setSearchResults(results)
-        setCurrentList([...results].slice(0, pageLimit))
+        setCurrentList(
+            [...results].slice(0, pageLimit).sort((a, b) => new Date(b.create_date) - new Date(a.create_date))
+        )
     }, [searchTerm, contactInfo])
-
-    const onEditorStateChange = editorState => {
-        const currentContent = draftToHtml(convertToRaw(editorState.getCurrentContent()))
-        setEditorState(editorState)
-
-        console.log(currentContent)
-
-        setEditObject(prevState => ({
-            ...prevState,
-            content: currentContent,
-        }))
-    }
 
     return (
         <AdminStyle open={!opensidebar}>
@@ -197,9 +186,9 @@ const AdminContact = props => {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {arrayContact !== null &&
-                                        arrayContact !== undefined &&
-                                        Object.values(arrayContact)?.map((contact, idx) => {
+                                    {currentList !== null &&
+                                        currentList !== undefined &&
+                                        Object.values(currentList)?.map((contact, idx) => {
                                             return (
                                                 contact !== null &&
                                                 contact !== undefined && (

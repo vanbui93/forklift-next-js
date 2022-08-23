@@ -40,13 +40,12 @@ export default function PagesContent() {
     const [currentList, setCurrentList] = useState([])
     const onPageChanged = value => {
         let offset = (value - 1) * pageLimit
-        const currentList = [...allList].slice(offset, offset + pageLimit)
+        const currentList = allList.slice(offset, offset + pageLimit)
         setCurrentList(currentList)
     }
     useEffect(() => {
         setCurrentList([...allList].slice(0, pageLimit))
     }, [blogData])
-
     return (
         <div>
             <Head>

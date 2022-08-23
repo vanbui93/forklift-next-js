@@ -90,6 +90,10 @@ function AdminPage(props) {
             }
         })
 
+    const currentList = [...arrayPage].sort(
+        (a, b) => new Date(b.create_date) - new Date(a.create_date) || new Date(b.update_date) - new Date(a.update_date)
+    )
+
     useEffect(() => {
         dispatch(getPageDetail())
     }, [])
@@ -232,9 +236,9 @@ function AdminPage(props) {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {arrayPage !== null &&
-                                        arrayPage !== undefined &&
-                                        Object.values(arrayPage)?.map(
+                                    {currentList !== null &&
+                                        currentList !== undefined &&
+                                        Object.values(currentList)?.map(
                                             (page, idx) =>
                                                 page !== null &&
                                                 page !== undefined && (

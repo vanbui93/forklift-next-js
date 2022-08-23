@@ -145,7 +145,9 @@ const AdminOrder = props => {
 
     const onPageChanged = value => {
         let offset = (value - 1) * pageLimit
-        const currentList = [...searchResults].slice(offset, offset + pageLimit)
+        const currentList = [...searchResults]
+            .slice(offset, offset + pageLimit)
+            .sort((a, b) => new Date(b.create_date) - new Date(a.create_date))
         setCurrentList(currentList)
     }
 
@@ -163,7 +165,9 @@ const AdminOrder = props => {
             return Object.values(e).join('').toLowerCase().includes(searchTerm.toLowerCase())
         })
         setSearchResults(results)
-        setCurrentList([...results].slice(0, pageLimit))
+        setCurrentList(
+            [...results].slice(0, pageLimit).sort((a, b) => new Date(b.create_date) - new Date(a.create_date))
+        )
     }, [searchTerm, orders])
 
     //Cick để edit đơn hàng

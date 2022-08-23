@@ -291,7 +291,13 @@ function AdminPage(props) {
     const [currentList, setCurrentList] = useState([])
     const onPageChanged = value => {
         let offset = (value - 1) * pageLimit
-        const currentList = [...searchResults].slice(offset, offset + pageLimit)
+        const currentList = [...searchResults]
+            .slice(offset, offset + pageLimit)
+            .sort(
+                (a, b) =>
+                    new Date(b.create_date) - new Date(a.create_date) ||
+                    new Date(b.update_date) - new Date(a.update_date)
+            )
         setCurrentList(currentList)
     }
     useEffect(() => {
@@ -304,7 +310,7 @@ function AdminPage(props) {
         setSearchTerm(value)
     }
     useEffect(() => {
-        const results = arrayBlog?.filter(e => {
+        const results = allList?.filter(e => {
             return Object.values(e).join('').toLowerCase().includes(searchTerm.toLowerCase())
         })
         setSearchResults(results)
