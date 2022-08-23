@@ -87,33 +87,6 @@
         margin-bottom: 20px;
     }
 
-    &__contact-input {
-        width: 100%;
-        font-family: Arial;
-        font-size: 14px;
-        color: #545454;
-        letter-spacing: 0;
-        line-height: 1.7em;
-        text-align: left;
-        background-color: rgb(243, 243, 243);
-        color: rgb(0, 0, 0);
-        border: 1px solid #ccc;
-        box-shadow: 1px 1px 2px rgb(0 0 0 / 10%) inset;
-
-    }
-
-    &__contact-text-area {
-        margin-top: 10px;
-        margin-bottom: 10px;
-        resize: vertical;
-    }
-
-    .errormessage {
-        color: red;
-        font-size: 14px;
-        line-height: 1.5;
-    }
-
     &__link-item {
         >a {
             position: relative;

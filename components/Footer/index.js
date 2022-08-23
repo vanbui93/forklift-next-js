@@ -1,14 +1,17 @@
-import { ref } from '@firebase/database'
+import { ref, set } from '@firebase/database'
 import { faPhone } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, Grid } from '@material-ui/core'
 import FacebookIcon from '@mui/icons-material/Facebook'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import methods from 'validator'
-import { getCollection } from '../../store/actions/collection'
+import nextId, { setPrefix } from 'react-id-generator'
 import { useDispatch, useSelector } from 'react-redux'
+import methods from 'validator'
+import { RULES } from '../../Route'
+import { getCollection } from '../../store/actions/collection'
 import { getMenu } from '../../store/actions/menu'
+import { db } from '../../utils/firebase'
 
 export default function Footer(props) {
     const { footerData } = props
@@ -48,7 +51,6 @@ export default function Footer(props) {
     }, [footerData])
 
     const [contactData, setContactData] = useState({
-        id: '',
         contact_email: '',
         contact_message: '',
     })
@@ -85,7 +87,7 @@ export default function Footer(props) {
 
     let isValid = true
     const valiErrors = () => {
-        rules.forEach(rule => {
+        RULES.forEach(rule => {
             if (errorsMessage[rule.field]) return
 
             const fieldVal = fieldValue[rule.field] || ''
@@ -106,13 +108,16 @@ export default function Footer(props) {
     }
 
     const handleSubmitContact = e => {
+        console.log(contactData)
         e.preventDefault()
 
         if (valiErrors().contact_email === '' && valiErrors().contact_message === '') {
             // thêm dữ liệu vào firebase
-            set(ref(db, 'contact/' + key), {
-                product_image: state.contact_email ? state.contact_email : '',
-                product_name: state.contact_message ? state.contact_message : '',
+            setPrefix('')
+            const keyAdd = nextId()
+            set(ref(db, 'contact/' + Number(keyAdd)), {
+                contact_email: contactData.contact_email,
+                contact_message: contactData.contact_message,
                 create_date: new Date().toString().replace(/GMT.*/g, ''),
             })
         } else {
@@ -252,33 +257,39 @@ export default function Footer(props) {
                                 <Grid item md={4} xs={12}>
                                     <h3>CONTACT US TODAY</h3>
                                     <form action='/'>
-                                        <div>
-                                            <span>
-                                                <input
-                                                    type='text'
-                                                    name='contact_email'
-                                                    className='footer__contact-input'
-                                                    required
-                                                    onChange={e => handleOnChange(e)}
-                                                />
-                                            </span>
-                                            {errorsMessage.contact_email && (
-                                                <div className='errormessage'>{errorsMessage.contact_email}</div>
-                                            )}
+                                        <div className='control-group'>
+                                            <div className='contact__form-fullwidth'>
+                                                <span>
+                                                    <input
+                                                        type='text'
+                                                        name='contact_email'
+                                                        className='contact__form-input'
+                                                        placeholder='*Email'
+                                                        required
+                                                        onChange={e => handleOnChange(e)}
+                                                    />
+                                                </span>
+                                                {errorsMessage.contact_email && (
+                                                    <div className='errormessage'>{errorsMessage.contact_email}</div>
+                                                )}
+                                            </div>
                                         </div>
-                                        <div>
-                                            <span>
-                                                <textarea
-                                                    type='text'
-                                                    name='contact_message'
-                                                    className='footer__contact-input footer__contact-text-area'
-                                                    required
-                                                    onChange={e => handleOnChange(e)}
-                                                />
-                                            </span>
-                                            {errorsMessage.contact_message && (
-                                                <div className='errormessage'>{errorsMessage.contact_message}</div>
-                                            )}
+                                        <div className='control-group'>
+                                            <div className='contact__form-fullwidth'>
+                                                <span>
+                                                    <textarea
+                                                        type='text'
+                                                        name='contact_message'
+                                                        className='contact__form-input'
+                                                        placeholder='*Message'
+                                                        required
+                                                        onChange={e => handleOnChange(e)}
+                                                    />
+                                                </span>
+                                                {errorsMessage.contact_message && (
+                                                    <div className='errormessage'>{errorsMessage.contact_message}</div>
+                                                )}
+                                            </div>
                                         </div>
                                         <Button
                                             variant='contained'

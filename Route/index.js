@@ -44,3 +44,18 @@ export const ADMIN_ROUTES = [
         name: 'Tệp tin - hình ảnh đã tải',
     },
 ]
+
+export const RULES = [
+    {
+        field: 'contact_email',
+        method: 'isEmpty',
+        validWhen: false,
+        message: 'This field is required',
+    },
+    {
+        field: 'contact_message',
+        method: 'isEmpty',
+        validWhen: false,
+        message: 'This field is required',
+    },
+]

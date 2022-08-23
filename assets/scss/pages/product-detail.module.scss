@@ -14,7 +14,7 @@
     }
 
     &__images {
-        width: 21vw;
+        width: 40%;
         margin-right: 15px;
     }
 
@@ -73,11 +73,10 @@
     &__variant {
         flex-grow: 1;
         margin-right: 30px;
-        width: 23vw;
     }
 
     &__short-des {
-        width: calc(100% - 44vw);
+        width: 30%;
     }
 
     &__purchase {

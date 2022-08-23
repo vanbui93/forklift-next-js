@@ -1,0 +1,42 @@
+.contact {
+  max-width: 800px;
+
+  &__form-input {
+    width: 100%;
+    font-family: Arial;
+    font-size: 14px;
+    color: #545454;
+    letter-spacing: 0;
+    line-height: 1.7em;
+    text-align: left;
+    background-color: rgb(243, 243, 243);
+    color: rgb(0, 0, 0);
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 2px rgb(0 0 0 / 10%) inset;
+    padding: 4px 7px;
+  }
+
+  &__form-text-area {
+    margin-bottom: 10px;
+    resize: vertical;
+  }
+
+  .control-label {
+    width: 160px;
+  }
+
+  &__form-fullwidth {
+    width: 100%;
+  }
+}
+
+.control-group {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.errormessage {
+  color: red;
+  font-size: 14px;
+  line-height: 1.5;
+}
