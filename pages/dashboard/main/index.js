@@ -32,9 +32,9 @@ const Main = props => {
         logo_alt: '',
         page_title: '',
         phone: '',
-        phone_text: '',
         hotline: '',
         address: '',
+        email_support: '',
         core_title_01: '',
         core_title_02: '',
         core_title_03: '',
@@ -43,27 +43,15 @@ const Main = props => {
         core_content_02: '',
         core_content_03: '',
         core_content_04: '',
-        header_content: {
-            header_text_01: '',
-            header_link_01: '',
-            header_text_02: '',
-            header_link_02: '',
-        },
         footer_title: {
             footer_title_01: '',
             footer_title_02: '',
-            footer_title_03: '',
-            footer_title_04: '',
         },
         footer_sub: {
-            text_01: '',
-            link_01: '',
-            text_02: '',
-            link_02: '',
-            text_03: '',
-            link_03: '',
-            text_04: '',
-            link_04: '',
+            footer_sub_title_01: '',
+            footer_sub_title_02: '',
+            footer_sub_title_03: '',
+            footer_sub_title_04: '',
         },
         menu_hambuger: {
             link_menu_01: '',
@@ -84,8 +72,8 @@ const Main = props => {
             logo_alt: mainData.logo_alt,
             page_title: mainData.page_title,
             phone: mainData.phone,
-            phone_text: mainData.phone_text,
             address: mainData.address,
+            email_support: mainData.email_support,
             hotline: mainData.hotline,
             core_title_01: mainData.core_title_01,
             core_title_02: mainData.core_title_02,
@@ -95,27 +83,15 @@ const Main = props => {
             core_content_02: mainData.core_content_02,
             core_content_03: mainData.core_content_03,
             core_content_04: mainData.core_content_04,
-            header_content: {
-                header_text_01: mainData.header_content.header_text_01,
-                header_link_01: mainData.header_content.header_link_01,
-                header_text_02: mainData.header_content.header_text_02,
-                header_link_02: mainData.header_content.header_link_02,
-            },
             footer_title: {
                 footer_title_01: mainData.footer_title.footer_title_01,
                 footer_title_02: mainData.footer_title.footer_title_02,
-                footer_title_03: mainData.footer_title.footer_title_03,
-                footer_title_04: mainData.footer_title.footer_title_04,
             },
             footer_sub: {
-                text_01: mainData.footer_sub.text_01,
-                link_01: mainData.footer_sub.link_01,
-                text_02: mainData.footer_sub.text_02,
-                link_02: mainData.footer_sub.link_02,
-                text_03: mainData.footer_sub.text_03,
-                link_03: mainData.footer_sub.link_03,
-                text_04: mainData.footer_sub.text_04,
-                link_04: mainData.footer_sub.link_04,
+                footer_sub_title_01: mainData.footer_sub.footer_sub_title_01,
+                footer_sub_title_02: mainData.footer_sub.footer_sub_title_02,
+                footer_sub_title_03: mainData.footer_sub.footer_sub_title_03,
+                footer_sub_title_04: mainData.footer_sub.footer_sub_title_04,
             },
             menu_hambuger: {
                 link_menu_01: mainData.menu_hambuger.link_menu_01,
@@ -129,6 +105,9 @@ const Main = props => {
             },
         })
     }
+
+    console.log(mainData)
+    console.log(editMain)
 
     const handleEditOnchage = e => {
         let name = e.target.name
@@ -302,6 +281,12 @@ const Main = props => {
                                     </TableRow>
                                     <TableRow>
                                         <TableCell className={classes.tbHeadLeft} variant='head'>
+                                            Email hỗ trợ
+                                        </TableCell>
+                                        <TableCell>{mainData?.email_support}</TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell className={classes.tbHeadLeft} variant='head'>
                                             Hotline
                                         </TableCell>
                                         <TableCell>{mainData?.hotline}</TableCell>
@@ -314,45 +299,21 @@ const Main = props => {
                                     </TableRow>
                                     <TableRow>
                                         <TableCell className={classes.tbHeadLeft} variant='head'>
-                                            Nội dung - Header 1
-                                        </TableCell>
-                                        <TableCell>{mainData?.phone_text}</TableCell>
-                                    </TableRow>
-                                    <TableRow>
-                                        <TableCell className={classes.tbHeadLeft} variant='head'>
-                                            Nội dung - Header 2
-                                        </TableCell>
-                                        <TableCell>{mainData.header_content?.header_text_01}</TableCell>
-                                    </TableRow>
-                                    <TableRow>
-                                        <TableCell className={classes.tbHeadLeft} variant='head'>
-                                            Nội dung - Header 3
-                                        </TableCell>
-                                        <TableCell>{mainData.header_content?.header_text_02}</TableCell>
-                                    </TableRow>
-                                    <TableRow>
-                                        <TableCell className={classes.tbHeadLeft} variant='head'>
-                                            Nội dung - Footer
+                                            Footer
                                         </TableCell>
                                         <TableCell>
                                             <ul>
                                                 <li className={classes.footerTitle}>
                                                     {mainData.footer_title?.footer_title_01}
                                                     <ul className={classes.footerSubItem}>
-                                                        <li>{mainData.footer_sub?.text_01}</li>
-                                                        <li>{mainData.footer_sub?.text_02}</li>
-                                                        <li>{mainData.footer_sub?.text_03}</li>
-                                                        <li>{mainData.footer_sub?.text_04}</li>
+                                                        <li>{mainData.footer_sub?.footer_sub_title_01}</li>
+                                                        <li>{mainData.footer_sub?.footer_sub_title_02}</li>
+                                                        <li>{mainData.footer_sub?.footer_sub_title_03}</li>
+                                                        <li>{mainData.footer_sub?.footer_sub_title_04}</li>
                                                     </ul>
                                                 </li>
                                                 <li className={classes.footerTitle}>
                                                     {mainData.footer_title?.footer_title_02}
-                                                </li>
-                                                <li className={classes.footerTitle}>
-                                                    {mainData.footer_title?.footer_title_03}
-                                                </li>
-                                                <li className={classes.footerTitle}>
-                                                    {mainData.footer_title?.footer_title_04}
                                                 </li>
                                             </ul>
                                         </TableCell>
@@ -514,22 +475,7 @@ const Main = props => {
                                     </TableRow>
                                     <TableRow>
                                         <TableCell className={classes.tbHeadLeft} variant='head'>
-                                            Nội dung - Header 1
-                                        </TableCell>
-                                        <TableCell>
-                                            <TextField
-                                                id='outlined-size-small'
-                                                size='small'
-                                                fullWidth
-                                                defaultValue={editMain.phone_text}
-                                                name='phone_text'
-                                                onChange={handleEditOnchage}
-                                            />
-                                        </TableCell>
-                                    </TableRow>
-                                    <TableRow>
-                                        <TableCell className={classes.tbHeadLeft} variant='head'>
-                                            Nội dung - Header 2
+                                            Email hỗ trợ
                                         </TableCell>
                                         <TableCell>
                                             <Grid container spacing={2}>
@@ -538,18 +484,8 @@ const Main = props => {
                                                         id='outlined-size-small'
                                                         size='small'
                                                         fullWidth
-                                                        defaultValue={editMain.header_content.header_text_01}
-                                                        name='header_text_01'
-                                                        onChange={handleEditOnchageHeader}
-                                                    />
-                                                </Grid>
-                                                <Grid item xs={6}>
-                                                    <TextField
-                                                        id='outlined-size-small'
-                                                        size='small'
-                                                        fullWidth
-                                                        defaultValue={editMain.header_content.header_link_01}
-                                                        name='header_link_01'
+                                                        defaultValue={editMain.email_support}
+                                                        name='email_support'
                                                         onChange={handleEditOnchageHeader}
                                                     />
                                                 </Grid>
@@ -558,40 +494,11 @@ const Main = props => {
                                     </TableRow>
                                     <TableRow>
                                         <TableCell className={classes.tbHeadLeft} variant='head'>
-                                            Nội dung - Header 3
+                                            Tiêu đề ở Footer
                                         </TableCell>
                                         <TableCell>
                                             <Grid container spacing={2}>
-                                                <Grid item xs={6}>
-                                                    <TextField
-                                                        id='outlined-size-small'
-                                                        size='small'
-                                                        fullWidth
-                                                        defaultValue={editMain.header_content.header_text_02}
-                                                        name='header_text_02'
-                                                        onChange={handleEditOnchageHeader}
-                                                    />
-                                                </Grid>
-                                                <Grid item xs={6}>
-                                                    <TextField
-                                                        id='outlined-size-small'
-                                                        size='small'
-                                                        fullWidth
-                                                        defaultValue={editMain.header_content.header_link_02}
-                                                        name='header_link_02'
-                                                        onChange={handleEditOnchageHeader}
-                                                    />
-                                                </Grid>
-                                            </Grid>
-                                        </TableCell>
-                                    </TableRow>
-                                    <TableRow>
-                                        <TableCell className={classes.tbHeadLeft} variant='head'>
-                                            Nội dung - Footer
-                                        </TableCell>
-                                        <TableCell>
-                                            <ul>
-                                                <li className={classes.footerTitle}>
+                                                <Grid item xs={4}>
                                                     <TextField
                                                         id='outlined-size-small'
                                                         size='small'
@@ -600,98 +507,10 @@ const Main = props => {
                                                         name='footer_title_01'
                                                         onChange={handleEditOnchageFooterTitle}
                                                     />
-                                                    <div className={classes.footerSubItem}>
-                                                        <Grid container spacing={2}>
-                                                            <Grid item xs={3}>
-                                                                <TextField
-                                                                    id='outlined-size-small'
-                                                                    size='small'
-                                                                    fullWidth
-                                                                    defaultValue={editMain.footer_sub.text_01}
-                                                                    name='text_01'
-                                                                    onChange={handleEditOnchageFooterSub}
-                                                                />
-                                                            </Grid>
-                                                            <Grid item xs={3}>
-                                                                <TextField
-                                                                    id='outlined-size-small'
-                                                                    size='small'
-                                                                    fullWidth
-                                                                    defaultValue={editMain.footer_sub.link_01}
-                                                                    name='link_01'
-                                                                    onChange={handleEditOnchageFooterSub}
-                                                                />
-                                                            </Grid>
-                                                        </Grid>
-                                                        <Grid container spacing={2}>
-                                                            <Grid item xs={3}>
-                                                                <TextField
-                                                                    id='outlined-size-small'
-                                                                    size='small'
-                                                                    fullWidth
-                                                                    defaultValue={editMain.footer_sub.text_02}
-                                                                    name='text_02'
-                                                                    onChange={handleEditOnchageFooterSub}
-                                                                />
-                                                            </Grid>
-                                                            <Grid item xs={3}>
-                                                                <TextField
-                                                                    id='outlined-size-small'
-                                                                    size='small'
-                                                                    fullWidth
-                                                                    defaultValue={editMain.footer_sub.link_02}
-                                                                    name='link_02'
-                                                                    onChange={handleEditOnchageFooterSub}
-                                                                />
-                                                            </Grid>
-                                                        </Grid>
-                                                        <Grid container spacing={2}>
-                                                            <Grid item xs={3}>
-                                                                <TextField
-                                                                    id='outlined-size-small'
-                                                                    size='small'
-                                                                    fullWidth
-                                                                    defaultValue={editMain.footer_sub.text_03}
-                                                                    name='text_03'
-                                                                    onChange={handleEditOnchageFooterSub}
-                                                                />
-                                                            </Grid>
-                                                            <Grid item xs={3}>
-                                                                <TextField
-                                                                    id='outlined-size-small'
-                                                                    size='small'
-                                                                    fullWidth
-                                                                    defaultValue={editMain.footer_sub.link_03}
-                                                                    name='link_03'
-                                                                    onChange={handleEditOnchageFooterSub}
-                                                                />
-                                                            </Grid>
-                                                        </Grid>
-                                                        <Grid container spacing={2}>
-                                                            <Grid item xs={3}>
-                                                                <TextField
-                                                                    id='outlined-size-small'
-                                                                    size='small'
-                                                                    fullWidth
-                                                                    defaultValue={editMain.footer_sub.text_04}
-                                                                    name='text_04'
-                                                                    onChange={handleEditOnchageFooterSub}
-                                                                />
-                                                            </Grid>
-                                                            <Grid item xs={3}>
-                                                                <TextField
-                                                                    id='outlined-size-small'
-                                                                    size='small'
-                                                                    fullWidth
-                                                                    defaultValue={editMain.footer_sub.link_04}
-                                                                    name='link_04'
-                                                                    onChange={handleEditOnchageFooterSub}
-                                                                />
-                                                            </Grid>
-                                                        </Grid>
-                                                    </div>
-                                                </li>
-                                                <li className={classes.footerTitle}>
+                                                </Grid>
+                                            </Grid>
+                                            <Grid container spacing={2}>
+                                                <Grid item xs={4}>
                                                     <TextField
                                                         id='outlined-size-small'
                                                         size='small'
@@ -700,28 +519,65 @@ const Main = props => {
                                                         name='footer_title_02'
                                                         onChange={handleEditOnchageFooterTitle}
                                                     />
-                                                </li>
-                                                <li className={classes.footerTitle}>
-                                                    <TextField
-                                                        id='outlined-size-small'
-                                                        size='small'
-                                                        fullWidth
-                                                        defaultValue={editMain.footer_title.footer_title_03}
-                                                        name='footer_title_03'
-                                                        onChange={handleEditOnchageFooterTitle}
-                                                    />
-                                                </li>
-                                                <li className={classes.footerTitle}>
-                                                    <TextField
-                                                        id='outlined-size-small'
-                                                        size='small'
-                                                        fullWidth
-                                                        defaultValue={editMain.footer_title.footer_title_04}
-                                                        name='footer_title_04'
-                                                        onChange={handleEditOnchageFooterTitle}
-                                                    />
-                                                </li>
-                                            </ul>
+                                                </Grid>
+                                            </Grid>
+                                        </TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell className={classes.tbHeadLeft} variant='head'>
+                                            Tiêu đề nhỏ ở Footer
+                                        </TableCell>
+                                        <TableCell>
+                                            <div className={classes.footerSubItem}>
+                                                <Grid container spacing={2}>
+                                                    <Grid item xs={4}>
+                                                        <TextField
+                                                            id='outlined-size-small'
+                                                            size='small'
+                                                            fullWidth
+                                                            defaultValue={editMain.footer_sub.footer_sub_title_01}
+                                                            name='footer_sub_title_01'
+                                                            onChange={handleEditOnchageFooterSub}
+                                                        />
+                                                    </Grid>
+                                                </Grid>
+                                                <Grid container spacing={2}>
+                                                    <Grid item xs={4}>
+                                                        <TextField
+                                                            id='outlined-size-small'
+                                                            size='small'
+                                                            fullWidth
+                                                            defaultValue={editMain.footer_sub.footer_sub_title_02}
+                                                            name='footer_sub_title_02'
+                                                            onChange={handleEditOnchageFooterSub}
+                                                        />
+                                                    </Grid>
+                                                </Grid>
+                                                <Grid container spacing={2}>
+                                                    <Grid item xs={4}>
+                                                        <TextField
+                                                            id='outlined-size-small'
+                                                            size='small'
+                                                            fullWidth
+                                                            defaultValue={editMain.footer_sub.footer_sub_title_03}
+                                                            name='footer_sub_title_03'
+                                                            onChange={handleEditOnchageFooterSub}
+                                                        />
+                                                    </Grid>
+                                                </Grid>
+                                                <Grid container spacing={2}>
+                                                    <Grid item xs={4}>
+                                                        <TextField
+                                                            id='outlined-size-small'
+                                                            size='small'
+                                                            fullWidth
+                                                            defaultValue={editMain.footer_sub.footer_sub_title_04}
+                                                            name='footer_sub_title_04'
+                                                            onChange={handleEditOnchageFooterSub}
+                                                        />
+                                                    </Grid>
+                                                </Grid>
+                                            </div>
                                         </TableCell>
                                     </TableRow>
                                     <TableRow>

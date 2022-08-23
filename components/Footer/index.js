@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import methods from 'validator'
 import { RULES } from '../../Route'
 import { getCollection } from '../../store/actions/collection'
+import { addContactInfo } from '../../store/actions/contact'
 import { getMenu } from '../../store/actions/menu'
 import { db } from '../../utils/firebase'
 
@@ -45,6 +46,7 @@ export default function Footer(props) {
     const [contactData, setContactData] = useState({
         contact_email: '',
         contact_message: '',
+        create_date: new Date().toString().replace(/GMT.*/g, ''),
     })
 
     const [errorsMessage, setErrorsMessage] = useState({
@@ -100,17 +102,17 @@ export default function Footer(props) {
     }
 
     const handleSubmitContact = e => {
-        console.log(contactData)
         e.preventDefault()
 
         if (valiErrors().contact_email === '' && valiErrors().contact_message === '') {
             // thêm dữ liệu vào firebase
             setPrefix('')
             const keyAdd = nextId()
-            set(ref(db, 'contact/' + Number(keyAdd)), {
-                contact_email: contactData.contact_email,
-                contact_message: contactData.contact_message,
-                create_date: new Date().toString().replace(/GMT.*/g, ''),
+            dispatch(addContactInfo(contactData, Number(keyAdd)))
+
+            setContactData({
+                contact_email: '',
+                contact_message: '',
             })
         } else {
             setErrorsMessage({
@@ -213,7 +215,7 @@ export default function Footer(props) {
                                                     background: '#fff',
                                                 }}
                                             >
-                                                Contact Sales Team
+                                                {footerData.footer_sub?.footer_sub_title_04}
                                             </Button>
                                         </div>
                                     </Grid>
@@ -233,7 +235,7 @@ export default function Footer(props) {
                                         </Link>
                                     </h2>
                                     <p className='footer__content-address'>
-                                        <strong>Address</strong>: {footerData?.address}
+                                        <strong>ที่อยู่</strong>: {footerData?.address}
                                     </p>
                                     <div className='footer__content-sns'>
                                         <a href={footerData?.fanpage} target='_blank' rel='noopener noreferrer'>
@@ -242,7 +244,7 @@ export default function Footer(props) {
                                     </div>
                                 </Grid>
                                 <Grid item md={2} xs={12}>
-                                    <h3>QUICK LINKS</h3>
+                                    <h3>{footerData.footer_sub?.footer_sub_title_01}</h3>
                                     <ul className='footer__link_01'>
                                         {arrayMenu?.map((item, idx) => {
                                             return (
@@ -256,7 +258,7 @@ export default function Footer(props) {
                                     </ul>
                                 </Grid>
                                 <Grid item md={2} xs={12}>
-                                    <h3>Products</h3>
+                                    <h3>{footerData.footer_sub?.footer_sub_title_02}</h3>
                                     <ul className='footer__link_01'>
                                         {arrayCollection?.map((item, idx) => {
                                             return (
@@ -270,7 +272,7 @@ export default function Footer(props) {
                                     </ul>
                                 </Grid>
                                 <Grid item md={4} xs={12}>
-                                    <h3>CONTACT US TODAY</h3>
+                                    <h3>{footerData.footer_sub?.footer_sub_title_03}</h3>
                                     <form action='/'>
                                         <div className='control-group'>
                                             <div className='contact__form-fullwidth'>
@@ -281,6 +283,7 @@ export default function Footer(props) {
                                                         className='contact__form-input'
                                                         placeholder='*Email'
                                                         required
+                                                        value={contactData?.contact_email}
                                                         onChange={e => handleOnChange(e)}
                                                     />
                                                 </span>
@@ -298,6 +301,7 @@ export default function Footer(props) {
                                                         className='contact__form-input'
                                                         placeholder='*Message'
                                                         required
+                                                        value={contactData?.contact_message}
                                                         onChange={e => handleOnChange(e)}
                                                     />
                                                 </span>

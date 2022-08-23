@@ -44,6 +44,7 @@ const AdminContact = props => {
         contact_name: '',
         contact_email: '',
         contact_message: '',
+        create_date: '',
     })
 
     const arrayContact = []
@@ -55,11 +56,13 @@ const AdminContact = props => {
                 const contact_name = contactInfo[key].contactInfo ? contactInfo[key].contact_name : ''
                 const contact_email = contactInfo[key].contact_email ? contactInfo[key].contact_email : ''
                 const contact_message = contactInfo[key].contact_message ? contactInfo[key].contact_message : ''
+                const create_date = contactInfo[key].create_date ? contactInfo[key].create_date : ''
                 arrayContact.push({
                     id: key,
                     contact_name: contact_name,
                     contact_email: contact_email,
                     contact_message: contact_message,
+                    create_date: create_date,
                 })
             }
         })
@@ -172,9 +175,9 @@ const AdminContact = props => {
                         >
                             <InputBase
                                 sx={{ ml: 1, flex: 1 }}
-                                placeholder='Tìm kiếm sản phẩm'
+                                placeholder='Tìm kiếm'
                                 value={searchTerm}
-                                inputProps={{ 'aria-label': 'Tìm kiếm sản phẩm' }}
+                                inputProps={{ 'aria-label': 'Tìm kiếm' }}
                                 onChange={handleSearch}
                             />
                             <IconButton type='button' sx={{ p: '10px' }} aria-label='search'>
@@ -188,6 +191,7 @@ const AdminContact = props => {
                                         <StyledTableCell>Tên</StyledTableCell>
                                         <StyledTableCell align='left'>Email</StyledTableCell>
                                         <StyledTableCell align='left'>Ghi chú</StyledTableCell>
+                                        <StyledTableCell align='left'>Ngày liên hệ</StyledTableCell>
                                         <StyledTableCell align='right'>XEM</StyledTableCell>
                                         <StyledTableCell align='right'>XÓA</StyledTableCell>
                                     </TableRow>
@@ -206,6 +210,9 @@ const AdminContact = props => {
                                                         </StyledTableCell>
                                                         <StyledTableCell align='left'>
                                                             {contact.contact_message}
+                                                        </StyledTableCell>
+                                                        <StyledTableCell align='left'>
+                                                            {contact.create_date}
                                                         </StyledTableCell>
                                                         <StyledTableCell align='right'>
                                                             <Fab
@@ -258,6 +265,12 @@ const AdminContact = props => {
                                                 Email
                                             </TableCell>
                                             <TableCell>{viewObject.contact_email}</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell className={classes.tbHeadLeft} variant='head'>
+                                                Email
+                                            </TableCell>
+                                            <TableCell>{viewObject.create_date}</TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell className={classes.tbHeadLeft} variant='head'>

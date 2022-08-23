@@ -47,6 +47,10 @@
         font-weight: bold;
         text-align: center;
 
+        >span {
+            margin-right: 10px;
+        }
+
         >a {
             color: #FF8C00;
         }

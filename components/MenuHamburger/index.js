@@ -1,51 +1,59 @@
 import Link from 'next/link'
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { useSelector } from 'react-redux'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { getMenu } from '../../store/actions/menu'
 import * as hamgugerActions from './../../store/actions/mobileMenu'
 
 export default function MenuHamburger(props) {
     const { headerData } = props
 
+    const menus = useSelector(state => state.menu.data)
     const showhamburger = useSelector(state => state.hambuger.showhamburger)
 
     const dispatch = useDispatch()
     const handleCloseHambuger = () => {
         dispatch(hamgugerActions.hideHamburger())
     }
+    useEffect(() => {
+        dispatch(getMenu())
+    }, [])
+
+    const arrayMenu = []
+    menus !== null &&
+        menus !== undefined &&
+        Object.values(menus)?.filter(item => {
+            if (item !== null) {
+                const name = item.name ? item.name : ''
+                const link = item.link ? item.link : ''
+                arrayMenu.push({
+                    name: name,
+                    link: link,
+                })
+            }
+        })
+
+    console.log(arrayMenu)
+
     return (
         showhamburger && (
             <div className='menu-hamberger__wrap'>
                 <ul className='menu-hamberger__list'>
-                    <li className='menu-hamberger__item'>
-                        <Link href={`/page/${headerData.menu_hambuger?.link_menu_01}`}>
-                            <a onClick={handleCloseHambuger}>{headerData.menu_hambuger?.text_menu_01}</a>
-                        </Link>
-                    </li>
-                    <li className='menu-hamberger__item'>
-                        <Link href={`/page/${headerData.menu_hambuger?.link_menu_02}`}>
-                            <a onClick={handleCloseHambuger}>{headerData.menu_hambuger?.text_menu_02}</a>
-                        </Link>
-                    </li>
-                    <li className='menu-hamberger__item'>
-                        <Link href={`/page/${headerData.menu_hambuger?.link_menu_03}`}>
-                            <a onClick={handleCloseHambuger}>{headerData.menu_hambuger?.text_menu_03}</a>
-                        </Link>
-                    </li>
-                    <li className='menu-hamberger__item'>
-                        <Link href={`/page/${headerData.menu_hambuger?.link_menu_04}`}>
-                            <a onClick={handleCloseHambuger}>{headerData.menu_hambuger?.text_menu_04}</a>
-                        </Link>
-                    </li>
+                    {arrayMenu?.map((item, idx) => (
+                        <li className='menu-hamberger__item' key={idx}>
+                            <Link href={`/page/${item.link}`}>
+                                <a onClick={handleCloseHambuger}>{item?.name}</a>
+                            </Link>
+                        </li>
+                    ))}
                 </ul>
                 <div className='menu-hamberger__contact'>
-                    <p className='menu-hamberger__contact-title'>Liên hệ</p>
+                    <p className='menu-hamberger__contact-title'>ติดต่อ</p>
                     <ul className='menu-hamberger__contact-list'>
                         <li className='menu-hamberger__contact-item'>
-                            Mua hàng: <a href={`tel:${headerData?.phone}`}>{headerData?.phone}</a>
+                            ซื้อ: <a href={`tel:${headerData?.phone}`}>{headerData?.phone}</a>
                         </li>
                         <li className='menu-hamberger__contact-item'>
-                            Khiếu nại: <a href={`tel:${headerData?.hotline}`}>{headerData?.hotline}</a>
+                            ร้องทุกข์: <a href={`tel:${headerData?.hotline}`}>{headerData?.hotline}</a>
                         </li>
                     </ul>
                 </div>

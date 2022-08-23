@@ -85,17 +85,8 @@ export default function Header(props) {
 
     const [loading, setLoading] = useState(true)
     useEffect(() => {
-        if (Object.keys(headerData)?.length > 0) {
-            setLoading(false)
-        }
+        setLoading(false)
     }, [headerData])
-
-    const [menuLoading, setMenuLoading] = useState(true)
-    useEffect(() => {
-        if (Object.keys(menus)?.length > 0) {
-            setMenuLoading(false)
-        }
-    }, [menus])
 
     return (
         <header>
@@ -117,7 +108,7 @@ export default function Header(props) {
                                 <Link href={`tel:0086-510-68937216`}>
                                     <a>
                                         <FontAwesomeIcon icon={faPhone} style={{ fontSize: 16, color: '#d2d2d7' }} />
-                                        0086-510-68937216
+                                        {headerData.phone}
                                     </a>
                                 </Link>
                             </li>
@@ -128,7 +119,7 @@ export default function Header(props) {
                                 <Link href={`mailto:someone@example.com`}>
                                     <a>
                                         <FontAwesomeIcon icon={faEnvelope} style={{ fontSize: 16, color: '#d2d2d7' }} />
-                                        sales@yi-lift.com
+                                        {headerData.email_support}
                                     </a>
                                 </Link>
                             </li>
@@ -180,14 +171,19 @@ export default function Header(props) {
                     </div>
                 </div>
             </div>
-            {menuLoading && (
+            {loading && (
                 <div className='container-fluid'>
                     <div className='menu-inner'>
                         <div className='container'>
-                            <div className='menu__item--seleketon'>
-                                <SkeletonTheme baseColor='#ccc' highlightColor='#fff'>
-                                    <Skeleton height={12} className='menu__link' count={4} />
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                                <SkeletonTheme baseColor='#ccc' highlightColor='#fff' borderRadius='0.5rem'>
+                                    {loading && <Skeleton className='logo--seleketon' />}
                                 </SkeletonTheme>
+                                <div className='menu__item--seleketon'>
+                                    <SkeletonTheme baseColor='#ccc' highlightColor='#fff'>
+                                        <Skeleton height={20} className='menu__link' count={4} />
+                                    </SkeletonTheme>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -205,7 +201,7 @@ export default function Header(props) {
                                         </a>
                                     </Link>
                                 </h1>
-                                <ul className='menu__list' style={{ display: menuLoading ? 'none' : undefined }}>
+                                <ul className='menu__list' style={{ display: loading ? 'none' : undefined }}>
                                     {Object.values(menus)?.map((menu, idx) => {
                                         return (
                                             <li className='menu__item' key={idx}>
