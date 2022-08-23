@@ -74,32 +74,6 @@ function AdminPage(props) {
         update_date: '',
     })
 
-    const arrayPage = []
-    blogData !== null &&
-        blogData !== undefined &&
-        Object.keys(blogData)?.map(element => {
-            const key = element
-            if (blogData[key] !== null) {
-                const title = blogData[key].title ? blogData[key].title : ''
-                const image = blogData[key].image ? blogData[key].image : ''
-                const content = blogData[key].content ? blogData[key].content : ''
-                const slug = blogData[key].slug ? blogData[key].slug : ''
-                const isDisplay = blogData[key].isDisplay ? blogData[key].isDisplay : ''
-                const create_date = blogData[key].create_date ? blogData[key].create_date : ''
-                const update_date = blogData[key].update_date ? blogData[key].update_date : ''
-                arrayPage.push({
-                    id: key,
-                    title,
-                    image,
-                    slug,
-                    content,
-                    isDisplay: isDisplay.toString(),
-                    create_date,
-                    update_date,
-                })
-            }
-        })
-
     useEffect(() => {
         dispatch(getBlog())
     }, [])
@@ -283,26 +257,24 @@ function AdminPage(props) {
         })
 
     //Phân trang
-    const allList = [...arrayBlog].sort(
-        (a, b) => new Date(b.create_date) - new Date(a.create_date) || new Date(b.update_date) - new Date(a.update_date)
-    )
-    const totalLists = allList.length
-    const pageLimit = 10
     const [currentList, setCurrentList] = useState([])
+    const allList = [...arrayBlog].sort((a, b) => new Date(b.create_date) - new Date(a.create_date))
+
+    const totalLists = allList.length
+    const pageLimit = 5
     const onPageChanged = value => {
         let offset = (value - 1) * pageLimit
-        const currentList = [...searchResults]
+        const currentList = [...currentList]
             .slice(offset, offset + pageLimit)
-            .sort(
-                (a, b) =>
-                    new Date(b.create_date) - new Date(a.create_date) ||
-                    new Date(b.update_date) - new Date(a.update_date)
-            )
+            .sort((a, b) => new Date(b.create_date) - new Date(a.create_date))
         setCurrentList(currentList)
     }
     useEffect(() => {
-        setCurrentList([...allList].slice(0, pageLimit))
+        setCurrentList([...allList])
     }, [blogData])
+
+    console.log(blogData)
+    console.log(arrayBlog)
 
     //Kết quả Search
     const handleSearch = e => {

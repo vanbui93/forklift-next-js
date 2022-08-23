@@ -35,6 +35,7 @@ const Main = props => {
         hotline: '',
         address: '',
         email_support: '',
+        fanpage: '',
         core_title_01: '',
         core_title_02: '',
         core_title_03: '',
@@ -53,16 +54,6 @@ const Main = props => {
             footer_sub_title_03: '',
             footer_sub_title_04: '',
         },
-        menu_hambuger: {
-            link_menu_01: '',
-            text_menu_01: '',
-            link_menu_02: '',
-            text_menu_02: '',
-            link_menu_03: '',
-            text_menu_03: '',
-            link_menu_04: '',
-            text_menu_04: '',
-        },
     })
 
     const handleEditMain = () => {
@@ -74,6 +65,7 @@ const Main = props => {
             phone: mainData.phone,
             address: mainData.address,
             email_support: mainData.email_support,
+            fanpage: mainData.fanpage,
             hotline: mainData.hotline,
             core_title_01: mainData.core_title_01,
             core_title_02: mainData.core_title_02,
@@ -93,21 +85,8 @@ const Main = props => {
                 footer_sub_title_03: mainData.footer_sub.footer_sub_title_03,
                 footer_sub_title_04: mainData.footer_sub.footer_sub_title_04,
             },
-            menu_hambuger: {
-                link_menu_01: mainData.menu_hambuger.link_menu_01,
-                text_menu_01: mainData.menu_hambuger.text_menu_01,
-                link_menu_02: mainData.menu_hambuger.link_menu_02,
-                text_menu_02: mainData.menu_hambuger.text_menu_02,
-                link_menu_03: mainData.menu_hambuger.link_menu_03,
-                text_menu_03: mainData.menu_hambuger.text_menu_03,
-                link_menu_04: mainData.menu_hambuger.link_menu_04,
-                text_menu_04: mainData.menu_hambuger.text_menu_04,
-            },
         })
     }
-
-    console.log(mainData)
-    console.log(editMain)
 
     const handleEditOnchage = e => {
         let name = e.target.name
@@ -153,19 +132,6 @@ const Main = props => {
             return {
                 ...prevState,
                 footer_sub: newState,
-            }
-        })
-    }
-
-    const handleEditOnchangeMenuHambuger = e => {
-        let inputName = e.target.name
-        let inputValue = e.target.value
-
-        setEditMain(prevState => {
-            const newState = Object.assign(editMain.menu_hambuger, { [inputName]: inputValue })
-            return {
-                ...prevState,
-                menu_hambuger: newState,
             }
         })
     }
@@ -287,6 +253,12 @@ const Main = props => {
                                     </TableRow>
                                     <TableRow>
                                         <TableCell className={classes.tbHeadLeft} variant='head'>
+                                            Fanpage
+                                        </TableCell>
+                                        <TableCell>{mainData?.fanpage}</TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell className={classes.tbHeadLeft} variant='head'>
                                             Hotline
                                         </TableCell>
                                         <TableCell>{mainData?.hotline}</TableCell>
@@ -314,27 +286,6 @@ const Main = props => {
                                                 </li>
                                                 <li className={classes.footerTitle}>
                                                     {mainData.footer_title?.footer_title_02}
-                                                </li>
-                                            </ul>
-                                        </TableCell>
-                                    </TableRow>
-                                    <TableRow>
-                                        <TableCell className={classes.tbHeadLeft} variant='head'>
-                                            Menu màn hình điện thoại
-                                        </TableCell>
-                                        <TableCell>
-                                            <ul>
-                                                <li className={classes.footerTitle}>
-                                                    {mainData.menu_hambuger?.text_menu_01}
-                                                </li>
-                                                <li className={classes.footerTitle}>
-                                                    {mainData.menu_hambuger?.text_menu_02}
-                                                </li>
-                                                <li className={classes.footerTitle}>
-                                                    {mainData.menu_hambuger?.text_menu_03}
-                                                </li>
-                                                <li className={classes.footerTitle}>
-                                                    {mainData.menu_hambuger?.text_menu_04}
                                                 </li>
                                             </ul>
                                         </TableCell>
@@ -494,6 +445,25 @@ const Main = props => {
                                     </TableRow>
                                     <TableRow>
                                         <TableCell className={classes.tbHeadLeft} variant='head'>
+                                            Fanpage
+                                        </TableCell>
+                                        <TableCell>
+                                            <Grid container spacing={2}>
+                                                <Grid item xs={6}>
+                                                    <TextField
+                                                        id='outlined-size-small'
+                                                        size='small'
+                                                        fullWidth
+                                                        defaultValue={editMain.fanpage}
+                                                        name='fanpage'
+                                                        onChange={handleEditOnchageHeader}
+                                                    />
+                                                </Grid>
+                                            </Grid>
+                                        </TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell className={classes.tbHeadLeft} variant='head'>
                                             Tiêu đề ở Footer
                                         </TableCell>
                                         <TableCell>
@@ -578,101 +548,6 @@ const Main = props => {
                                                     </Grid>
                                                 </Grid>
                                             </div>
-                                        </TableCell>
-                                    </TableRow>
-                                    <TableRow>
-                                        <TableCell className={classes.tbHeadLeft} variant='head'>
-                                            Menu màn hình điện thoại
-                                        </TableCell>
-                                        <TableCell>
-                                            <Grid container spacing={2}>
-                                                <Grid item xs={6}>
-                                                    <TextField
-                                                        id='outlined-size-small'
-                                                        size='small'
-                                                        fullWidth
-                                                        defaultValue={editMain.menu_hambuger.text_menu_01}
-                                                        name='text_menu_01'
-                                                        onChange={handleEditOnchangeMenuHambuger}
-                                                    />
-                                                </Grid>
-                                                <Grid item xs={6}>
-                                                    <TextField
-                                                        id='outlined-size-small'
-                                                        size='small'
-                                                        fullWidth
-                                                        defaultValue={editMain.menu_hambuger.link_menu_01}
-                                                        name='link_menu_01'
-                                                        onChange={handleEditOnchangeMenuHambuger}
-                                                    />
-                                                </Grid>
-                                            </Grid>
-                                            <Grid container spacing={2}>
-                                                <Grid item xs={6}>
-                                                    <TextField
-                                                        id='outlined-size-small'
-                                                        size='small'
-                                                        fullWidth
-                                                        defaultValue={editMain.menu_hambuger.text_menu_02}
-                                                        name='text_menu_02'
-                                                        onChange={handleEditOnchangeMenuHambuger}
-                                                    />
-                                                </Grid>
-                                                <Grid item xs={6}>
-                                                    <TextField
-                                                        id='outlined-size-small'
-                                                        size='small'
-                                                        fullWidth
-                                                        defaultValue={editMain.menu_hambuger.link_menu_02}
-                                                        name='link_menu_02'
-                                                        onChange={handleEditOnchangeMenuHambuger}
-                                                    />
-                                                </Grid>
-                                            </Grid>
-                                            <Grid container spacing={2}>
-                                                <Grid item xs={6}>
-                                                    <TextField
-                                                        id='outlined-size-small'
-                                                        size='small'
-                                                        fullWidth
-                                                        defaultValue={editMain.menu_hambuger.text_menu_03}
-                                                        name='text_menu_03'
-                                                        onChange={handleEditOnchangeMenuHambuger}
-                                                    />
-                                                </Grid>
-                                                <Grid item xs={6}>
-                                                    <TextField
-                                                        id='outlined-size-small'
-                                                        size='small'
-                                                        fullWidth
-                                                        defaultValue={editMain.menu_hambuger.link_menu_03}
-                                                        name='link_menu_03'
-                                                        onChange={handleEditOnchangeMenuHambuger}
-                                                    />
-                                                </Grid>
-                                            </Grid>
-                                            <Grid container spacing={2}>
-                                                <Grid item xs={6}>
-                                                    <TextField
-                                                        id='outlined-size-small'
-                                                        size='small'
-                                                        fullWidth
-                                                        defaultValue={editMain.menu_hambuger.text_menu_04}
-                                                        name='text_menu_04'
-                                                        onChange={handleEditOnchangeMenuHambuger}
-                                                    />
-                                                </Grid>
-                                                <Grid item xs={6}>
-                                                    <TextField
-                                                        id='outlined-size-small'
-                                                        size='small'
-                                                        fullWidth
-                                                        defaultValue={editMain.menu_hambuger.link_menu_04}
-                                                        name='link_menu_04'
-                                                        onChange={handleEditOnchangeMenuHambuger}
-                                                    />
-                                                </Grid>
-                                            </Grid>
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>

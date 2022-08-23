@@ -52,7 +52,7 @@ const AdminContact = props => {
         Object.keys(contactInfo)?.map(element => {
             const key = element
             if (contactInfo[key] !== null) {
-                const contact_name = contactInfo[key].contactInfo ? contactInfo[key].contact_name : ''
+                const contact_name = contactInfo[key].contact_name ? contactInfo[key].contact_name : ''
                 const contact_email = contactInfo[key].contact_email ? contactInfo[key].contact_email : ''
                 const contact_message = contactInfo[key].contact_message ? contactInfo[key].contact_message : ''
                 const create_date = contactInfo[key].create_date ? contactInfo[key].create_date : ''
@@ -104,7 +104,6 @@ const AdminContact = props => {
         setIsView(true)
         setViewObject(contact)
     }
-
     const handleCancel = () => {
         setIsView(false)
     }
@@ -257,7 +256,7 @@ const AdminContact = props => {
                                         </TableRow>
                                         <TableRow>
                                             <TableCell className={classes.tbHeadLeft} variant='head'>
-                                                Email
+                                                Ngày liên hệ
                                             </TableCell>
                                             <TableCell>{viewObject.create_date}</TableCell>
                                         </TableRow>

@@ -84,7 +84,7 @@ function Login(props) {
         <div>
             <Head>
                 <title>Đăng nhập</title>
-                <meta name='description' content='Tuấn táo apple - Đăng nhập' />
+                <meta name='description' content='Tanat Service ForkLift - Đăng nhập' />
                 <meta
                     name='viewport'
                     content='width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0'

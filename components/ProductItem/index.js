@@ -46,11 +46,11 @@ export default function ProductItem(props) {
                         </SkeletonTheme>
                         <p className='collections__price' style={{ display: loading ? 'none' : undefined }}>
                             <strong className='collections__new-price'>
-                                {price ? `${numberInputFormat(price.toString())} đ` : `${mainData?.phone}`}
+                                {price ? `${numberInputFormat(price.toString())} Bath` : `${mainData?.phone}`}
                             </strong>
                             {price && comparePrice && (
                                 <strike className='collections__compare-price'>
-                                    {numberInputFormat(comparePrice.toString())} đ
+                                    {numberInputFormat(comparePrice.toString())} Bath
                                 </strike>
                             )}
                         </p>

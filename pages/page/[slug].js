@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import methods from 'validator'
 import LayoutUser from '../../layouts/LayoutUser'
 import { RULES } from '../../Route'
+import { addContactInfo } from '../../store/actions/contact'
 import { db } from '../../utils/firebase'
 import { getPageDetail } from './../../store/actions/page'
 
@@ -19,8 +20,10 @@ export default function PagesContent() {
     const dispatch = useDispatch()
 
     const [contactData, setContactData] = useState({
+        contact_name: '',
         contact_email: '',
         contact_message: '',
+        create_date: new Date().toString().replace(/GMT.*/g, ''),
     })
     const [errorsMessage, setErrorsMessage] = useState({
         contact_email: '',
@@ -85,12 +88,8 @@ export default function PagesContent() {
             // thêm dữ liệu vào firebase
             setPrefix('')
             const keyAdd = nextId()
-            set(ref(db, 'contact/' + Number(keyAdd)), {
-                contact_name: contactData.contact_name,
-                contact_email: contactData.contact_email,
-                contact_message: contactData.contact_message,
-                create_date: new Date().toString().replace(/GMT.*/g, ''),
-            })
+            dispatch(addContactInfo(contactData, Number(keyAdd)))
+
             setContactData({
                 contact_name: '',
                 contact_email: '',
@@ -111,7 +110,7 @@ export default function PagesContent() {
             <div>
                 <Head>
                     <title>{currentPage?.name}</title>
-                    <meta name='description' content={`Tuấn táo apple - ${currentPage?.name}`} />
+                    <meta name='description' content={`Tanat Service ForkLift - ${currentPage?.name}`} />
                     <meta
                         name='viewport'
                         content='width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0'
@@ -206,7 +205,7 @@ export default function PagesContent() {
                 <div>
                     <Head>
                         <title>{currentPage?.name}</title>
-                        <meta name='description' content={`Tuấn táo apple - ${currentPage?.name}`} />
+                        <meta name='description' content={`Tanat Service ForkLift - ${currentPage?.name}`} />
                         <meta
                             name='viewport'
                             content='width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0'

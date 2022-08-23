@@ -87,7 +87,7 @@
     }
 
     &__product-color {
-        width: 150px;
+        width: calc(100% - 110px);
     }
 
     .text-red {

@@ -125,7 +125,7 @@ function Checkout(props) {
 
             router.push(
                 {
-                    pathname: '/cam-on-ban-da-mua-hang',
+                    pathname: '/thanks-for-your-order',
                     query: {
                         id_order: key,
                         product_image: state.productImage,
@@ -140,7 +140,7 @@ function Checkout(props) {
                         create_date: orderData.create_date,
                     },
                 },
-                '/cam-on-ban-da-mua-hang'
+                '/thanks-for-your-order'
             )
         } else {
             setErrorsMessage({
@@ -182,8 +182,8 @@ function Checkout(props) {
     return (
         <div>
             <Head>
-                <title>Thanh toán</title>
-                <meta name='description' content='Tuấn táo apple - Thanh toán' />
+                <title>Payment</title>
+                <meta name='description' content='Tanat Service ForkLift - Payment' />
                 <meta
                     name='viewport'
                     content='width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0'
@@ -194,10 +194,10 @@ function Checkout(props) {
                 <div className='checkout'>
                     <div className='container'>
                         <div className='checkout__wrap'>
-                            <h2 className='checkout__title'>Đơn hàng của bạn</h2>
+                            <h2 className='checkout__title'>คำสั่งของคุณ</h2>
                             <span className='checkout__message'>
                                 <i className='fa fa-check-circle' aria-hidden='true'></i>
-                                {state.productName} đã được thêm vào giỏ hàng. Cảm ơn bạn đã chọn Tuấn táo apple!
+                                เพิ่ม {state.productName} ลงในรถเข็นแล้ว ขอบคุณที่เลือกเรา!
                             </span>
                             <form action='/' name='checkout' method='post' className=''>
                                 <div className='checkout__inner'>
@@ -212,27 +212,13 @@ function Checkout(props) {
                                                 </span>
                                             </div>
                                             <div className='checkout__product-name'>
-                                                <span className='checkout__product-title'>Sản phẩm</span>
-                                                <dl className='variation'>
-                                                    <dt className='variation__select-color'>Chọn màu:</dt>
-                                                    {state.productColor && (
-                                                        <dd className='variation__select-color'>
-                                                            <p>{state?.productColor}</p>
-                                                        </dd>
-                                                    )}
-                                                    <dt className='variation__select-memory'>Chọn dung lượng:</dt>
-                                                    {state.productSku && (
-                                                        <dd className='variation__select-memory'>
-                                                            <p>{state?.productSku}</p>
-                                                        </dd>
-                                                    )}
-                                                </dl>
+                                                <span className='checkout__product-title'>ผลิตภัณฑ์</span>
                                             </div>
                                             <div className='checkout__product-price'>
-                                                <span className='checkout__product-title'>Tạm tính</span>
+                                                <span className='checkout__product-title'>ชั่วคราว</span>
                                                 <span>
                                                     {state.productPrice
-                                                        ? `${numberInputFormat(state.productPrice?.toString())} đ`
+                                                        ? `${numberInputFormat(state.productPrice?.toString())} Bath`
                                                         : 'Liên hệ'}
                                                 </span>
                                             </div>
@@ -240,11 +226,11 @@ function Checkout(props) {
                                     </div>
                                     <div className='checkout__total'>
                                         <div className='checkout__total-inner'>
-                                            <h3 className='checkout__total-title'>Thông tin đơn hàng</h3>
+                                            <h3 className='checkout__total-title'>Order infomation</h3>
                                             <div className='customer__info'>
                                                 <div>
                                                     <label>
-                                                        Họ và tên <span className='checkout__asterisk'>*</span>
+                                                        ชื่อและนามสกุล <span className='checkout__asterisk'>*</span>
                                                     </label>
                                                     <span>
                                                         <input
@@ -262,7 +248,7 @@ function Checkout(props) {
                                                 </div>
                                                 <div>
                                                     <label>
-                                                        Địa chỉ, phường, quận{' '}
+                                                        Address, Ward, District{' '}
                                                         <span className='checkout__asterisk'>*</span>
                                                     </label>
                                                     <span>
@@ -283,7 +269,7 @@ function Checkout(props) {
                                                 </div>
                                                 <div>
                                                     <label>
-                                                        Tỉnh/ Thành phố <span className='checkout__asterisk'>*</span>
+                                                        Province/City <span className='checkout__asterisk'>*</span>
                                                     </label>
                                                     <span>
                                                         <input
@@ -301,7 +287,7 @@ function Checkout(props) {
                                                 </div>
                                                 <div>
                                                     <label>
-                                                        Số điện thoại <span className='checkout__asterisk'>*</span>
+                                                        Phone Number <span className='checkout__asterisk'>*</span>
                                                     </label>
                                                     <span>
                                                         <input
@@ -331,7 +317,7 @@ function Checkout(props) {
                                                     </span>
                                                 </div>
                                                 <div>
-                                                    <label>Ghi chú (tuỳ chọn)</label>
+                                                    <label>Note (option)</label>
                                                     <span>
                                                         <textarea
                                                             type='text'
@@ -348,7 +334,7 @@ function Checkout(props) {
                                 </div>
                                 <div className='order-button'>
                                     <button type='button' onClick={handleCheckOut}>
-                                        Đặt hàng
+                                        Purchase
                                     </button>
                                 </div>
                             </form>

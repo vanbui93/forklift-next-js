@@ -9,8 +9,11 @@ function ThankYou(props) {
     return (
         <div>
             <Head>
-                <title>Cảm ơn bạn đã mua hàng</title>
-                <meta name='description' content='Tuấn táo apple - Cảm ơn bạn đã mua hàng' />
+                <title>Tanat Service ForkLift ธนัท เซอร์วิส ซื้อ ขาย เช่า โฟล์ค ลิฟท์ กิ่งแก้ว</title>
+                <meta
+                    name='description'
+                    content='Tanat Service ForkLift ธนัท เซอร์วิส ซื้อ ขาย เช่า โฟล์ค ลิฟท์ กิ่งแก้ว - Thank you for your purchase'
+                />
                 <meta
                     name='viewport'
                     content='width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0'
@@ -19,25 +22,25 @@ function ThankYou(props) {
             </Head>
             <LayoutUser>
                 <div className='thankyou'>
-                    <h2 className='thankyou__title'>Thanh toán</h2>
+                    <h2 className='thankyou__title'>Payment</h2>
                     <span className='checkout__message'>
-                        <i className='fa fa-check-circle' aria-hidden='true'></i>Cảm ơn vì đã quan tâm đến sản phẩm của
-                        chúng tôi. Bạn vui lòng đợi trong giây lát để hệ thống xử lý đơn hàng của bạn.
+                        <i className='fa fa-check-circle' aria-hidden='true'></i>Thanks for your interest in our
+                        products. Please wait a moment for the system to process your order.
                     </span>
                     <div className='cart-icon'>
                         <label>
-                            THÔNG TIN ĐƠN HÀNG SỐ <span className='text-orange'>{state.id_order}</span>
+                            Order code <span className='text-orange'>{state.id_order}</span>
                         </label>
                     </div>
                     <div className='order-infomation'>
-                        <h3>1. Thông tin người đặt hàng</h3>
+                        <h3>1. Ordering information</h3>
                         <div className='thankyou__order'>
                             <div className='thankyou__name'>
-                                <span>Họ tên: </span>
+                                <span>Full name: </span>
                                 <span>{state.customer_name}</span>
                             </div>
                             <div className='thankyou__phone'>
-                                <span>Điện thoại: </span>
+                                <span>Phone Number: </span>
                                 <span>{state.customer_phone}</span>
                             </div>
                             <div className='thankyou__email'>
@@ -45,35 +48,27 @@ function ThankYou(props) {
                                 <span>{state.customer_email}</span>
                             </div>
                             <div className='thankyou__address'>
-                                <span>Địa chỉ: </span>
+                                <span>Address: </span>
                                 <span>{state.customer_address}</span>
                             </div>
                             <div className='thankyou__address'>
-                                <span>Ghi chú đặt hàng : </span>
+                                <span>Order Notes : </span>
                                 <span>{state.customer_notes}</span>
                             </div>
                         </div>
                     </div>
                     <div className='order-infomation'>
-                        <h3>2. Danh sách sản phẩm đặt hàng</h3>
+                        <h3>2. Ordered product list</h3>
                         <div className='thankyou__confirm'>
                             <div className='thankyou__product-name'>
-                                <span className='thankyou__product-title'>Tên sản phẩm</span>
+                                <span className='thankyou__product-title'>Product's name</span>
                                 <span className='thankyou__product-content'>{state.product_name}</span>
                             </div>
-                            <div className='thankyou__product-version'>
-                                <span className='thankyou__product-title'>Phiên bản</span>
-                                <span className='thankyou__product-content'>{state.product_sku}</span>
-                            </div>
                             <div className='thankyou__product-color'>
-                                <span className='thankyou__product-title'>Màu sắc</span>
-                                <span className='thankyou__product-content'>{state.color_id}</span>
-                            </div>
-                            <div className='thankyou__product-color'>
-                                <span className='thankyou__product-title'>Giá tiền</span>
+                                <span className='thankyou__product-title'>Price</span>
                                 <span className='thankyou__product-content text-red'>
                                     {state.product_price
-                                        ? `${numberInputFormat(state.product_price.toString())} đ`
+                                        ? `${numberInputFormat(state.product_price.toString())} Bath`
                                         : 'Liên hệ'}
                                 </span>
                             </div>

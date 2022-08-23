@@ -50,7 +50,7 @@ export default function PagesContent() {
         <div>
             <Head>
                 <title>{blogData?.name}</title>
-                <meta name='description' content={`Tuấn táo apple - ${blogData?.name}`} />
+                <meta name='description' content={`Tanat Service ForkLift - ${blogData?.name}`} />
                 <meta
                     name='viewport'
                     content='width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0'

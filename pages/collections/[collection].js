@@ -90,7 +90,7 @@ export default function Collections() {
         <div>
             <Head>
                 <title>{colllectName[0]?.name}</title>
-                <meta name='description' content='Tuấn táo apple - iPhone' />
+                <meta name='description' content='Tanat Service ForkLift - iPhone' />
                 <meta
                     name='viewport'
                     content='width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0'

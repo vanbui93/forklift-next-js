@@ -95,7 +95,7 @@ export default function ProductDetail(props) {
         <div>
             <Head>
                 <title>{`${product?.name}`}</title>
-                <meta name='description' content={`Tuấn táo apple - ${product?.name}`} />
+                <meta name='description' content={`Tanat Service ForkLift - ${product?.name}`} />
                 <link rel='icon' href='/favicon.ico' />
             </Head>
             <LayoutUser>
@@ -113,7 +113,7 @@ export default function ProductDetail(props) {
                                         <div className='product-detail__current-price'>
                                             <strong>
                                                 {product.price
-                                                    ? `${numberInputFormat(product.price.toString())} đ`
+                                                    ? `${numberInputFormat(product.price.toString())} Bath`
                                                     : `Liên hệ : ${mainData?.phone ? mainData?.phone : ''}`}
                                             </strong>
                                         </div>

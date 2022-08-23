@@ -91,7 +91,7 @@ const HomeProduct = props => {
                     {loading && <Skeleton containerClassName='avatar-skeleton' className='page-title--seleketon' />}
                 </SkeletonTheme>
                 <div className='page-title' style={{ display: loading ? 'none' : undefined }}>
-                    <h3>{collectName?.[1]}</h3>
+                    <h3>{collectName?.[2]}</h3>
                 </div>
                 <ul className='collections__list'>{getDulieu('rental-hire', 10)}</ul>
             </div>
@@ -100,7 +100,7 @@ const HomeProduct = props => {
                     {loading && <Skeleton containerClassName='avatar-skeleton' className='page-title--seleketon' />}
                 </SkeletonTheme>
                 <div className='page-title' style={{ display: loading ? 'none' : undefined }}>
-                    <h3>{collectName?.[2]}</h3>
+                    <h3>{collectName?.[1]}</h3>
                 </div>
                 <ul className='collections__list'>{getDulieu('new-machines', 10)}</ul>
             </div>

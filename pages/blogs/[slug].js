@@ -23,7 +23,7 @@ export default function PagesContent() {
         <div>
             <Head>
                 <title>{currentPage?.title}</title>
-                <meta name='description' content={`Tuấn táo apple - ${currentPage?.title}`} />
+                <meta name='description' content={`Tanat Service ForkLift - ${currentPage?.title}`} />
                 <meta
                     name='viewport'
                     content='width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0'

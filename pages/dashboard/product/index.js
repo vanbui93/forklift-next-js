@@ -427,7 +427,7 @@ const AdminProduct = props => {
                                                 </StyledTableCell>
                                                 <StyledTableCell align='left'>
                                                     {product?.price
-                                                        ? `${numberInputFormat(product?.price.toString())} đ`
+                                                        ? `${numberInputFormat(product?.price.toString())} Bath`
                                                         : 'Liên hệ'}{' '}
                                                 </StyledTableCell>
                                                 <StyledTableCell align='left'>{product?.create_date}</StyledTableCell>

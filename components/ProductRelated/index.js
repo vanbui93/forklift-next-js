@@ -61,12 +61,12 @@ export default function ProductRelated(props) {
                                             <p className='product-related__price'>
                                                 <strong className='product-related__new-price'>
                                                     {val.price
-                                                        ? `${numberInputFormat(val.price.toString())}đ`
+                                                        ? `${numberInputFormat(val.price.toString())}Bath`
                                                         : `${mainData?.phone}`}
                                                 </strong>
                                                 {val.price && val.compare_price && (
                                                     <strike className='product-related__compare-price'>
-                                                        {numberInputFormat(val.compare_price.toString())} đ
+                                                        {numberInputFormat(val.compare_price.toString())} Bath
                                                     </strike>
                                                 )}
                                             </p>

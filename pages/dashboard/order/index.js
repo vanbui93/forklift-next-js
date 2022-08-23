@@ -138,22 +138,26 @@ const AdminOrder = props => {
     }
 
     //Phân trang
-    const allList = [...arrayOrder].sort((a, b) => new Date(b.create_date) - new Date(a.create_date))
+    const allList = [...arrayOrder]
     const totalLists = allList.length
     const pageLimit = 10
     const [currentList, setCurrentList] = useState([])
 
     const onPageChanged = value => {
         let offset = (value - 1) * pageLimit
-        const currentList = [...searchResults]
+        const currentList = [...allList]
             .slice(offset, offset + pageLimit)
             .sort((a, b) => new Date(b.create_date) - new Date(a.create_date))
         setCurrentList(currentList)
     }
 
     useEffect(() => {
-        setCurrentList([...allList].slice(0, pageLimit))
+        setCurrentList(
+            [...allList].slice(0, pageLimit).sort((a, b) => new Date(b.create_date) - new Date(a.create_date))
+        )
     }, [orders])
+
+    console.log(currentList)
 
     //Kết quả Search
     const handleSearch = e => {
@@ -165,9 +169,7 @@ const AdminOrder = props => {
             return Object.values(e).join('').toLowerCase().includes(searchTerm.toLowerCase())
         })
         setSearchResults(results)
-        setCurrentList(
-            [...results].slice(0, pageLimit).sort((a, b) => new Date(b.create_date) - new Date(a.create_date))
-        )
+        setCurrentList([...results].slice(0, pageLimit))
     }, [searchTerm, orders])
 
     //Cick để edit đơn hàng
@@ -308,7 +310,7 @@ const AdminOrder = props => {
                                                         </StyledTableCell>
                                                         <StyledTableCell>
                                                             {order.price
-                                                                ? `${numberInputFormat(order.price.toString())} đ`
+                                                                ? `${numberInputFormat(order.price.toString())} Bath`
                                                                 : 'Liên hệ'}
                                                         </StyledTableCell>
                                                         <StyledTableCell>{order.cusName}</StyledTableCell>
