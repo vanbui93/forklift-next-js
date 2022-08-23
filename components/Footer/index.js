@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import nextId, { setPrefix } from 'react-id-generator'
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import { useDispatch, useSelector } from 'react-redux'
 import methods from 'validator'
 import { RULES } from '../../Route'
@@ -18,10 +19,14 @@ export default function Footer(props) {
     const { footerData } = props
     const collectAll = useSelector(state => state.collection.data)
     const menus = useSelector(state => state.menu.data)
-    const [loading, setLoading] = useState(true)
     const router = useRouter()
 
     const dispatch = useDispatch()
+
+    const [loading, setLoading] = useState(true)
+    useEffect(() => {
+        setLoading(false)
+    }, [menus])
 
     useEffect(() => {
         dispatch(getCollection())
@@ -137,9 +142,9 @@ export default function Footer(props) {
     const arrayMenu = []
     menus !== null &&
         menus !== undefined &&
-        Object.keys(menus)?.map(element => {
+        Object.keys(menus)?.filter(element => {
             const key = element
-            if (menus[key] !== null) {
+            if (menus[key] !== null && menus[key].link.includes('collections') === false) {
                 const name = menus[key].name ? menus[key].name : ''
                 const link = menus[key].link ? menus[key].link : ''
                 arrayMenu.push({
@@ -159,24 +164,48 @@ export default function Footer(props) {
                             <div className='footer__contact-inner'>
                                 <Grid container spacing={2} style={{ display: 'flex', alignItems: 'center' }}>
                                     <Grid item md={4} xs={12}>
-                                        <div className='footer__contact-text'>
+                                        <SkeletonTheme baseColor='#ccc' highlightColor='#fff'>
+                                            {loading && (
+                                                <Skeleton className='footer__top-span--seleketon footer__contact-text--seleketon' />
+                                            )}
+                                        </SkeletonTheme>
+                                        <div
+                                            className='footer__contact-text'
+                                            style={{ display: loading ? 'none' : undefined }}
+                                        >
                                             <a href={`tel:0987777777`}>
                                                 <FontAwesomeIcon
                                                     icon={faPhone}
                                                     style={{ fontSize: 20, color: '#333' }}
                                                 />
                                             </a>
-                                            <span>FOR ANY HELP OR QUERIES</span>
+                                            <span>{footerData.footer_title?.footer_title_01}</span>
                                         </div>
                                     </Grid>
                                     <Grid item md={5} xs={12}>
-                                        <div className='footer__contact-phone'>
-                                            <span>Call Us Now On</span>
-                                            <a href={`tel:0987777777`}> 0086-510-68937216</a>
+                                        <SkeletonTheme baseColor='#ccc' highlightColor='#fff'>
+                                            {loading && (
+                                                <Skeleton className='footer__top-span--seleketon footer__contact-phone--seleketon' />
+                                            )}
+                                        </SkeletonTheme>
+                                        <div
+                                            className='footer__contact-phone'
+                                            style={{ display: loading ? 'none' : undefined }}
+                                        >
+                                            <span>{footerData.footer_title?.footer_title_02}</span>
+                                            <a href={`tel:${footerData?.phone}`}>{footerData?.phone}</a>
                                         </div>
                                     </Grid>
                                     <Grid item md={3} xs={12}>
-                                        <div className='footer__contact-sale-team'>
+                                        <SkeletonTheme baseColor='#ccc' highlightColor='#fff'>
+                                            {loading && (
+                                                <Skeleton className='footer__top-span--seleketon footer__contact-sale--seleketon' />
+                                            )}
+                                        </SkeletonTheme>
+                                        <div
+                                            className='footer__contact-sale-team'
+                                            style={{ display: loading ? 'none' : undefined }}
+                                        >
                                             <Button
                                                 variant='contained'
                                                 onClick={handleOpenModalContact}
@@ -204,15 +233,12 @@ export default function Footer(props) {
                                         </Link>
                                     </h2>
                                     <p className='footer__content-address'>
-                                        <strong>Address</strong>: No.369 Changhong Road, Yaoguan Town , Wujin District ,
-                                        Changzhou 213102 , Jiangsu ,P.R.China
+                                        <strong>Address</strong>: {footerData?.address}
                                     </p>
                                     <div className='footer__content-sns'>
-                                        <Link href='/'>
-                                            <a>
-                                                <FacebookIcon fontSize='large' color='red' />
-                                            </a>
-                                        </Link>
+                                        <a href={footerData?.fanpage} target='_blank' rel='noopener noreferrer'>
+                                            <FacebookIcon fontSize='large' color='red' />
+                                        </a>
                                     </div>
                                 </Grid>
                                 <Grid item md={2} xs={12}>

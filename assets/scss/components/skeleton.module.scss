@@ -29,6 +29,11 @@
   height: 45px;
 }
 
+.homeSlide--seleketon {
+  height: 424px;
+  margin: 20px 0 30px;
+}
+
 .menu__item--seleketon {
   >span {
     display: flex;
@@ -38,6 +43,23 @@
     width: 100px !important;
     margin: 20px;
   }
+}
+
+.footer__contact-text--seleketon {
+  max-width: 390px;
+}
+
+.footer__top-span--seleketon {
+  height: 30px;
+  margin: 20px 0;
+}
+
+.footer__contact-phone--seleketon {
+  max-width: 450px;
+}
+
+.footer__contact-sale--seleketon {
+  max-width: 164px;
 }
 
 @media screen and (max-width: 1023px) {
