@@ -8,6 +8,10 @@ export const ADMIN_ROUTES = [
         name: 'Đơn hàng',
     },
     {
+        path: '/dashboard/contact',
+        name: 'Danh sách liên hệ',
+    },
+    {
         path: '/dashboard/product',
         name: 'Sản phẩm',
     },

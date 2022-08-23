@@ -65,7 +65,7 @@ const AdminMenus = props => {
     }, [])
 
     //Thêm tài khoản mới
-    const handleAddAccount = () => {
+    const handleAddMenu = () => {
         router.push('/dashboard/menu_add')
     }
 
@@ -137,7 +137,7 @@ const AdminMenus = props => {
                 {!isEdit ? (
                     <div>
                         <Grid style={{ paddingBottom: '20px' }}>
-                            <Button variant='contained' color='primary' onClick={handleAddAccount}>
+                            <Button variant='contained' color='primary' onClick={handleAddMenu}>
                                 <AddIcon />
                                 &nbsp;&nbsp;Tạo menu
                             </Button>

@@ -2,6 +2,7 @@ import { combineReducers } from 'redux'
 import accountReducer from './account'
 import blogReducer from './blogs'
 import collectionReducer from './collections'
+import contactReducer from './contact'
 import mainReducer from './main'
 import menuReducer from './menus'
 import mobileMenuReducer from './mobileMenu'
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
     page: pageReducer,
     blog: blogReducer,
     mediaStorage: storageReducer,
+    contact: contactReducer,
 })
 
 export default rootReducer

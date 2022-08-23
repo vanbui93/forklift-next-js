@@ -1,10 +1,7 @@
 import {
     Button,
     Fab,
-    FormControl,
     Grid,
-    MenuItem,
-    Select,
     Table,
     TableBody,
     TableCell,
@@ -287,7 +284,7 @@ const AdminOrder = props => {
                                         <StyledTableCell align='left'>Địa chỉ</StyledTableCell>
                                         <StyledTableCell align='left'>Ghi chú</StyledTableCell>
                                         <StyledTableCell align='left'>Ngày đặt hàng</StyledTableCell>
-                                        <StyledTableCell align='right'>SỬA</StyledTableCell>
+                                        <StyledTableCell align='right'>XEM</StyledTableCell>
                                         <StyledTableCell align='right'>XÓA</StyledTableCell>
                                     </TableRow>
                                 </TableHead>

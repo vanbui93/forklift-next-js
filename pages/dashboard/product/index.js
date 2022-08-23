@@ -476,7 +476,7 @@ const AdminProduct = props => {
                                                     id='outlined-size-small'
                                                     size='small'
                                                     fullWidth
-                                                    defaultValue={editObject.name}
+                                                    value={editObject.name}
                                                     name='name'
                                                     onChange={handleEditOnchage}
                                                 />
@@ -558,9 +558,7 @@ const AdminProduct = props => {
                                                             id='outlined-size-small'
                                                             size='small'
                                                             fullWidth
-                                                            defaultValue={numberInputFormat(
-                                                                editObject.price.toString()
-                                                            )}
+                                                            value={numberInputFormat(editObject.price.toString())}
                                                             name='price'
                                                             onChange={handleEditOnchage}
                                                         />
@@ -571,7 +569,7 @@ const AdminProduct = props => {
                                                             id='outlined-size-small'
                                                             size='small'
                                                             fullWidth
-                                                            defaultValue={numberInputFormat(
+                                                            value={numberInputFormat(
                                                                 editObject.compare_price.toString()
                                                             )}
                                                             name='compare_price'
@@ -677,7 +675,6 @@ const AdminProduct = props => {
                                                         row
                                                         aria-labelledby='demo-row-radio-buttons-group-label'
                                                         name='isDisplay'
-                                                        defaultValue={editObject.isDisplay === '1' ? true : false}
                                                         value={editObject.isDisplay}
                                                         onChange={handleEditOnchage}
                                                     >

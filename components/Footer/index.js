@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, Grid } from '@material-ui/core'
 import FacebookIcon from '@mui/icons-material/Facebook'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import nextId, { setPrefix } from 'react-id-generator'
 import { useDispatch, useSelector } from 'react-redux'
@@ -18,23 +19,9 @@ export default function Footer(props) {
     const collectAll = useSelector(state => state.collection.data)
     const menus = useSelector(state => state.menu.data)
     const [loading, setLoading] = useState(true)
+    const router = useRouter()
 
     const dispatch = useDispatch()
-
-    const rules = [
-        {
-            field: 'contact_email',
-            method: 'isEmpty',
-            validWhen: false,
-            message: 'This field is required',
-        },
-        {
-            field: 'contact_message',
-            method: 'isEmpty',
-            validWhen: false,
-            message: 'This field is required',
-        },
-    ]
 
     useEffect(() => {
         dispatch(getCollection())
@@ -127,7 +114,9 @@ export default function Footer(props) {
         }
     }
 
-    const handleOpenModalContact = () => {}
+    const handleOpenModalContact = () => {
+        router.push('/page/contact')
+    }
 
     const arrayCollection = []
     collectAll !== null &&
