@@ -52,10 +52,25 @@ const HomeProduct = props => {
                             <li className='home-collection__item' key={idx}>
                                 <Link href={`/collections/${item?.collection}`}>
                                     <a>
-                                        <div
-                                            className='home-collection__img'
-                                            style={{ backgroundImage: `url(${item.image})` }}
-                                        ></div>
+                                        <SkeletonTheme
+                                            baseColor='#ccc'
+                                            highlightColor='#fff'
+                                            borderRadius='0.5rem'
+                                            textAlign='center'
+                                        >
+                                            {loading && (
+                                                <Skeleton
+                                                    containerClassName='avatar-skeleton'
+                                                    className='home-collection__img'
+                                                />
+                                            )}
+                                        </SkeletonTheme>
+                                        <div style={{ display: loading ? 'none' : undefined }}>
+                                            <div
+                                                className='home-collection__img'
+                                                style={{ backgroundImage: `url(${item.image})` }}
+                                            ></div>
+                                        </div>
                                         <h3 className='home-collection__text'>{item?.name}</h3>
                                     </a>
                                 </Link>

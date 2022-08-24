@@ -1,4 +1,3 @@
-import { ref, set } from '@firebase/database'
 import { Button } from '@material-ui/core'
 import parse from 'html-react-parser'
 import Head from 'next/head'
@@ -10,7 +9,6 @@ import methods from 'validator'
 import LayoutUser from '../../layouts/LayoutUser'
 import { RULES } from '../../Route'
 import { addContactInfo } from '../../store/actions/contact'
-import { db } from '../../utils/firebase'
 import { getPageDetail } from './../../store/actions/page'
 
 export default function PagesContent() {
@@ -216,7 +214,11 @@ export default function PagesContent() {
                         <div className='post'>
                             <div className='container'>
                                 <h2>{currentPage?.name}</h2>
-                                <div>{parse(currentPage?.content)}</div>
+                                <div>
+                                    {currentPage?.slug === 'about-us'
+                                        ? parse(currentPage?.content?.split('|||')[1])
+                                        : parse(currentPage?.content)}
+                                </div>
                             </div>
                         </div>
                     </LayoutUser>

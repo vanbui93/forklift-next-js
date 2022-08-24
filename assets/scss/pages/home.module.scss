@@ -53,9 +53,17 @@
 
     &__img {
         display: flex;
+        margin-bottom: 10px;
+        background-position: center;
+        -webkit-background-size: cover;
+        background-size: cover;
+        background-repeat: no-repeat;
 
-        img {
+        &::before {
             display: block;
+            width: 100%;
+            padding-bottom: 75.3488%;
+            content: '';
         }
     }
 
