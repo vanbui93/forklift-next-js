@@ -1,4 +1,3 @@
-import { ref, set } from '@firebase/database'
 import { faPhone } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, Grid } from '@material-ui/core'
@@ -14,7 +13,6 @@ import { RULES } from '../../Route'
 import { getCollection } from '../../store/actions/collection'
 import { addContactInfo } from '../../store/actions/contact'
 import { getMenu } from '../../store/actions/menu'
-import { db } from '../../utils/firebase'
 
 export default function Footer(props) {
     const { footerData } = props
@@ -26,7 +24,7 @@ export default function Footer(props) {
 
     const [loading, setLoading] = useState(true)
     useEffect(() => {
-        setLoading(true)
+        setLoading(false)
     }, [menus])
 
     useEffect(() => {
@@ -175,7 +173,7 @@ export default function Footer(props) {
                                             className='footer__contact-text'
                                             style={{ display: loading ? 'none' : undefined }}
                                         >
-                                            <a href={`tel:0987777777`}>
+                                            <a href={`tel:${footerData?.phone}`}>
                                                 <FontAwesomeIcon
                                                     icon={faPhone}
                                                     style={{ fontSize: 20, color: '#333' }}
@@ -228,17 +226,36 @@ export default function Footer(props) {
                             <Grid container spacing={2} style={{ display: 'flex' }}>
                                 <Grid item md={4} xs={12}>
                                     <h2 className='footer__content-logo'>
+                                        <SkeletonTheme baseColor='#ccc' highlightColor='#fff'>
+                                            {loading && <Skeleton className='footer__content-logo--seleketon' />}
+                                        </SkeletonTheme>
                                         <Link href='/'>
-                                            <a>
-                                                <img src='../../assets/img/logo.png' alt='' />
+                                            <a style={{ display: loading ? 'none' : undefined }}>
+                                                <img src={footerData.logo_img} alt='' />
                                             </a>
                                         </Link>
                                     </h2>
-                                    <p className='footer__content-address'>
+                                    <SkeletonTheme baseColor='#ccc' highlightColor='#fff'>
+                                        {loading && (
+                                            <Skeleton width={350} height={34} style={{ marginBottom: '10px' }} />
+                                        )}
+                                    </SkeletonTheme>
+                                    <p
+                                        className='footer__content-address'
+                                        style={{ display: loading ? 'none' : undefined }}
+                                    >
                                         <strong>ที่อยู่</strong>: {footerData?.address}
                                     </p>
                                     <div className='footer__content-sns'>
-                                        <a href={footerData?.fanpage} target='_blank' rel='noopener noreferrer'>
+                                        <SkeletonTheme baseColor='#ccc' highlightColor='#fff'>
+                                            {loading && <Skeleton width={35} height={35} />}
+                                        </SkeletonTheme>
+                                        <a
+                                            href={footerData?.fanpage}
+                                            target='_blank'
+                                            rel='noopener noreferrer'
+                                            style={{ display: loading ? 'none' : undefined }}
+                                        >
                                             <FacebookIcon fontSize='large' color='red' />
                                         </a>
                                     </div>

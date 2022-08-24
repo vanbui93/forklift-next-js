@@ -102,14 +102,21 @@ export default function Collections() {
                     <div className='container'>
                         <h2 className='collection__title'>{colllectName[0]?.name}</h2>
                         <ul className='collections__list'>{getDulieu(collection)}</ul>
-                        <div className='blogs__pagination'>
-                            <PaginationButtons
-                                count={Math.ceil(totalLists / pageLimit)}
-                                handleChangePage={value => {
-                                    onPageChanged(value)
-                                }}
-                            />
-                        </div>
+                        {currentList.length ? (
+                            <div
+                                className='collections__pagination'
+                                style={{ display: 'flex', justifyContent: 'center' }}
+                            >
+                                <PaginationButtons
+                                    count={Math.ceil(totalLists / pageLimit)}
+                                    handleChangePage={value => {
+                                        onPageChanged(value)
+                                    }}
+                                />
+                            </div>
+                        ) : (
+                            ''
+                        )}
                     </div>
                 </div>
             </LayoutUser>

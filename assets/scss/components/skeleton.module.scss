@@ -63,10 +63,20 @@
   max-width: 164px;
 }
 
+.footer__content-logo--seleketon {
+  width: 153px !important;
+  height: 66px;
+}
+
 @media screen and (max-width: 1023px) {
   .logo-sp--seleketon {
     width: 96px !important;
     height: 30px;
+  }
+
+  .homeSlide--seleketon {
+    height: 145px;
+    margin: 20px 0 10px;
   }
 
   .menu__item--seleketon {
@@ -84,8 +94,8 @@
   }
 
   .page-title--seleketon {
-    max-width: 210px;
-    height: 27px;
+    width: 250px !important;
+    margin: 30px 0 32px;
   }
 
   .collections__img--sekeleton {

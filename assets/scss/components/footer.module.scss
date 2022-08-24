@@ -4,6 +4,7 @@
     }
 
     &__area {
+        overflow: hidden;
         background: #fff;
     }
 
@@ -48,6 +49,7 @@
         text-align: center;
 
         >span {
+            display: block;
             margin-right: 10px;
         }
 

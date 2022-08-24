@@ -1,3 +1,6 @@
+import { Card } from '@material-ui/core'
+import { Button, CardActions, CardContent, CardMedia, Grid, Typography } from '@mui/material'
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import { useDispatch, useSelector } from 'react-redux'
@@ -5,7 +8,7 @@ import { getCollection } from '../../store/actions/collection'
 import ProductItem from './../../components/ProductItem'
 
 const HomeProduct = props => {
-    const { products } = props
+    const { classes, products } = props
     let data = { ...products }
 
     const collectAll = useSelector(state => state.collection.data)
@@ -72,37 +75,61 @@ const HomeProduct = props => {
     const collectName =
         collectAll &&
         Object.values(collectAll)?.map((item, idx) => {
-            return item?.name
+            return item
         })
 
     return (
-        <section className='collections'>
-            <div className='home-collect01 container'>
-                <SkeletonTheme baseColor='#ccc' highlightColor='#fff' borderRadius='0.5rem'>
-                    {loading && <Skeleton containerClassName='avatar-skeleton' className='page-title--seleketon' />}
-                </SkeletonTheme>
-                <div className='page-title' style={{ display: loading ? 'none' : undefined }}>
-                    <h3>{collectName?.[0]}</h3>
+        <section className='container'>
+            <div className='container'>
+                <div className='page-title-wrap'>
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                        <SkeletonTheme baseColor='#ccc' highlightColor='#fff' borderRadius='0.5rem' textAlign='center'>
+                            {loading && (
+                                <Skeleton containerClassName='avatar-skeleton' className='page-title--seleketon' />
+                            )}
+                        </SkeletonTheme>
+                    </div>
+                    <h2 className='page-title' style={{ display: loading ? 'none' : undefined }}>
+                        Forklift Sales Rental
+                    </h2>
                 </div>
-                <ul className='collections__list'>{getDulieu('used-forklifts', 10)}</ul>
-            </div>
-            <div className='home-collect02 container'>
-                <SkeletonTheme baseColor='#ccc' highlightColor='#fff' borderRadius='0.5rem'>
-                    {loading && <Skeleton containerClassName='avatar-skeleton' className='page-title--seleketon' />}
-                </SkeletonTheme>
-                <div className='page-title' style={{ display: loading ? 'none' : undefined }}>
-                    <h3>{collectName?.[2]}</h3>
+                <div className='home-collection'>
+                    <ul className='home-collection__list'>
+                        <li className='home-collection__item'>
+                            <Link href={`/collections/${collectName[0]?.collection}`}>
+                                <a>
+                                    <div
+                                        className='home-collection__img'
+                                        style={{ backgroundImage: `url('../../assets/img/@temp/collect_01.jpg')` }}
+                                    ></div>
+                                    <h3 className='home-collection__text'>{collectName[0]?.name}</h3>
+                                </a>
+                            </Link>
+                        </li>
+                        <li className='home-collection__item'>
+                            <Link href={`/collections/${collectName[1]?.collection}`}>
+                                <a>
+                                    <div
+                                        className='home-collection__img'
+                                        style={{ backgroundImage: `url('../../assets/img/@temp/collect_02.jpg')` }}
+                                    ></div>
+                                    <h3 className='home-collection__text'>{collectName[1]?.name}</h3>
+                                </a>
+                            </Link>
+                        </li>
+                        <li className='home-collection__item'>
+                            <Link href={`/collections/${collectName[2]?.collection}`}>
+                                <a>
+                                    <div
+                                        className='home-collection__img'
+                                        style={{ backgroundImage: `url('../../assets/img/@temp/collect_03.jpg')` }}
+                                    ></div>
+                                    <h3 className='home-collection__text'>{collectName[2]?.name}</h3>
+                                </a>
+                            </Link>
+                        </li>
+                    </ul>
                 </div>
-                <ul className='collections__list'>{getDulieu('rental-hire', 10)}</ul>
-            </div>
-            <div className='home-collect03 container'>
-                <SkeletonTheme baseColor='#ccc' highlightColor='#fff' borderRadius='0.5rem'>
-                    {loading && <Skeleton containerClassName='avatar-skeleton' className='page-title--seleketon' />}
-                </SkeletonTheme>
-                <div className='page-title' style={{ display: loading ? 'none' : undefined }}>
-                    <h3>{collectName?.[1]}</h3>
-                </div>
-                <ul className='collections__list'>{getDulieu('new-machines', 10)}</ul>
             </div>
         </section>
     )
