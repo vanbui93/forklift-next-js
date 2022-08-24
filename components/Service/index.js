@@ -31,6 +31,7 @@ export default function Service() {
                         <h3 className='service__sub-title'>Tanat Service ForkLift.</h3>
                         <p className='service__text'>
                             ธนัท เซอร์วิส มีบริการ ขาย เช่า ซ่อม และ อะไหล่ รถโฟล์คลิฟท์ ฟอร์คลิฟท์ หรือ รถยกมือสอง
+                            <br />
                             (Used Forklift).
                         </p>
                     </li>

@@ -85,7 +85,9 @@ export default function Header(props) {
 
     const [loading, setLoading] = useState(true)
     useEffect(() => {
-        setLoading(false)
+        if (headerData && Object.keys(headerData)?.length > 0) {
+            setLoading(false)
+        }
     }, [headerData])
 
     return (

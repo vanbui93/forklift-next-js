@@ -93,6 +93,12 @@
 }
 
 @media screen and (min-width: 1023px) {
+    .page-title {
+        &--home-collection {
+            padding-top: 70px;
+        }
+    }
+
     .aboutus {
         margin-bottom: 110px;
 
@@ -158,7 +164,6 @@
 
     &__item {
         width: 50%;
-        text-align: center;
     }
 
     &__img {
@@ -177,7 +182,7 @@
     }
 
     &__text {
-        font-weight: 900;
+        font-weight: 700;
         color: #333;
     }
 

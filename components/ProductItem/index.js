@@ -31,8 +31,8 @@ export default function ProductItem(props) {
                     <SkeletonTheme baseColor='#ccc' highlightColor='#fff'>
                         {loading && <Skeleton className='collections__img--sekeleton' />}
                     </SkeletonTheme>
-                    <div className='collections__img' style={{ display: loading ? 'none' : undefined }}>
-                        <img src={img[0]} alt='' />
+                    <div style={{ display: loading ? 'none' : undefined }}>
+                        <div className='collections__img' style={{ backgroundImage: `url(${img[0]})` }}></div>
                     </div>
                     <div className='collections__info'>
                         <SkeletonTheme baseColor='#ccc' highlightColor='#fff'>

@@ -24,7 +24,9 @@ export default function Footer(props) {
 
     const [loading, setLoading] = useState(true)
     useEffect(() => {
-        setLoading(false)
+        if (menus && Object.keys(menus)?.length > 0) {
+            setLoading(false)
+        }
     }, [menus])
 
     useEffect(() => {

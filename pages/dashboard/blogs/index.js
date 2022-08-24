@@ -273,9 +273,6 @@ function AdminPage(props) {
         setCurrentList([...allList])
     }, [blogData])
 
-    console.log(blogData)
-    console.log(arrayBlog)
-
     //Kết quả Search
     const handleSearch = e => {
         let value = e.target.value
@@ -420,7 +417,7 @@ function AdminPage(props) {
                                         </TableRow>
                                         <TableRow>
                                             <TableCell className={classes.tbHeadLeft} variant='head'>
-                                                Hình slide
+                                                Hình bài viết
                                             </TableCell>
                                             <TableCell>
                                                 <Grid container spacing={2}>
@@ -459,7 +456,7 @@ function AdminPage(props) {
                                                                                 ></path>
                                                                             </svg>
                                                                         </svg>
-                                                                        <p>Thay hình slide</p>
+                                                                        <p>Thay hình bài viết</p>
                                                                     </div>
                                                                 </UploadControl>
                                                             </div>

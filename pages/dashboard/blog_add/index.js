@@ -143,7 +143,7 @@ const BlogAdd = props => {
 
     const { result, uploader } = useDisplayImage()
 
-    //Button 'Thêm 1 hình slide'
+    //Button 'Thêm 1 hình bài viết'
     const UploadControl = ({ children, value, disabled }) => {
         return (
             <label htmlFor='contained-button-file' className='m-0 w-100'>
@@ -164,15 +164,13 @@ const BlogAdd = props => {
         )
     }
 
-    //Cập nhật link hình vào setSlide
+    //Cập nhật link hình vào setAddBlog
     useEffect(() => {
         setAddBlog(prevState => ({
             ...prevState,
             image: result,
         }))
     }, [result])
-
-    console.log(addBlog)
 
     return (
         <AdminStyle open={!opensidebar}>
@@ -234,7 +232,7 @@ const BlogAdd = props => {
                                                                     ></path>
                                                                 </svg>
                                                             </svg>
-                                                            <p>Thêm hình slide</p>
+                                                            <p>Thêm hình bài viết</p>
                                                         </div>
                                                     </UploadControl>
                                                 </div>
