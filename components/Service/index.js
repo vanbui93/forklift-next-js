@@ -1,42 +1,46 @@
-import React from 'react'
+import parse from 'html-react-parser'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { getMain } from '../../store/actions/main'
 
 export default function Service() {
+    const mainData = useSelector(state => state.main.data)
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(getMain())
+    }, [])
+
+    console.log(mainData.main_content_02)
     return (
-        <div className='container'>
-            <div className='service'>
-                <h2 className='page-title'>Service</h2>
-                <ul className='service__list'>
-                    <li className='service__item'>
-                        <div className='service__img'>
-                            <img src='../../assets/img/service_img_01.png' alt='' />
-                        </div>
-                        <h3 className='service__sub-title'>บริการซ่อม-อะไหล่!</h3>
-                        <p className='service__text'>
-                            มีทีมช่างผู้ชำนาญงานมากประสบการณ์คอยให้บริการซ่อม และ บริการอะไหล่หลังการขาย
-                        </p>
-                    </li>
-                    <li className='service__item'>
-                        <div className='service__img'>
-                            <img src='../../assets/img/service_img_02.png' alt='' />
-                        </div>
-                        <h3 className='service__sub-title'>เช่าระยะยาว!</h3>
-                        <p className='service__text'>
-                            บริการให้เช่ารถโฟล์คลิฟท์ ฟอร์คลิฟท์ หรือ รถยกมือสอง มีทั้งรายวัน รายเดือน และรายปี...
-                        </p>
-                    </li>
-                    <li className='service__item'>
-                        <div className='service__img'>
-                            <img src='../../assets/img/service_img_03.png' alt='' />
-                        </div>
-                        <h3 className='service__sub-title'>Tanat Service ForkLift.</h3>
-                        <p className='service__text'>
-                            ธนัท เซอร์วิส มีบริการ ขาย เช่า ซ่อม และ อะไหล่ รถโฟล์คลิฟท์ ฟอร์คลิฟท์ หรือ รถยกมือสอง
-                            <br />
-                            (Used Forklift).
-                        </p>
-                    </li>
-                </ul>
+        mainData.main_content_02 && (
+            <div className='container'>
+                <div className='service'>
+                    <h2 className='page-title'>{mainData.main_content_02.content_title}</h2>
+                    <ul className='service__list'>
+                        <li className='service__item'>
+                            <div className='service__img'>
+                                <img src={mainData.main_content_02.icon_01} alt='' />
+                            </div>
+                            <h3 className='service__sub-title'>{mainData.main_content_02.title_01}</h3>
+                            <div className='service__text'>{parse(mainData.main_content_02.des_01)}</div>
+                        </li>
+                        <li className='service__item'>
+                            <div className='service__img'>
+                                <img src={mainData.main_content_02.icon_02} alt='' />
+                            </div>
+                            <h3 className='service__sub-title'>{mainData.main_content_02.title_02}</h3>
+                            <div className='service__text'>{parse(mainData.main_content_02.des_02)}</div>
+                        </li>
+                        <li className='service__item'>
+                            <div className='service__img'>
+                                <img src={mainData.main_content_02.icon_03} alt='' />
+                            </div>
+                            <h3 className='service__sub-title'>{mainData.main_content_02.title_03}</h3>
+                            <div className='service__text'>{parse(mainData.main_content_02.des_03)}</div>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
+        )
     )
 }

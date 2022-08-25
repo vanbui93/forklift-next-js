@@ -11,13 +11,14 @@ import {
     withStyles,
 } from '@material-ui/core'
 import EditIcon from '@mui/icons-material/Edit'
-import { Stack } from '@mui/material'
+import { Stack, TextareaAutosize } from '@mui/material'
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import LayoutAdmin from '../../../layouts/LayoutAdmin'
 import { getMain, updateMain } from '../../../store/actions/main'
 import { AdminStyle } from './../../../admin_components/AdminStyle'
+import parse from 'html-react-parser'
 import styles from './styles'
 
 const Main = props => {
@@ -54,6 +55,24 @@ const Main = props => {
             footer_sub_title_03: '',
             footer_sub_title_04: '',
         },
+        main_content_01: {
+            title: '',
+            des: '',
+            image: '',
+            link: '',
+        },
+        main_content_02: {
+            content_title: '',
+            title_01: '',
+            des_01: '',
+            icon_01: '',
+            title_02: '',
+            des_02: '',
+            icon_02: '',
+            title_03: '',
+            des_03: '',
+            icon_03: '',
+        },
     })
 
     const handleEditMain = () => {
@@ -84,6 +103,24 @@ const Main = props => {
                 footer_sub_title_02: mainData.footer_sub.footer_sub_title_02,
                 footer_sub_title_03: mainData.footer_sub.footer_sub_title_03,
                 footer_sub_title_04: mainData.footer_sub.footer_sub_title_04,
+            },
+            main_content_01: {
+                title: mainData.main_content_01.title,
+                des: mainData.main_content_01.des,
+                image: mainData.main_content_01.image,
+                link: mainData.main_content_01.link,
+            },
+            main_content_02: {
+                content_title: mainData.main_content_02.content_title,
+                title_01: mainData.main_content_02.title_01,
+                des_01: mainData.main_content_02.des_01,
+                icon_01: mainData.main_content_02.icon_01,
+                title_02: mainData.main_content_02.title_02,
+                des_02: mainData.main_content_02.des_02,
+                icon_02: mainData.main_content_02.icon_02,
+                title_03: mainData.main_content_02.title_03,
+                des_03: mainData.main_content_02.des_03,
+                icon_03: mainData.main_content_02.icon_03,
             },
         })
     }
@@ -136,6 +173,31 @@ const Main = props => {
         })
     }
 
+    const handleEditOnchageMainContent01 = e => {
+        let inputName = e.target.name
+        let inputValue = e.target.value
+
+        setEditMain(prevState => {
+            const newState = Object.assign(editMain.main_content_01, { [inputName]: inputValue })
+            return {
+                ...prevState,
+                main_content_01: newState,
+            }
+        })
+    }
+
+    const handleEditOnchageMainContent02 = e => {
+        let inputName = e.target.name
+        let inputValue = e.target.value
+
+        setEditMain(prevState => {
+            const newState = Object.assign(editMain.main_content_02, { [inputName]: inputValue })
+            return {
+                ...prevState,
+                main_content_02: newState,
+            }
+        })
+    }
     const [image, setImage] = useState('')
 
     function useDisplayImage() {
@@ -247,18 +309,6 @@ const Main = props => {
                                     </TableRow>
                                     <TableRow>
                                         <TableCell className={classes.tbHeadLeft} variant='head'>
-                                            Email hỗ trợ
-                                        </TableCell>
-                                        <TableCell>{mainData?.email_support}</TableCell>
-                                    </TableRow>
-                                    <TableRow>
-                                        <TableCell className={classes.tbHeadLeft} variant='head'>
-                                            Fanpage
-                                        </TableCell>
-                                        <TableCell>{mainData?.fanpage}</TableCell>
-                                    </TableRow>
-                                    <TableRow>
-                                        <TableCell className={classes.tbHeadLeft} variant='head'>
                                             Hotline
                                         </TableCell>
                                         <TableCell>{mainData?.hotline}</TableCell>
@@ -268,6 +318,18 @@ const Main = props => {
                                             Địa chỉ
                                         </TableCell>
                                         <TableCell>{mainData?.address}</TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell className={classes.tbHeadLeft} variant='head'>
+                                            Email hỗ trợ
+                                        </TableCell>
+                                        <TableCell>{mainData?.email_support}</TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell className={classes.tbHeadLeft} variant='head'>
+                                            Fanpage
+                                        </TableCell>
+                                        <TableCell>{mainData?.fanpage}</TableCell>
                                     </TableRow>
                                     <TableRow>
                                         <TableCell className={classes.tbHeadLeft} variant='head'>
@@ -286,6 +348,46 @@ const Main = props => {
                                                 </li>
                                                 <li className={classes.footerTitle}>
                                                     {mainData.footer_title?.footer_title_02}
+                                                </li>
+                                            </ul>
+                                        </TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell className={classes.tbHeadLeft} variant='head'>
+                                            Nội dung trang chủ 1
+                                        </TableCell>
+                                        <TableCell>
+                                            <div>
+                                                <h2>{mainData.main_content_01?.title}</h2>
+                                                <br />
+                                                {parse(mainData.main_content_01?.des)}
+                                            </div>
+                                        </TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell className={classes.tbHeadLeft} variant='head'>
+                                            Nội dung trang chủ 2
+                                        </TableCell>
+                                        <TableCell>
+                                            <h2>{mainData.main_content_02.content_title}</h2>
+                                            <ul>
+                                                <li>
+                                                    <strong>{mainData.main_content_02.title_01}</strong>
+                                                    <div className={classes.footerSubItem}>
+                                                        {parse(mainData.main_content_02.des_01)}
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <strong>{mainData.main_content_02.title_02}</strong>
+                                                    <div className={classes.footerSubItem}>
+                                                        {parse(mainData.main_content_02.des_02)}
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <strong>{mainData.main_content_02.title_03}</strong>
+                                                    <div className={classes.footerSubItem}>
+                                                        {parse(mainData.main_content_02.des_03)}
+                                                    </div>
                                                 </li>
                                             </ul>
                                         </TableCell>
@@ -548,6 +650,119 @@ const Main = props => {
                                                     </Grid>
                                                 </Grid>
                                             </div>
+                                        </TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell className={classes.tbHeadLeft} variant='head'>
+                                            Nội dung trang chủ 1
+                                        </TableCell>
+                                        <TableCell>
+                                            <TextField
+                                                id='outlined-size-small'
+                                                size='small'
+                                                fullWidth
+                                                defaultValue={editMain.main_content_01?.title}
+                                                name='title'
+                                                label='Tiêu đề'
+                                                onChange={handleEditOnchageMainContent01}
+                                            />
+                                            <TextField
+                                                id='outlined-size-small'
+                                                size='small'
+                                                fullWidth
+                                                defaultValue={editMain.main_content_01?.link}
+                                                name='title'
+                                                label='Link'
+                                                onChange={handleEditOnchageMainContent01}
+                                                sx={{ marginBottom: 2 }}
+                                            />
+                                            <TextareaAutosize
+                                                aria-label='minimum height'
+                                                minRows={3}
+                                                placeholder='Minimum 3 rows'
+                                                defaultValue={editMain.main_content_01?.des}
+                                                style={{ width: 400 }}
+                                                name='des'
+                                                onChange={handleEditOnchageMainContent01}
+                                            />
+                                        </TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell className={classes.tbHeadLeft} variant='head'>
+                                            Nội dung trang chủ 2
+                                        </TableCell>
+                                        <TableCell>
+                                            <TextField
+                                                id='outlined-size-small'
+                                                size='small'
+                                                fullWidth
+                                                defaultValue={editMain.main_content_02?.content_title}
+                                                name='content_title'
+                                                onChange={handleEditOnchageMainContent02}
+                                            />
+                                            <Grid container spacing={2}>
+                                                <Grid item sx={12}>
+                                                    <TextField
+                                                        id='outlined-size-small'
+                                                        size='small'
+                                                        fullWidth
+                                                        defaultValue={editMain.main_content_02?.title_01}
+                                                        name='title_01'
+                                                        label='Service 01'
+                                                        onChange={handleEditOnchageMainContent02}
+                                                    />
+                                                    <TextareaAutosize
+                                                        aria-label='minimum height'
+                                                        minRows={3}
+                                                        placeholder='Minimum 3 rows'
+                                                        defaultValue={editMain.main_content_02?.des_01}
+                                                        style={{ width: 400 }}
+                                                        name='des_01'
+                                                        onChange={handleEditOnchageMainContent02}
+                                                    />
+                                                </Grid>
+                                                <Grid item sx={12}>
+                                                    <TextField
+                                                        id='outlined-size-small'
+                                                        size='small'
+                                                        fullWidth
+                                                        defaultValue={editMain.main_content_02?.title_02}
+                                                        name='title_02'
+                                                        label='Service 02'
+                                                        onChange={handleEditOnchageMainContent02}
+                                                    />
+                                                    <TextareaAutosize
+                                                        aria-label='minimum height'
+                                                        minRows={3}
+                                                        placeholder='Minimum 3 rows'
+                                                        defaultValue={editMain.main_content_02?.des_02}
+                                                        style={{ width: 400 }}
+                                                        name='des_02'
+                                                        onChange={handleEditOnchageMainContent02}
+                                                    />
+                                                </Grid>
+                                                <Grid item sx={12}>
+                                                    <TextField
+                                                        id='outlined-size-small'
+                                                        size='small'
+                                                        fullWidth
+                                                        defaultValue={editMain.main_content_02?.title_03}
+                                                        name='title_03'
+                                                        label='Service 03'
+                                                        onChange={handleEditOnchageMainContent02}
+                                                        sx={{ marginBottom: 1 }}
+                                                    />
+                                                    <TextareaAutosize
+                                                        aria-label='minimum height'
+                                                        minRows={3}
+                                                        placeholder='Minimum 3 rows'
+                                                        defaultValue={editMain.main_content_02?.des_03}
+                                                        style={{ width: 400 }}
+                                                        name='des_03'
+                                                        onChange={handleEditOnchageMainContent02}
+                                                    />
+                                                </Grid>
+                                            </Grid>
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>

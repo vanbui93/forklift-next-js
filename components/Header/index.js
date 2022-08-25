@@ -173,46 +173,42 @@ export default function Header(props) {
                     </div>
                 </div>
             </div>
-            {loading && (
-                <div className='container-fluid'>
-                    <div className='menu-inner'>
-                        <div className='container'>
-                            <div style={{ display: 'flex', alignItems: 'center' }}>
-                                <SkeletonTheme baseColor='#ccc' highlightColor='#fff' borderRadius='0.5rem'>
-                                    {loading && <Skeleton className='logo--seleketon' />}
-                                </SkeletonTheme>
-                                <div className='menu__item--seleketon'>
-                                    <SkeletonTheme baseColor='#ccc' highlightColor='#fff'>
-                                        <Skeleton height={20} className='menu__link' count={4} />
-                                    </SkeletonTheme>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
             <nav className='menu'>
                 <div className='container-fluid'>
                     <div className='menu-inner'>
                         <div className='container'>
                             <div className='menu__flex'>
-                                <h1 className='logo' style={{ display: loading ? 'none' : undefined }}>
+                                <h1 className='logo'>
+                                    <SkeletonTheme baseColor='#ccc' highlightColor='#fff' borderRadius='0.5rem'>
+                                        {loading && <Skeleton className='logo--seleketon' />}
+                                    </SkeletonTheme>
                                     <Link href='/'>
-                                        <a>
+                                        <a style={{ display: loading ? 'none' : undefined }}>
                                             <img src={headerData?.logo_img} alt={headerData?.logo_alt} />
                                         </a>
                                     </Link>
                                 </h1>
-                                <ul className='menu__list' style={{ display: loading ? 'none' : undefined }}>
-                                    {Object.values(menus)?.map((menu, idx) => {
-                                        return (
-                                            <li className='menu__item' key={idx}>
-                                                <Link href={`/${menu.link}`}>
-                                                    <a className='menu__link'> {menu.name}</a>
-                                                </Link>
-                                            </li>
-                                        )
-                                    })}
+                                <ul className='menu__list'>
+                                    {menus &&
+                                        Object.values(menus).map((menu, idx) => {
+                                            return (
+                                                <li className='menu__item' key={idx}>
+                                                    <SkeletonTheme baseColor='#ccc' highlightColor='#fff'>
+                                                        {loading && (
+                                                            <SkeletonTheme height={18} className='menu__link' />
+                                                        )}
+                                                    </SkeletonTheme>
+                                                    <Link href={`/${menu.link}`}>
+                                                        <a
+                                                            className='menu__link'
+                                                            style={{ display: loading ? 'none' : undefined }}
+                                                        >
+                                                            {menu.name}
+                                                        </a>
+                                                    </Link>
+                                                </li>
+                                            )
+                                        })}
                                 </ul>
                             </div>
                         </div>

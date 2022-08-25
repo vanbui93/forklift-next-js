@@ -214,11 +214,7 @@ export default function PagesContent() {
                         <div className='post'>
                             <div className='container'>
                                 <h2>{currentPage?.name}</h2>
-                                <div>
-                                    {currentPage?.slug === 'about-us'
-                                        ? parse(currentPage?.content?.split('|||')[1])
-                                        : parse(currentPage?.content)}
-                                </div>
+                                <div>{parse(currentPage?.content)}</div>
                             </div>
                         </div>
                     </LayoutUser>

@@ -1,43 +1,38 @@
 import parse from 'html-react-parser'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import { useDispatch, useSelector } from 'react-redux'
-import { getPageDetail } from '../../store/actions/page'
+import { getMain } from '../../store/actions/main'
 
 export default function AboutUs(props) {
-    const data = useSelector(state => state.page.data)
+    const mainData = useSelector(state => state.main.data)
     const dispatch = useDispatch()
     useEffect(() => {
-        dispatch(getPageDetail())
+        dispatch(getMain())
     }, [])
-
-    const aboutData = data !== null && data !== undefined && Object.values(data)?.find(page => page.slug === 'about-us')
 
     const [loading, setLoading] = useState(true)
     useEffect(() => {
-        if (data && Object.keys(data)?.length > 0) {
-            setLoading(false)
-        }
-    }, [data])
+        setLoading(false)
+    }, [mainData])
 
     return (
-        aboutData && (
+        mainData.main_content_01 && (
             <div className='container'>
                 <div className='aboutus'>
-                    <h2 className='page-title'>{aboutData?.name}</h2>
+                    <h2 className='page-title'>{mainData.main_content_01?.title}</h2>
                     <div className='aboutus__inner'>
                         <div
                             className='aboutus__img'
                             style={{
-                                backgroundImage: `url(../../assets/img/@temp/aboutus.jpg)`,
+                                backgroundImage: `url(${mainData.main_content_01?.image})`,
                             }}
                         ></div>
                         <div className='aboutus__text'>
                             <div className='aboutus__text-inner'>
-                                <div>{parse(aboutData?.content?.split('|||')[0])}</div>
+                                <div>{parse(mainData.main_content_01.des)}</div>
                                 <div className='btn_more'>
-                                    <Link href='/page/about-us'>
+                                    <Link href={mainData.main_content_01.link}>
                                         <a>— ดูเพิ่มเติม</a>
                                     </Link>
                                 </div>

@@ -127,6 +127,7 @@ const AdminCollections = props => {
         }
     }
 
+
     const [image, setImage] = useState('')
     const imageRef = useRef(null)
     const { result, uploader } = useDisplayImage()
