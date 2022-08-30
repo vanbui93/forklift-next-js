@@ -143,7 +143,7 @@ export default function ProductDetail(props) {
                                     <div className='page-title'>
                                         <h3>Gợi ý cho bạn</h3>
                                     </div>
-                                    <ProductRelated productCategory={product.category} />
+                                    <ProductRelated productCollection={product.collection} />
                                 </div>
                                 <VideoReview dataVideo={dataVideo} productName={product.name} />
                             </div>

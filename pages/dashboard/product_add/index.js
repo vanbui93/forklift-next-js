@@ -116,7 +116,6 @@ const ProductAdd = props => {
     const handleSaveProduct = async () => {
         try {
             dispatch(addProductObject(addProduct, Number(keyAdd)))
-            dispatch(getProduct())
             router.push('/dashboard/product')
         } catch (err) {
             console.log(err)

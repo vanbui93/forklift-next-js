@@ -54,7 +54,7 @@ const AdminOrder = props => {
         name: '',
         img: '',
         price: '',
-        category: '',
+        collection: '',
         notes: '',
         create_date: '',
     })

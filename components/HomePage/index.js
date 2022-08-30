@@ -24,10 +24,6 @@ function HomePage(props) {
     }, [])
 
     useEffect(() => {
-        dispatch(getProduct())
-    }, [])
-
-    useEffect(() => {
         dispatch(getSlides())
     }, [])
 

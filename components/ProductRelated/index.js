@@ -9,13 +9,13 @@ import { getProduct } from './../../store/actions/products'
 export default function ProductRelated(props) {
     const products = useSelector(state => state.products.data)
     const mainData = useSelector(state => state.main.data)
-    const { productCategory } = props
+    const { productCollection } = props
 
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(getProduct())
-    }, [productCategory])
+    }, [productCollection])
 
     const params = {
         spaceBetween: 10,
@@ -49,8 +49,8 @@ export default function ProductRelated(props) {
             products &&
             Object.entries(products)?.map(([key, val]) => {
                 if (val !== null) {
-                    const category = val.category
-                    if (productCategory === category) {
+                    const collection = val.collection
+                    if (productCollection === collection) {
                         return (
                             <SwiperSlide className='product-related__item' key={key}>
                                 <Link className='product-related__link' href={`/product/${key}`}>
