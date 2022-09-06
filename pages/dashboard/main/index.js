@@ -275,7 +275,6 @@ const Main = props => {
                         <TableContainer component={Paper}>
                             <Table>
                                 <TableBody>
-                                    <TableRow></TableRow>
                                     <TableRow>
                                         <TableCell className={classes.tbHeadLeft} variant='head'>
                                             Logo
@@ -360,7 +359,9 @@ const Main = props => {
                                             <div>
                                                 <h2>{mainData.main_content_01?.title}</h2>
                                                 <br />
-                                                {parse(mainData.main_content_01?.des)}
+                                                {parse(
+                                                    mainData.main_content_01?.des ? mainData.main_content_01?.des : ''
+                                                )}
                                             </div>
                                         </TableCell>
                                     </TableRow>
@@ -369,24 +370,36 @@ const Main = props => {
                                             Nội dung trang chủ 2
                                         </TableCell>
                                         <TableCell>
-                                            <h2>{mainData.main_content_02.content_title}</h2>
+                                            <h2>{mainData.main_content_02?.content_title}</h2>
                                             <ul>
                                                 <li>
-                                                    <strong>{mainData.main_content_02.title_01}</strong>
+                                                    <strong>{mainData.main_content_02?.title_01}</strong>
                                                     <div className={classes.footerSubItem}>
-                                                        {parse(mainData.main_content_02.des_01)}
+                                                        {parse(
+                                                            mainData.main_content_02?.des_01
+                                                                ? mainData.main_content_02?.des_01
+                                                                : ''
+                                                        )}
                                                     </div>
                                                 </li>
                                                 <li>
-                                                    <strong>{mainData.main_content_02.title_02}</strong>
+                                                    <strong>{mainData.main_content_02?.title_02}</strong>
                                                     <div className={classes.footerSubItem}>
-                                                        {parse(mainData.main_content_02.des_02)}
+                                                        {parse(
+                                                            mainData.main_content_02?.des_02
+                                                                ? mainData.main_content_02?.des_02
+                                                                : ''
+                                                        )}
                                                     </div>
                                                 </li>
                                                 <li>
-                                                    <strong>{mainData.main_content_02.title_03}</strong>
+                                                    <strong>{mainData.main_content_02?.title_03}</strong>
                                                     <div className={classes.footerSubItem}>
-                                                        {parse(mainData.main_content_02.des_03)}
+                                                        {parse(
+                                                            mainData.main_content_02?.des_03
+                                                                ? mainData.main_content_02?.des_03
+                                                                : ''
+                                                        )}
                                                     </div>
                                                 </li>
                                             </ul>

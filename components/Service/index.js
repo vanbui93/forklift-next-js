@@ -10,7 +10,6 @@ export default function Service() {
         dispatch(getMain())
     }, [])
 
-    console.log(mainData.main_content_02)
     return (
         mainData.main_content_02 && (
             <div className='container'>
