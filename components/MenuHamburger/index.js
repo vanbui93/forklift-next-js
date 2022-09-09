@@ -40,7 +40,7 @@ export default function MenuHamburger(props) {
                 <ul className='menu-hamberger__list'>
                     {arrayMenu?.map((item, idx) => (
                         <li className='menu-hamberger__item' key={idx}>
-                            <Link href={`/page/${item.link}`}>
+                            <Link href={`/${item.link}`}>
                                 <a onClick={handleCloseHambuger}>{item?.name}</a>
                             </Link>
                         </li>
