@@ -157,8 +157,6 @@ const AdminOrder = props => {
         )
     }, [orders])
 
-    console.log(currentList)
-
     //Kết quả Search
     const handleSearch = e => {
         let value = e.target.value

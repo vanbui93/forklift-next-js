@@ -32,8 +32,6 @@ export default function MenuHamburger(props) {
             }
         })
 
-    console.log(arrayMenu)
-
     return (
         showhamburger && (
             <div className='menu-hamberger__wrap'>

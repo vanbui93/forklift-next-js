@@ -153,7 +153,6 @@ const AdminProduct = props => {
         setIsEdit(true)
         setEditObject(product)
         setImgsSrc(product?.images)
-        console.log(product?.content)
         const blocksFromHtml = htmlToDraft(product?.content ? product.content.toString() : '')
         const { contentBlocks, entityMap } = blocksFromHtml
         setEditorState(EditorState.createWithContent(ContentState.createFromBlockArray(contentBlocks, entityMap)))
@@ -318,8 +317,6 @@ const AdminProduct = props => {
     const onEditorStateChange = editorState => {
         const currentContent = draftToHtml(convertToRaw(editorState.getCurrentContent()))
         setEditorState(editorState)
-
-        console.log(currentContent)
 
         setEditObject(prevState => ({
             ...prevState,
