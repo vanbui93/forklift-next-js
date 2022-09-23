@@ -133,11 +133,15 @@ export default function ProductDetail(props) {
                                         </div>
                                     </div>
                                     <div className='product-detail__short-des'>
-                                        {isShortDes ? parse(product?.content.split('|||')[0]) : ''}
+                                        {isShortDes
+                                            ? parse(product.content ? product?.content.split('|||')[0] : '')
+                                            : ''}
                                     </div>
                                 </div>
                                 <div className='product-detail__long-des'>
-                                    {isShortDes ? parse(product?.content.split('|||')[1]) : parse(product?.content)}
+                                    {isShortDes
+                                        ? parse(product.content ? product.content.split('|||')[1] : '')
+                                        : parse(product.content ? product.content : '')}
                                 </div>
                                 <div className='product-detail__related'>
                                     <div className='page-title'>
